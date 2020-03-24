@@ -1,52 +1,31 @@
-# Prerequisites
-*.d
+# Windows default autosave extension
+*.asv
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+# OSX / *nix default autosave extension
+*.m~
 
-# Linker output
-*.ilk
-*.map
-*.exp
+# Compiled MEX binaries (all platforms)
+*.mex*
 
-# Precompiled Headers
-*.gch
-*.pch
+# Packaged app and toolbox files
+*.mlappinstall
+*.mltbx
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+# Generated helpsearch folders
+helpsearch*/
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+# Simulink code generation folders
+slprj/
+sccprj/
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+# Matlab code generation folders
+codegen/
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
+# Simulink autosave extension
+*.autosave
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+# Simulink cache files
+*.slxc
+
+# Octave session info
+octave-workspace
