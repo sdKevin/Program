@@ -1,4 +1,4 @@
-clc;clear all;close all;
+clc; clear all; close all;
 
 %% Setting the input/output paths
 InputPath_CMIP6_Ensemble = 'D:\CMIP6\ProcessData\Ensemble_Met';
