@@ -1,4 +1,4 @@
-function Fig2a_Supplementary_Plotting()
+function Fig2a_Supplementary_Plotting(Path_DryWetRegion_GCM , Path_DryWetRegion_Princeton)
 %% Drawing PM-RC %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 if 1==1
     RGB_Cold_Shade = [191,220,237];RGB_Cold_Line = [57,83,164];
@@ -8,7 +8,7 @@ if 1==1
     YlimRange_Dry_Humid = [38,49];YTickRange_Dry_Humid = [38:3:49];
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Figure Left%%%%%%%%%%%%%%%%%%%%%%%%
     %% DryWetRegion_CLM
-    load DryWetRegion_CLM
+    load(Path_DryWetRegion_GCM)
     figure
     % 画坐标轴底图，并添加Cold的Shade Area
     [ax,h1,h2]=plotyy(0,0,0,0); hold on;
@@ -85,7 +85,7 @@ if 1==1
     set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Cold_Line./255)
     set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Cold,'xlim',[1850,2100]);
     %% DryWetRegion_Princeton 普林斯顿
-    load DryWetRegion_Princeton
+    load(Path_DryWetRegion_Princeton)
     % Cold 滑动平均
     axes('position', [0.1300    0.1100    0.7750    0.8150]);
     % plot([1948:2014],Cold_PM_RC,...
@@ -115,14 +115,14 @@ if 1==1
     set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Dry_Humid,'xlim',[1850,2100]);
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Figure Right%%%%%%%%%%%%%%%%%%%%%%%%
-    clc;clear all;
+    clear -regexp [^Path_DryWetRegion_GCM,^Path_DryWetRegion_Princeton]
     RGB_Cold_Shade = [191,220,237];RGB_Cold_Line = [57,83,164];
     RGB_Dry_Shade = [251,191,164];RGB_Dry_Line = [238,32,37];
     RGB_Humid_Shade = [206,230,192];RGB_Humid_Line = [61,124,98];
     YlimRange_Cold = [5,20];YTickRange_Cold = [5:3:20];
     YlimRange_Dry_Humid = [38,49];YTickRange_Dry_Humid = [38:3:49];
     
-    load DryWetRegion_CLM
+    load(Path_DryWetRegion_GCM)
     figure
     % Dry and Humid
     subplot(1,9,[1:6])
@@ -193,7 +193,7 @@ if 2==2
     YlimRange_Cold = [8,20];YTickRange_Cold = [8:3:20];
     YlimRange_Dry_Humid = [38,47];YTickRange_Dry_Humid = [38:3:47];
     %% DryWetRegion_CLM
-    load DryWetRegion_CLM
+    load(Path_DryWetRegion_GCM)
     figure
     % 画坐标轴底图，并添加Cold的Shade Area
     [ax,h1,h2]=plotyy(0,0,0,0); hold on;
@@ -269,8 +269,8 @@ if 2==2
     h = legend('CMIP6 Cold Regions');
     set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Cold_Line./255)
     set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Cold,'xlim',[1850,2100]);
-    %% DryWetRegion_Princeton 普林斯顿
-    load DryWetRegion_Princeton
+    %% DryWetRegion_Princeton
+    load(Path_DryWetRegion_Princeton)
     % Cold 滑动平均
     axes('position', [0.1300    0.1100    0.7750    0.8150]);
     % plot([1948:2014],Cold_PM_RC_CO2_Yang,...
@@ -300,14 +300,14 @@ if 2==2
     set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Dry_Humid,'xlim',[1850,2100]);
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Figure Right%%%%%%%%%%%%%%%%%%%%%%%%
-    clc;clear all;
+    clear -regexp [^Path_DryWetRegion_GCM,^Path_DryWetRegion_Princeton]
     RGB_Cold_Shade = [191,220,237];RGB_Cold_Line = [57,83,164];
     RGB_Dry_Shade = [251,191,164];RGB_Dry_Line = [238,32,37];
     RGB_Humid_Shade = [206,230,192];RGB_Humid_Line = [61,124,98];
     YlimRange_Cold = [8,20];YTickRange_Cold = [8:3:20];
     YlimRange_Dry_Humid = [38,47];YTickRange_Dry_Humid = [38:3:47];
     
-    load DryWetRegion_CLM
+    load(Path_DryWetRegion_GCM)
     figure
     % Dry and Humid
     subplot(1,9,[1:6])
