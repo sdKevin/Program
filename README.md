@@ -1,5 +1,7 @@
 # CIMP6_Program
 
+To run these
+
 ETrc_Calculation is calculating reference crop evapotranspiration (ETrc). 
 
 ## CMIP6 Ensemble Description
@@ -30,6 +32,5 @@ ETrc_Calculation is calculating reference crop evapotranspiration (ETrc).
 | 22  | MPI-ESM1-2-HR   | MPI-M, Germany                 | r1i1p1f1    | 192x384              | .mat |
 | 23  | MPI-ESM1-2-LR   | MPI-M, Germany                 | r1i1p1f1    | 96x192               | .mat |
 | 24  | MRI-ESM2-0      | MRI, Japan                     | r1i1p1f1    | 160×320              | .mat |
-| 25  | UKESM1-0-LL     | MOHC, UK                       | r1i1p1f2    | 144×192              | .mat |
-
-
+| 25  | NorESM2-MM      | NCC, Norway                    | r1i1p1f1    | 192x288              | .mat |
+| 26  | UKESM1-0-LL     | MOHC, UK                       | r1i1p1f2    | 144×192              | .mat |

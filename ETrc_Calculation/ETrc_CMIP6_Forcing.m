@@ -4,16 +4,16 @@ clc; clear all; close all;
 InputPath_CMIP6_Ensemble = 'D:\CMIP6\ProcessData\Ensemble_Met';
 InputPath_CO2 = 'D:\CMIP6\ProcessData\CO2Data';
 InputPath_Princeton = 'D:\CMIP6\ProcessData\Princeton\monthly';
-OutputPath_Attribution = 'D:\CMIP6\Output\Output_Attribution';
-OutputPath_InterVar = 'D:\CMIP6\Output\Output_Met';
-OutputPath_ETrc = 'D:\CMIP6\Output\Output_ETrc';
+OutputPath_Attribution = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Attribution';
+OutputPath_MetVar = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Met';
+OutputPath_ETrc = 'D:\CMIP6\VariableStorage\MonthlyVar\ETrc';
 
 %% (1) Historical Experiment
 GCM_Ensemble = {'ACCESS-CM2','ACCESS-ESM1-5','BCC-CSM2-MR','CanESM5','CanESM5-CanOE',...
     'CESM2','CESM2-WACCM','CNRM-CM6-1','CNRM-ESM2-1','EC-Earth3','EC-Earth3-Veg',...
     'FGOALS-f3-L','FGOALS-g3','GFDL-ESM4','GISS-E2-1-G','HadGEM3-GC31-LL','INM-CM4-8',...
     'INM-CM5-0','IPSL-CM6A-LR','MIROC6','MIROC-ES2L','MPI-ESM1-2-HR','MPI-ESM1-2-LR',...
-    'MRI-ESM2-0','NorESM2-LM','NorESM2-MM','UKESM1-0-LL'}; % Name of Global Climate Model
+    'MRI-ESM2-0','NorESM2-MM','UKESM1-0-LL'}; % Name of Global Climate Model
 for i_GCM = 1 : length(GCM_Ensemble)
     %% (1.1) load Data
     GCM = GCM_Ensemble{i_GCM}
@@ -80,13 +80,13 @@ for i_GCM = 1 : length(GCM_Ensemble)
     PM_RC = Penman_Mothith(r1.rsds , r1.rlds , r1.sfcWind , r1.tas , r1.huss , r1.ps);
     [PM_RC_CO2_Yang , PM_RC_CO2_Jarvis_H , PM_RC_CO2_Jarvis_L] =...
         Penman_Mothith_CO2(r1.rsds , r1.rlds , r1.sfcWind , r1.tas , r1.huss , r1.ps , CO2, r1.pr ,...
-        OutputPath_Attribution , OutputPath_InterVar , strcat('Historical_',GCM));
+        [OutputPath_Attribution , '\Historical'] , [OutputPath_MetVar , '\Historical'] , strcat('Historical_',GCM));
     
     %% (1.5) Save the result
-    save(strcat(OutputPath_ETrc , '\PM_RC_Historical_',GCM),'PM_RC');
-    save(strcat(OutputPath_ETrc , '\PM_RC_CO2_Yang_Historical_',GCM),'PM_RC_CO2_Yang');
-    save(strcat(OutputPath_ETrc , '\PM_RC_CO2_Jarvis_H_Historical_',GCM),'PM_RC_CO2_Jarvis_H');
-    save(strcat(OutputPath_ETrc , '\PM_RC_CO2_Jarvis_L_Historical_',GCM),'PM_RC_CO2_Jarvis_L');
+    save(strcat(OutputPath_ETrc , '\Historical\PM_RC_Historical_',GCM),'PM_RC');
+    save(strcat(OutputPath_ETrc , '\Historical\PM_RC_CO2_Yang_Historical_',GCM),'PM_RC_CO2_Yang');
+    save(strcat(OutputPath_ETrc , '\Historical\PM_RC_CO2_Jarvis_H_Historical_',GCM),'PM_RC_CO2_Jarvis_H');
+    save(strcat(OutputPath_ETrc , '\Historical\PM_RC_CO2_Jarvis_L_Historical_',GCM),'PM_RC_CO2_Jarvis_L');
     clear C CO2 r1 PM_RC PM_RC_CO2_Yang PM_RC_CO2_Jarvis_H PM_RC_CO2_Jarvis_L
 end
 
@@ -99,7 +99,7 @@ for i_GCM = 1 : length(GCM_Ensemble)
     load(strcat(InputPath_CMIP6_Ensemble , '\Historical\' , GCM , '.mat'));
     
     %% (2.1.2) Uniform Resolution: interpolated to 0.5deg
-    load LandInfo_05deg; % Land Info from Princeton reanalysis
+    load LandInfo_05deg; % Global Land Info from Princeton reanalysis
     R1.lat = lat_05deg; R1.lon = lon_05deg;
     for ii = 1 : size(r1.huss,3)
         R1.huss(:,:,ii) = interp2(r1.lat , r1.lon , r1.huss(:,:,ii) ,...
@@ -179,12 +179,12 @@ for i_GCM = 1 : length(GCM_Ensemble)
     PM_RC = Penman_Mothith(r1.rsds , r1.rlds , r1.sfcWind , r1.tas , r1.huss , r1.ps);
     [PM_RC_CO2_Yang , PM_RC_CO2_Jarvis_H , PM_RC_CO2_Jarvis_L] =...
         Penman_Mothith_CO2(r1.rsds , r1.rlds , r1.sfcWind , r1.tas , r1.huss , r1.ps , CO2, r1.pr ,...
-        OutputPath_Attribution , OutputPath_InterVar , strcat(ssp,'_',GCM));
+        [OutputPath_Attribution , '\ScenarioMIP_' , ssp] , [OutputPath_MetVar , '\ScenarioMIP_' , ssp] , strcat(ssp,'_',GCM));
     
     %% (2.6) Save the result
-    save(strcat(OutputPath_ETrc , '\PM_RC_',ssp,'_',GCM),'PM_RC');
-    save(strcat(OutputPath_ETrc , '\PM_RC_CO2_Yang_',ssp,'_',GCM),'PM_RC_CO2_Yang');
-    save(strcat(OutputPath_ETrc , '\PM_RC_CO2_Jarvis_H_',ssp,'_',GCM),'PM_RC_CO2_Jarvis_H');
-    save(strcat(OutputPath_ETrc , '\PM_RC_CO2_Jarvis_L_',ssp,'_',GCM),'PM_RC_CO2_Jarvis_L');
+    save(strcat(OutputPath_ETrc , '\ScenarioMIP_' , ssp , '\PM_RC_',ssp,'_',GCM),'PM_RC');
+    save(strcat(OutputPath_ETrc , '\ScenarioMIP_' , ssp , '\PM_RC_CO2_Yang_',ssp,'_',GCM),'PM_RC_CO2_Yang');
+    save(strcat(OutputPath_ETrc , '\ScenarioMIP_' , ssp , '\PM_RC_CO2_Jarvis_H_',ssp,'_',GCM),'PM_RC_CO2_Jarvis_H');
+    save(strcat(OutputPath_ETrc , '\ScenarioMIP_' , ssp , '\PM_RC_CO2_Jarvis_L_',ssp,'_',GCM),'PM_RC_CO2_Jarvis_L');
     clear C CO2 r1 PM_RC PM_RC_CO2_Yang PM_RC_CO2_Jarvis_H PM_RC_CO2_Jarvis_L
 end
