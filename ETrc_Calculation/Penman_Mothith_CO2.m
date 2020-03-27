@@ -36,12 +36,15 @@ rs_H = rl_H./(0.5*LAI);
 rs_L = rl_L./(0.5*LAI);
 rs_Yang = 70+0.05.*(CO2-300);
 % For Attribution Analysis
-Middle_Var.s = s; Middle_Var.lamda = 2.501 - 0.002361.*Ta; Middle_Var.gamma = gamma;
-Middle_Var.rs_H = rs_H; Middle_Var.rs_L = rs_L; Middle_Var.rs_Yang = rs_Yang;
-Middle_Var.ra = 208./U2; Middle_Var.ea = ea; Middle_Var.pa = (Pa./1000)./(1.01.*(Ta+273).*0.287);%rou_a
-Middle_Var.Ca = gamma.*0.622.*Middle_Var.lamda./(Pa./1000); Middle_Var.Rn_s = Rn; Middle_Var.VPD = VPD;
-save(strcat(OutputPath_Attribution , '\Middle_Var_' , Name) , 'Middle_Var')
-clear Middle_Var
+Attribution_Var.s = s; Attribution_Var.lamda = 2.501 - 0.002361.*Ta;
+Attribution_Var.gamma = gamma; Attribution_Var.rs_H = rs_H;
+Attribution_Var.rs_L = rs_L; Attribution_Var.rs_Yang = rs_Yang;
+Attribution_Var.ra = 208./U2; Attribution_Var.ea = ea;
+Attribution_Var.pa = (Pa./1000)./(1.01.*(Ta+273).*0.287);%rou_a
+Attribution_Var.Ca = gamma.*0.622.*Attribution_Var.lamda./(Pa./1000);
+Attribution_Var.Rn_s = Rn; Attribution_Var.VPD = VPD;
+save(strcat(OutputPath_Attribution , '\Attribution_Var_' , Name) , 'Attribution_Var')
+clear Attribution_Var
 % Sg (W/m2),Ta (oC), VPD (kPa), CO2 (ppm), U2 (m/s), pr ((kg m-2 s-1))
 Met_Var.Sg = Sg; Met_Var.Ta = Ta; Met_Var.VPD = VPD; Met_Var.CO2 = CO2; Met_Var.U2 = U2; Met_Var.pr = pr;
 save(strcat(OutputPath_InterVar , '\Met_Var_',Name) , 'Met_Var')
