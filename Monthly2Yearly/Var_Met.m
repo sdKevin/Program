@@ -69,7 +69,7 @@ for i_Path = 1 : length(InputPath)
         save(strcat(OutputPath{i_Path} , GCM) , 'Met_Var');
         clear Met_Var GCM
     end
-    clear GCM_Ensemble GCM i_GCM
+    clear GCM i_GCM
     save(strcat(OutputPath{i_Path} , 'Met_Year') , 'Met_Year');
 end
 
@@ -117,7 +117,7 @@ end
 clear ii Met_Var
 Met_Var = GridYear; clear GridYear;
 %% (1.2) Output GridYear from 1850-2100
-save(strcat(OutputPath_Princeton , '_Princeton') , 'Met_Var');
+save(strcat(OutputPath_Princeton , 'Met_Var_Princeton') , 'Met_Var');
 clear Met_Var GCM
 clear GCM_Ensemble GCM i_GCM
 save(strcat(OutputPath_Princeton , 'Met_Year_Princeton') , 'Met_Year');
