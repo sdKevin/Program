@@ -17,7 +17,7 @@ OutputPath{4} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Met\ScenarioMIP_ssp370\M
 InputPath{5} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Met\ScenarioMIP_ssp585\Met_Var_ssp585_';
 OutputPath{5} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Met\ScenarioMIP_ssp585\Met_Var_ssp585_';
 
-%% (1) Integrate Monthly data to yearly data
+%% (1) Integrate Monthly CMIP6 data to yearly data
 % Name of Global Climate Model
 GCM_Ensemble = {'ACCESS-CM2','ACCESS-ESM1-5','BCC-CSM2-MR','CanESM5','CanESM5-CanOE',...
     'CESM2','CESM2-WACCM','CNRM-CM6-1','CNRM-ESM2-1','EC-Earth3','EC-Earth3-Veg',...
@@ -56,12 +56,12 @@ for i_Path = 1 : length(InputPath)
         clear ii iii;
         % Yearly Grid to Yearly series : Met_Year
         for ii = 1:size(GridYear.Sg,3)
-            A = GridYear.Sg(:,:,ii); Met_Year.Sg(ii) = nanmean(A(:)); clear A;
-            A = GridYear.Ta(:,:,ii); Met_Year.Ta(ii) = nanmean(A(:)); clear A;
-            A = GridYear.VPD(:,:,ii); Met_Year.VPD(ii) = nanmean(A(:)); clear A;
-            A = GridYear.CO2(:,:,ii); Met_Year.CO2(ii) = nanmean(A(:)); clear A;
-            A = GridYear.U2(:,:,ii); Met_Year.U2(ii) = nanmean(A(:)); clear A;
-            A = GridYear.pr(:,:,ii); Met_Year.pr(ii) = nanmean(A(:)); clear A;
+            A = GridYear.Sg(:,:,ii); Met_Year.Sg(i_GCM , ii) = nanmean(A(:)); clear A;
+            A = GridYear.Ta(:,:,ii); Met_Year.Ta(i_GCM , ii) = nanmean(A(:)); clear A;
+            A = GridYear.VPD(:,:,ii); Met_Year.VPD(i_GCM , ii) = nanmean(A(:)); clear A;
+            A = GridYear.CO2(:,:,ii); Met_Year.CO2(i_GCM , ii) = nanmean(A(:)); clear A;
+            A = GridYear.U2(:,:,ii); Met_Year.U2(i_GCM , ii) = nanmean(A(:)); clear A;
+            A = GridYear.pr(:,:,ii); Met_Year.pr(i_GCM , ii) = nanmean(A(:)); clear A;
         end
         clear ii Met_Var
         Met_Var = GridYear; clear GridYear;
