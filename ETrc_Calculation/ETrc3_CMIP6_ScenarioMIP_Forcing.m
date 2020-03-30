@@ -120,7 +120,7 @@ for i_GCM = 1 : length(GCM_Ensemble)
     %% (2.6) Save the result
     % strcat(OutputPath_ETrc , '\ScenarioMIP_' , ssp , '\ETrc_' , GCM) is for saving 'PM_RC','PM_RC_CO2_Yang','PM_RC_CO2_Jarvis_H','PM_RC_CO2_Jarvis_L' in
     % ETrc_GCM.mat, which is the reference crop evapotranspiration calculated by different methods
-    save(strcat(OutputPath_ETrc , '\ScenarioMIP_' , ssp , '\ETrc_' , GCM),...
+    save(strcat(OutputPath_ETrc , '\ScenarioMIP_' , ssp , '\ETrc_' , ssp , '_' , GCM),...
         'PM_RC','PM_RC_CO2_Yang','PM_RC_CO2_Jarvis_H','PM_RC_CO2_Jarvis_L');
     
     clear C CO2 r1 PM_RC PM_RC_CO2_Yang PM_RC_CO2_Jarvis_H PM_RC_CO2_Jarvis_L

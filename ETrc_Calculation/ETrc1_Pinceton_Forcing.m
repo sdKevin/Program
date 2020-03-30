@@ -45,7 +45,7 @@ PM_RC = Penman_Mothith(rsds , rlds , sfcWind , tas , huss , ps);
 %% Save the result
 % strcat(OutputPath_ETrc , '\Princeton\ETrc') is for saving 'PM_RC','PM_RC_CO2_Yang','PM_RC_CO2_Jarvis_H','PM_RC_CO2_Jarvis_L' in
 % ETrc.mat, which is the reference crop evapotranspiration calculated by different methods
-save(strcat(OutputPath_ETrc , '\Princeton\ETrc'),...
+save(strcat(OutputPath_ETrc , '\Princeton\ETrc_Princeton'),...
     'PM_RC','PM_RC_CO2_Yang','PM_RC_CO2_Jarvis_H','PM_RC_CO2_Jarvis_L');
 
 clear CO2 PM_RC PM_RC_CO2_Yang PM_RC_CO2_Jarvis_H PM_RC_CO2_Jarvis_L
