@@ -118,6 +118,5 @@ clear ii Met_Var
 Met_Var = GridYear; clear GridYear;
 %% (1.2) Output GridYear from 1850-2100
 save(strcat(OutputPath_Princeton , 'Met_Var_Princeton') , 'Met_Var');
-clear Met_Var GCM
-clear GCM_Ensemble GCM i_GCM
+clear Met_Var
 save(strcat(OutputPath_Princeton , 'Met_Year_Princeton') , 'Met_Year');
