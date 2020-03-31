@@ -87,7 +87,9 @@ for i_Path = 1 : length(InputETrcPath)
         'Cold_PM_RC','DryLand_PM_RC','HumidLand_PM_RC',...
         'Cold_PM_RC_CO2_Jarvis_H','DryLand_PM_RC_CO2_Jarvis_H','HumidLand_PM_RC_CO2_Jarvis_H',...
         'Cold_PM_RC_CO2_Yang','DryLand_PM_RC_CO2_Yang','HumidLand_PM_RC_CO2_Yang')
-    clear i_GCM
+    clear i_GCM Cold_PM_RC DryLand_PM_RC HumidLand_PM_RC
+    clear Cold_PM_RC_CO2_Jarvis_H DryLand_PM_RC_CO2_Jarvis_H HumidLand_PM_RC_CO2_Jarvis_H
+    clear Cold_PM_RC_CO2_Yang DryLand_PM_RC_CO2_Yang HumidLand_PM_RC_CO2_Yang
 end
 clear i_Path
 
@@ -141,3 +143,6 @@ save([OutputPath 'DryWetRegion_Year_Princeton'],...
     'Cold_PM_RC','DryLand_PM_RC','HumidLand_PM_RC',...
     'Cold_PM_RC_CO2_Jarvis_H','DryLand_PM_RC_CO2_Jarvis_H','HumidLand_PM_RC_CO2_Jarvis_H',...
     'Cold_PM_RC_CO2_Yang','DryLand_PM_RC_CO2_Yang','HumidLand_PM_RC_CO2_Yang')
+clear Cold_PM_RC DryLand_PM_RC HumidLand_PM_RC
+clear Cold_PM_RC_CO2_Jarvis_H DryLand_PM_RC_CO2_Jarvis_H HumidLand_PM_RC_CO2_Jarvis_H
+clear Cold_PM_RC_CO2_Yang DryLand_PM_RC_CO2_Yang HumidLand_PM_RC_CO2_Yang

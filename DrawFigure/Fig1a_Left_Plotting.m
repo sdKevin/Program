@@ -1,4 +1,4 @@
-function Fig2a_Plotting(Path_DryWetRegion_GCM , Path_DryWetRegion_Princeton)
+function Fig1a_Left_Plotting(CMIP_DryWetRegion , Path_DryWetRegion_Princeton)
 RGB_Cold_Shade = [191,220,237];RGB_Cold_Line = [57,83,164];
 RGB_Dry_Shade = [251,191,164];RGB_Dry_Line = [238,32,37];
 RGB_Humid_Shade = [206,230,192];RGB_Humid_Line = [61,124,98];
@@ -6,7 +6,10 @@ YlimRange_Cold = [12,22.2];YTickRange_Cold = [12:3:22];
 YlimRange_Dry_Humid = [36.5,46];YTickRange_Dry_Humid = [36:3:48];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Figure Left%%%%%%%%%%%%%%%%%%%%%%%%
 %% DryWetRegion_CLM
-load(Path_DryWetRegion_GCM)
+Cold_PM_RC_CO2_Jarvis_H = cat(2 , CMIP_DryWetRegion(1).Cold_PM_RC_CO2_Jarvis_H , CMIP_DryWetRegion(2).Cold_PM_RC_CO2_Jarvis_H);
+DryLand_PM_RC_CO2_Jarvis_H = cat(2 , CMIP_DryWetRegion(1).DryLand_PM_RC_CO2_Jarvis_H , CMIP_DryWetRegion(2).DryLand_PM_RC_CO2_Jarvis_H);
+HumidLand_PM_RC_CO2_Jarvis_H = cat(2 , CMIP_DryWetRegion(1).HumidLand_PM_RC_CO2_Jarvis_H , CMIP_DryWetRegion(2).HumidLand_PM_RC_CO2_Jarvis_H);
+
 figure
 % 画坐标轴底图，并添加Cold的Shade Area
 [ax,h1,h2]=plotyy(0,0,0,0); hold on;
@@ -113,14 +116,17 @@ set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',[102,194,165]./25
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Dry_Humid,'xlim',[1850,2100]);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Figure Right%%%%%%%%%%%%%%%%%%%%%%%%
-clear -regexp [^Path_DryWetRegion_GCM,^Path_DryWetRegion_Princeton]
-RGB_Cold_Shade = [191,220,237];RGB_Cold_Line = [57,83,164];
-RGB_Dry_Shade = [251,191,164];RGB_Dry_Line = [238,32,37];
-RGB_Humid_Shade = [206,230,192];RGB_Humid_Line = [61,124,98];
-YlimRange_Cold = [12,22.2];YTickRange_Cold = [12:3:22];
-YlimRange_Dry_Humid = [36.5,46];YTickRange_Dry_Humid = [36:3:48];
+clear -regexp [^CMIP_DryWetRegion,^Path_DryWetRegion_Princeton]
+RGB_Cold_Shade = [191,220,237]; RGB_Cold_Line = [57,83,164];
+RGB_Dry_Shade = [251,191,164]; RGB_Dry_Line = [238,32,37];
+RGB_Humid_Shade = [206,230,192]; RGB_Humid_Line = [61,124,98];
+YlimRange_Cold = [12,22.2]; YTickRange_Cold = [12:3:22];
+YlimRange_Dry_Humid = [36.5,46]; YTickRange_Dry_Humid = [36:3:48];
 
-load(Path_DryWetRegion_GCM)
+Cold_PM_RC_CO2_Jarvis_H = cat(2 , CMIP_DryWetRegion(1).Cold_PM_RC_CO2_Jarvis_H , CMIP_DryWetRegion(2).Cold_PM_RC_CO2_Jarvis_H);
+DryLand_PM_RC_CO2_Jarvis_H = cat(2 , CMIP_DryWetRegion(1).DryLand_PM_RC_CO2_Jarvis_H , CMIP_DryWetRegion(2).DryLand_PM_RC_CO2_Jarvis_H);
+HumidLand_PM_RC_CO2_Jarvis_H = cat(2 , CMIP_DryWetRegion(1).HumidLand_PM_RC_CO2_Jarvis_H , CMIP_DryWetRegion(2).HumidLand_PM_RC_CO2_Jarvis_H);
+
 figure
 % Dry and Humid
 subplot(1,9,[1:6])
@@ -130,7 +136,7 @@ H = notBoxPlot([mean(DryLand_PM_RC_CO2_Jarvis_H(:,1:30)')',mean(DryLand_PM_RC_CO
     mean(HumidLand_PM_RC_CO2_Jarvis_H(:,221:250)')'],[]);
 set(gca,'color',[ 255 255 255]./255,'Box','On')
 set([H.data],'MarkerSize',6,...
-    'markerFaceColor',[77,77,77]./255,...
+    'markerFaceColor','none',...
     'markerEdgeColor', 'none')
 % DryLand_PM_RC_CO2_Jarvis_H
 set([H(1).sdPtch],'EdgeColor','none','FaceAlpha',0)%delete 1std
@@ -164,7 +170,7 @@ H = notBoxPlot([mean(Cold_PM_RC_CO2_Jarvis_H(:,1:30)')',mean(Cold_PM_RC_CO2_Jarv
     mean(Cold_PM_RC_CO2_Jarvis_H(:,221:250)')'],[]);
 set(gca,'color',[ 255 255 255]./255,'Box','On')
 set([H.data],'MarkerSize',5,...
-    'markerFaceColor',[77,77,77]./255,...
+    'markerFaceColor','none',...
     'markerEdgeColor','none' )
 % Cold_PM_RC_CO2_Jarvis_H
 set([H(1).sdPtch],'EdgeColor','none','FaceAlpha',0)%delete 1std
