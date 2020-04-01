@@ -53,6 +53,11 @@ for i_Path = 1 : length(InputETrcPath)
         ETrc.PM_RC_CO2_Yang = ETrc.PM_RC_CO2_Yang .* 365;
         % Convert pr from kg/(m2s) to mm/year
         Met_Var.pr = Met_Var.pr .* 1000 .* 31536000 ./ 997;
+        % Build a four Dimension matrix (D4) for calculating Ensemble Mean AI
+        D4.PM_RC(: , : , : , i_GCM) =  ETrc.PM_RC;
+        D4.PM_RC_CO2_Jarvis_H(: , : , : , i_GCM) =  ETrc.PM_RC_CO2_Jarvis_H;
+        D4.PM_RC_CO2_Yang(: , : , : , i_GCM) =  ETrc.PM_RC_CO2_Yang;
+        D4.pr(: , : , : , i_GCM) =  Met_Var.pr;
         for ii = 1 : size(Met_Var.pr , 3)
             Grid_AI.PM_RC(:,:,ii) = Met_Var.pr(:,:,ii) ./ ETrc.PM_RC(:,:,ii);
             Grid_AI.PM_RC_CO2_Jarvis_H(:,:,ii) = Met_Var.pr(:,:,ii) ./ ETrc.PM_RC_CO2_Jarvis_H(:,:,ii);
@@ -83,6 +88,7 @@ for i_Path = 1 : length(InputETrcPath)
         save([OutputPath{i_Path} , GCM_Ensemble{i_GCM}] , 'Grid_AI');
         clear Grid_AI
     end
+    % Save DryWetRegion Yearly series : DryWetRegion_Year
     save([OutputPath{i_Path} 'DryWetRegion_Year'],...
         'Cold_PM_RC','DryLand_PM_RC','HumidLand_PM_RC',...
         'Cold_PM_RC_CO2_Jarvis_H','DryLand_PM_RC_CO2_Jarvis_H','HumidLand_PM_RC_CO2_Jarvis_H',...
@@ -90,6 +96,12 @@ for i_Path = 1 : length(InputETrcPath)
     clear i_GCM Cold_PM_RC DryLand_PM_RC HumidLand_PM_RC
     clear Cold_PM_RC_CO2_Jarvis_H DryLand_PM_RC_CO2_Jarvis_H HumidLand_PM_RC_CO2_Jarvis_H
     clear Cold_PM_RC_CO2_Yang DryLand_PM_RC_CO2_Yang HumidLand_PM_RC_CO2_Yang
+    % Save Ensemble Mean Grid AI
+    Grid_AI.PM_RC = nanmean(D4.pr,4) ./ nanmean(D4.PM_RC,4);
+    Grid_AI.PM_RC_CO2_Jarvis_H = nanmean(D4.pr,4) ./ nanmean(D4.PM_RC_CO2_Jarvis_H,4);
+    Grid_AI.PM_RC_CO2_Yang = nanmean(D4.pr,4) ./ nanmean(D4.PM_RC_CO2_Yang,4);
+    save([OutputPath{i_Path} , 'Ensemble_Mean'] , 'Grid_AI');
+    clear Grid_AI D4
 end
 clear i_Path
 
