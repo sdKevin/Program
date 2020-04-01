@@ -12,11 +12,11 @@ HumidLand_PM_RC_CO2_Jarvis_H = cat(2 ,...
 
 %% Setting Color
 % Color for cold region
-RGB_Cold_Shade = [191 , 220 , 237]; RGB_Cold_Line = [57 , 83 , 164];
+RGB_Cold_Shade = [191 , 220 , 237]; RGB_Cold_Line = [57 , 83 , 164]; RGB_Princeton_Cold = [112,131,164];
 % Color for dryland
-RGB_Dry_Shade = [251 , 191 , 164]; RGB_Dry_Line = [238 , 32 , 37];
+RGB_Dry_Shade = [251 , 191 , 164]; RGB_Dry_Line = [238 , 32 , 37]; RGB_Princeton_Dry = [208,106,95];
 % Color for humid land
-RGB_Humid_Shade = [206 , 230 , 192]; RGB_Humid_Line = [61 , 124 , 98];
+RGB_Humid_Shade = [206 , 230 , 192]; RGB_Humid_Line = [61 , 124 , 98]; RGB_Princeton_Humid = [102,194,165];
 
 %% Setting axis range
 YlimRange_Cold = [13 , 22.2]; YTickRange_Cold = 13 : 3 : 22;
@@ -78,74 +78,77 @@ fill([[1850:2100]';flipud([1850:2100]')],...
     RGB_Humid_Shade./255,'EdgeAlpha',0,'FaceAlpha',0.5);
 % Dryland Ensemble Mean
 plot([1850:2100],mean(DryLand_PM_RC_CO2_Jarvis_H),...
-    'Color',1.0-1*(1.0-RGB_Dry_Line./255),'EraseMode','xor','Linewidth',1);% 1为透明度
+    'Color',1.0-1*(1.0-RGB_Dry_Line./255),'EraseMode','xor','Linewidth',1);
 % Humid land Ensemble Mean
 plot([1850:2100],mean(HumidLand_PM_RC_CO2_Jarvis_H),...
-    'Color',1.0-1*(1.0-RGB_Humid_Line./255),'EraseMode','xor','Linewidth',1);% 1为透明度
+    'Color',1.0-1*(1.0-RGB_Humid_Line./255),'EraseMode','xor','Linewidth',1);
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Dry_Humid,'xlim',[1850,2100]);
+
 %%% Plotting Moving Average for Dryland and Humid land
 % Dryland Moving Average
 axes('position', [0.1300    0.1100    0.7750    0.8150]);
 plot([1850:2100],smooth(mean(DryLand_PM_RC_CO2_Jarvis_H),7),...
     'Color',1.0-1*(1.0-RGB_Dry_Line./255),'EraseMode','xor','Linewidth',2.5);
-h = legend('CMIP6 Drylands');
+h = legend('Drylands');
 set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Dry_Line./255)
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Dry_Humid,'xlim',[1850,2100]);
 % Humid land Moving Average
 axes('position', [0.1300    0.1100    0.7750    0.8150]);
 plot([1850:2100],smooth(mean(HumidLand_PM_RC_CO2_Jarvis_H),7),...
     'Color',1.0-1*(1.0-RGB_Humid_Line./255),'EraseMode','xor','Linewidth',2.5);
-h = legend('CMIP6 Humid Lands');
+h = legend('Humid Lands');
 set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Humid_Line./255)
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Dry_Humid,'xlim',[1850,2100]);
+
 %% Plotting Cold Region
 axes('position', [0.1300    0.1100    0.7750    0.8150]);
 % Plotting Ensemble Mean
 plot([1850:2100],mean(Cold_PM_RC_CO2_Jarvis_H),...
-    'Color',1.0-1*(1.0-RGB_Cold_Line./255),'EraseMode','xor','Linewidth',1);hold on;% 1为透明度
+    'Color',1.0-1*(1.0-RGB_Cold_Line./255),'EraseMode','xor','Linewidth',1); hold on;
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Cold,'xlim',[1850,2100]);
 axes('position', [0.1300    0.1100    0.7750    0.8150]);
 % Plotting moving average
 plot([1850:2100],smooth(mean(Cold_PM_RC_CO2_Jarvis_H),7),...
     'Color',1.0-1*(1.0-RGB_Cold_Line./255),'EraseMode','xor','Linewidth',2.5);
-h = legend('CMIP6 Cold Regions');
+h = legend('CMIP6 : Cold Regions');
 set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Cold_Line./255)
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Cold,'xlim',[1850,2100]);
+
 %% DryWetRegion_Princeton
 load(Path_DryWetRegion_Princeton)
 % Cold Region Moving average
 axes('position', [0.1300    0.1100    0.7750    0.8150]);
 % Cold Region Yearly Series
 % plot([1948:2014],Cold_PM_RC_CO2_Jarvis_H,...
-%     'Color',1.0-1*(1.0-[183,154,200]./255),'EraseMode','xor','Linewidth',1);% 1为透明度
+%     'Color',1.0-1*(1.0-RGB_Princeton_Cold./255),'EraseMode','xor','Linewidth',1);
 % Cold Region Moving average
 plot([1948:2014],smooth(Cold_PM_RC_CO2_Jarvis_H,7),'--',...
-    'Color',1.0-1*(1.0-[112,131,164]./255),'EraseMode','xor','Linewidth',2.5);
-h = legend('Princeton Cold Regions');
-set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',[112,131,164]./255)
+    'Color',1.0-1*(1.0-RGB_Princeton_Cold./255),'EraseMode','xor','Linewidth',2.5);
+h = legend('Princeton : Cold Regions');
+set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Princeton_Cold./255)
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Cold,'xlim',[1850,2100]);
 
 % Dryland Moving average
 axes('position', [0.1300    0.1100    0.7750    0.8150]);
 % Dryland Yearly Series
 % plot([1948:2014],DryLand_PM_RC_CO2_Jarvis_H,...
-%     'Color',1.0-1*(1.0-[245,129,51]./255),'EraseMode','xor','Linewidth',1);hold on;% 1为透明度
+%     'Color',1.0-1*(1.0-RGB_Princeton_Dry./255),'EraseMode','xor','Linewidth',1); hold on;
 % Dryland Moving average
 plot([1948:2014],smooth(DryLand_PM_RC_CO2_Jarvis_H,7),'--',...
-    'Color',1.0-1*(1.0-[208,106,95]./255),'EraseMode','xor','Linewidth',2.5);hold on;
-h = legend('Princeton Drylands');
-set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',[208,106,95]./255);
+    'Color',1.0-1*(1.0-RGB_Princeton_Dry./255),'EraseMode','xor','Linewidth',2.5); hold on;
+h = legend('Drylands');
+set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Princeton_Dry./255);
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Dry_Humid,'xlim',[1850,2100]);
 
 % Humid Land Moving average
 axes('position', [0.1300    0.1100    0.7750    0.8150]);
 % Humid land Yearly Series
 % plot([1948:2014],HumidLand_PM_RC_CO2_Jarvis_H,...
-%     'Color',1.0-1*(1.0-[102,194,165]./255),'EraseMode','xor','Linewidth',1);% 1为透明度
+%     'Color',1.0-1*(1.0-RGB_Princeton_Humid./255),'EraseMode','xor','Linewidth',1);
 % Humid land Moving average
 plot([1948:2014],smooth(HumidLand_PM_RC_CO2_Jarvis_H,7),'--',...
-    'Color',1.0-1*(1.0-[102,194,165]./255),'EraseMode','xor','Linewidth',2.5);hold on;
-h = legend('Princeton Humid Lands');
-set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',[102,194,165]./255)
+    'Color',1.0-1*(1.0-RGB_Princeton_Humid./255),'EraseMode','xor','Linewidth',2.5);hold on;
+h = legend('Humid Lands');
+set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Princeton_Humid./255)
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Dry_Humid,'xlim',[1850,2100]);
 end
