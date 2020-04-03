@@ -96,12 +96,13 @@ for i_Path = 1 : length(InputETrcPath)
     clear i_GCM Cold_PM_RC DryLand_PM_RC HumidLand_PM_RC
     clear Cold_PM_RC_CO2_Jarvis_H DryLand_PM_RC_CO2_Jarvis_H HumidLand_PM_RC_CO2_Jarvis_H
     clear Cold_PM_RC_CO2_Yang DryLand_PM_RC_CO2_Yang HumidLand_PM_RC_CO2_Yang
-    % Save Ensemble Mean Grid AI
-    Grid_AI.PM_RC = nanmean(D4.pr,4) ./ nanmean(D4.PM_RC,4);
-    Grid_AI.PM_RC_CO2_Jarvis_H = nanmean(D4.pr,4) ./ nanmean(D4.PM_RC_CO2_Jarvis_H,4);
-    Grid_AI.PM_RC_CO2_Yang = nanmean(D4.pr,4) ./ nanmean(D4.PM_RC_CO2_Yang,4);
-    save([OutputPath{i_Path} , 'Ensemble_Mean'] , 'Grid_AI');
-    clear Grid_AI D4
+    % Save Ensemble Mean annual ETrc and Pr for calculating Grid AI
+    Ensemble_AI.ETrc_PM_RC = nanmean(D4.PM_RC , 4);
+    Ensemble_AI.ETrc_PM_RC_CO2_Jarvis_H = nanmean(D4.PM_RC_CO2_Jarvis_H , 4);
+    Ensemble_AI.ETrc_PM_RC_CO2_Yang = nanmean(D4.PM_RC_CO2_Yang , 4);
+    Ensemble_AI.pr = nanmean(D4.pr , 4);
+    save([OutputPath{i_Path} , 'Ensemble_Mean'] , 'Ensemble_AI');
+    clear Ensemble_AI D4
 end
 clear i_Path
 
@@ -148,8 +149,15 @@ for ii = 1 : size( ETrc.PM_RC,3)
         ./nansum(nansum(EarthLandArea_05deg(~isnan(landmask_05deg)))) .* 100;
     HumidLand_PM_RC_CO2_Yang(1,ii) = 100 - Cold_PM_RC_CO2_Yang(1,ii) - DryLand_PM_RC_CO2_Yang(1,ii);
 end
+Ensemble_AI.ETrc_PM_RC = ETrc.PM_RC;
+Ensemble_AI.ETrc_PM_RC_CO2_Jarvis_H = ETrc.PM_RC_CO2_Jarvis_H;
+Ensemble_AI.ETrc_PM_RC_CO2_Yang = ETrc.PM_RC_CO2_Yang;
+Ensemble_AI.pr = Met_Var.pr;
+save([OutputPath , 'Ensemble_Mean'] , 'Ensemble_AI');
 clear ii ETrc Met_Var
+
 save([OutputPath 'AI_Princeton'] , 'Grid_AI');
+
 clear Grid_AI
 save([OutputPath 'DryWetRegion_Year_Princeton'],...
     'Cold_PM_RC','DryLand_PM_RC','HumidLand_PM_RC',...
