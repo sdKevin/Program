@@ -14,6 +14,7 @@ CMIP_DryWetRegion = cat(2,load(Path_DryWetRegion_Historical_GCM),...
 
 Fig1a_Left_Plotting( cat(2,CMIP_DryWetRegion(1),CMIP_DryWetRegion(5)) , Path_DryWetRegion_Princeton );
 Fig1a_Right_Plotting( CMIP_DryWetRegion );
+
 %%% Figure 1b
 clc; clear all; close all;
 Path_Ensemble_Mean_Historical_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_AridityIndex\Historical\AI_Historical_Ensemble_Mean.mat';

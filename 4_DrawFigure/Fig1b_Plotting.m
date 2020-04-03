@@ -109,7 +109,7 @@ AI_PM_RC_Princeton(Dry_Sub_humid) = 2;AI_PM_RC_Princeton(Cold) = 6;
 AI_PM_RC_Princeton(isnan(AI_PM_RC_Princeton))=-9999;
 SaveData2GeoTIFF([Path_Fig1b_Output 'AI_PM_RC_Princeton'],extent,AI_PM_RC_Princeton');
 clear Humid Hyper_arid Arid Semi_arid Dry_Sub_humid Cold
-clear ETrc_PM_RC_Princeton AI_PM_RC_Princeton
+clear ETrc_PM_RC_Princeton
 
 % (2.2) PM_RC_CO2_Yang
 ETrc_PM_RC_CO2_Yang_Princeton = mean(GridAI_Princeton_ScenarioMIP(1).Ensemble_AI.ETrc_PM_RC_CO2_Yang , 3);
@@ -129,7 +129,7 @@ AI_PM_RC_CO2_Yang_Princeton(Dry_Sub_humid) = 2;AI_PM_RC_CO2_Yang_Princeton(Cold)
 AI_PM_RC_CO2_Yang_Princeton(isnan(AI_PM_RC_CO2_Yang_Princeton))=-9999;
 SaveData2GeoTIFF([Path_Fig1b_Output 'AI_PM_RC_CO2_Yang_Princeton'],extent,AI_PM_RC_CO2_Yang_Princeton');
 clear Humid Hyper_arid Arid Semi_arid Dry_Sub_humid Cold
-clear ETrc_PM_RC_CO2_Yang_Princeton AI_PM_RC_CO2_Yang_Princeton
+clear ETrc_PM_RC_CO2_Yang_Princeton
 
 % (2.3) PM_RC_CO2_Jarvis_H
 ETrc_PM_RC_CO2_Jarvis_H_Princeton = mean(GridAI_Princeton_ScenarioMIP(1).Ensemble_AI.ETrc_PM_RC_CO2_Jarvis_H , 3);
@@ -149,7 +149,7 @@ AI_PM_RC_CO2_Jarvis_H_Princeton(Dry_Sub_humid) = 2;AI_PM_RC_CO2_Jarvis_H_Princet
 AI_PM_RC_CO2_Jarvis_H_Princeton(isnan(AI_PM_RC_CO2_Jarvis_H_Princeton))=-9999;
 SaveData2GeoTIFF([Path_Fig1b_Output 'AI_PM_RC_CO2_Jarvis_H_Princeton'],extent,AI_PM_RC_CO2_Jarvis_H_Princeton');
 clear Humid Hyper_arid Arid Semi_arid Dry_Sub_humid Cold
-clear ETrc_PM_RC_CO2_Jarvis_H_Princeton AI_PM_RC_CO2_Jarvis_H_Princeton
+clear ETrc_PM_RC_CO2_Jarvis_H_Princeton
 
 %% (3) AI for Far Future [CMIP6 2070-2099]
 ssp = {'ssp126','ssp245','ssp370','ssp585'};
@@ -173,7 +173,7 @@ for i_ssp = 1 : length(ssp)
     AI_PM_RC_2070_2099(isnan(AI_PM_RC_2070_2099))=-9999;
     SaveData2GeoTIFF([Path_Fig1b_Output 'AI_PM_RC_2070_2099_' ssp{i_ssp}],extent,AI_PM_RC_2070_2099');
     clear Humid Hyper_arid Arid Semi_arid Dry_Sub_humid Cold
-    clear ETrc_PM_RC_2070_2099 AI_PM_RC_2070_2099
+    clear ETrc_PM_RC_2070_2099
     % (3.2) PM_RC_CO2_Yang
     ETrc_PM_RC_CO2_Yang_2070_2099 = mean(GridAI_Princeton_ScenarioMIP(i_ssp+1).Ensemble_AI.ETrc_PM_RC_CO2_Yang(:,:,end-30:end-1) , 3);
     AI_PM_RC_CO2_Yang_2070_2099 = pr_PM_RC_2070_2099 ./ ETrc_PM_RC_CO2_Yang_2070_2099;
@@ -192,7 +192,7 @@ for i_ssp = 1 : length(ssp)
     AI_PM_RC_CO2_Yang_2070_2099(isnan(AI_PM_RC_CO2_Yang_2070_2099))=-9999;
     SaveData2GeoTIFF([Path_Fig1b_Output 'AI_PM_RC_CO2_Yang_2070_2099' ssp{i_ssp}],extent,AI_PM_RC_CO2_Yang_2070_2099');
     clear Humid Hyper_arid Arid Semi_arid Dry_Sub_humid Cold
-    clear ETrc_PM_RC_CO2_Yang_2070_2099 AI_PM_RC_CO2_Yang_2070_2099
+    clear ETrc_PM_RC_CO2_Yang_2070_2099
     % (3.3) PM_RC_CO2_Jarvis_H
     ETrc_PM_RC_CO2_Jarvis_H_2070_2099 = mean(GridAI_Princeton_ScenarioMIP(i_ssp+1).Ensemble_AI.ETrc_PM_RC_CO2_Jarvis_H(:,:,end-30:end-1) , 3);
     AI_PM_RC_CO2_Jarvis_H_2070_2099 = pr_PM_RC_2070_2099 ./ ETrc_PM_RC_CO2_Jarvis_H_2070_2099;
@@ -211,6 +211,11 @@ for i_ssp = 1 : length(ssp)
     AI_PM_RC_CO2_Jarvis_H_2070_2099(isnan(AI_PM_RC_CO2_Jarvis_H_2070_2099))=-9999;
     SaveData2GeoTIFF([Path_Fig1b_Output 'AI_PM_RC_CO2_Jarvis_H_2070_2099' ssp{i_ssp}],extent,AI_PM_RC_CO2_Jarvis_H_2070_2099');
     clear Humid Hyper_arid Arid Semi_arid Dry_Sub_humid Cold
-    clear ETrc_PM_RC_CO2_Jarvis_H_2070_2099 AI_PM_RC_CO2_Jarvis_H_2070_2099
+    clear ETrc_PM_RC_CO2_Jarvis_H_2070_2099
+    
+    Fig1b_TransferMatrix(AI_PM_RC_Princeton , AI_PM_RC_CO2_Yang_Princeton ,...
+        AI_PM_RC_CO2_Jarvis_H_Princeton , AI_PM_RC_2070_2099 ,...
+        AI_PM_RC_CO2_Yang_2070_2099 , AI_PM_RC_CO2_Jarvis_H_2070_2099 ,...
+        Path_Fig1b_Output , ssp{i_ssp})
 end
 end
