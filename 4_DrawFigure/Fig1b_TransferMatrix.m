@@ -1,4 +1,4 @@
-function Fig1b_TransferMatrix(AI_PM_RC_Princeton , AI_PM_RC_CO2_Yang_Princeton ,...
+function [Cold_Humid , Cold_Dry] = Fig1b_TransferMatrix(AI_PM_RC_Princeton , AI_PM_RC_CO2_Yang_Princeton ,...
         AI_PM_RC_CO2_Jarvis_H_Princeton , AI_PM_RC_2070_2099 ,...
         AI_PM_RC_CO2_Yang_2070_2099 , AI_PM_RC_CO2_Jarvis_H_2070_2099 ,...
         Path_Fig1b_Output , sspName)
@@ -171,4 +171,20 @@ M_PM_RC(6,:) =...
 xlswrite([Path_Fig1b_Output 'TransferMatrix_EnsembleMean.xlsx'] , M_PM_RC , sspName , 'C4:H9');
 xlswrite([Path_Fig1b_Output 'TransferMatrix_EnsembleMean.xlsx'] , M_PM_RC_Yang , sspName , 'C16:H21');
 xlswrite([Path_Fig1b_Output 'TransferMatrix_EnsembleMean.xlsx'] , M_PM_RC_Jarvis_H , sspName , 'C28:H33');
+
+
+load Permafrost
+% permafrost: 5-Continuous,4-sporadic,3-discontinuous,2-isolated.
+Permafrost = fliplr(Permafrost');
+% Cold to Humid
+P51 = nansum(EarthLandArea_05deg(AI_PM_RC_CO2_Jarvis_H_Change==61&Permafrost==5))./nansum(EarthLandArea_05deg(~isnan(Permafrost))).*100;
+P41 = nansum(EarthLandArea_05deg(AI_PM_RC_CO2_Jarvis_H_Change==61&Permafrost==4))./nansum(EarthLandArea_05deg(~isnan(Permafrost))).*100;
+P31 = nansum(EarthLandArea_05deg(AI_PM_RC_CO2_Jarvis_H_Change==61&Permafrost==3))./nansum(EarthLandArea_05deg(~isnan(Permafrost))).*100;
+P21 = nansum(EarthLandArea_05deg(AI_PM_RC_CO2_Jarvis_H_Change==61&Permafrost==2))./nansum(EarthLandArea_05deg(~isnan(Permafrost))).*100;
+Cold_Humid = [P51,P31,P41,P21];
+
+Cold_Dry = sum([nansum(EarthLandArea_05deg(AI_PM_RC_CO2_Jarvis_H_Change==62&~isnan(Permafrost)))./nansum(EarthLandArea_05deg(~isnan(Permafrost))).*100,...
+    nansum(EarthLandArea_05deg(AI_PM_RC_CO2_Jarvis_H_Change==63&~isnan(Permafrost)))./nansum(EarthLandArea_05deg(~isnan(Permafrost))).*100,...
+    nansum(EarthLandArea_05deg(AI_PM_RC_CO2_Jarvis_H_Change==64&~isnan(Permafrost)))./nansum(EarthLandArea_05deg(~isnan(Permafrost))).*100,...
+    nansum(EarthLandArea_05deg(AI_PM_RC_CO2_Jarvis_H_Change==65&~isnan(Permafrost)))./nansum(EarthLandArea_05deg(~isnan(Permafrost))).*100]);
 end
