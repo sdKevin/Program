@@ -8,8 +8,8 @@ RGB_Dry_Shade = [251 , 191 , 164]; RGB_Dry_Line = [238 , 32 , 37];
 RGB_Humid_Shade = [206 , 230 , 192]; RGB_Humid_Line = [61 , 124 , 98];
 
 %% Setting axis range
-YlimRange_Cold = [13 , 22.2]; YTickRange_Cold = 13 : 3 : 22;
-YlimRange_Dry_Humid = [36.5 , 46]; YTickRange_Dry_Humid = 36 : 3 : 48;
+YlimRange_Cold = [11 , 20]; YTickRange_Cold = 10 : 3 : 21;
+YlimRange_Dry_Humid = [39 , 47]; YTickRange_Dry_Humid = 39 : 3 : 48;
 
 %% Plotting DryLand Area Ratio Under ssp126 , 245 & 585
 figure
