@@ -19,8 +19,8 @@ RGB_Dry_Shade = [251 , 191 , 164]; RGB_Dry_Line = [238 , 32 , 37]; RGB_Princeton
 RGB_Humid_Shade = [206 , 230 , 192]; RGB_Humid_Line = [61 , 124 , 98]; RGB_Princeton_Humid = [102,194,165];
 
 %% Setting axis range
-YlimRange_Cold = [11 , 20]; YTickRange_Cold = 10 : 3 : 21;
-YlimRange_Dry_Humid = [39 , 47]; YTickRange_Dry_Humid = 39 : 3 : 48;
+YlimRange_Cold = [11 , 20]; YTickRange_Cold = 11 : 3 : 20;
+YlimRange_Dry_Humid = [39 , 48]; YTickRange_Dry_Humid = 39 : 3 : 48;
 
 %% Three time windows
 figure
