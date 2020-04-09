@@ -219,14 +219,14 @@ for i_ssp = 1 : length(ssp)
         Path_Fig1b_Output , ssp{i_ssp})
 end
 
-%% Plotting Permafrost Change
+%% Plotting As of 2070-2099, How much historical Permafrost will change to Humid & Dry lands
 H_Bar = bar(Cold_Humid,'stacked');
 H_Bar(1).FaceColor = [8,29,88]./255;
 H_Bar(2).FaceColor = [34,94,168]./255;
 H_Bar(3).FaceColor = [65,182,196]./255;
 H_Bar(4).FaceColor = [199,233,180]./255;
 set(gca,'View',[90,90],'xTickLabel',['ssp126';'ssp245';'ssp370';'ssp585'],...
-    'ylim',[0,25],'yTick',[0:5:25],...
+    'ylim',[0,35],'yTick',[0:5:35],...
     'FontSize',24,'FontName','Arial','LineWidth',2.5,'TickDir','out')
 ylabel('Permafrost to Humid Lands (%)','Color',[34,94,168]./255)
 
@@ -236,7 +236,7 @@ pause()
 axes('position', get(gca,'Position'));
 bar(flipud(Cold_Dry) , 'FaceColor' , [239,59,44]./255)
 set(gca,'View',[-90,90],'xTickLabel','',...
-    'ylim',[0,25],'yTick',[0:5:25],'FontSize',24,'FontName','Arial',...
+    'ylim',[0,35],'yTick',[0:5:35],'FontSize',24,'FontName','Arial',...
     'LineWidth',2.5,'TickDir','out','yaxislocation','right')
 ylabel('Permafrost to Drylands (%)','Color',[239,59,44]./255)
 set(gca,'color','none');
