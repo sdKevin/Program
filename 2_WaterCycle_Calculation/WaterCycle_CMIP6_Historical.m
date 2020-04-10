@@ -37,7 +37,7 @@ for i_GCM = 1 : length(GCM_Ensemble)
     r1 = R1; clear R1
     
     %% (2.3) Bias Correction : Using CDR Data to correct CMIP6 Historical Data
-    % CDR Unit: mm/month
+    % CDR Unit: mm/month and [./  (1000 .* 2592000 ./ 997))] to convert to kg/(m2s)
     load([InputPath_CDR , '\evspsbl.mat']); %1984-2010
     C.evspsbl = (nanmean(evspsbl,3) ./  (1000 .* 2592000 ./ 997)) ./ nanmean(r1.evspsbl(:,:,1609:1932),3); C.evspsbl(C.evspsbl>10)=10; clear evspsbl;
     load([InputPath_CDR , '\mrro.mat']); %1984-2010

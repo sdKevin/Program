@@ -1,6 +1,6 @@
 function Fig1b_Plotting(GridAI_Princeton_ScenarioMIP , Path_Fig1b_Output)
 %% (1) Adjust map range from 0~360 to -180~180
-extent=[-179.75 , 179.75 , -59.75+0.195 , 89.75+0.195];
+extent = [-179.75 , 179.75 , -59.75+0.195 , 89.75+0.195];
 for ii = 1 : size(GridAI_Princeton_ScenarioMIP(1).Ensemble_AI.ETrc_PM_RC , 3)
     % ETrc_PM_RC
     A = GridAI_Princeton_ScenarioMIP(1).Ensemble_AI.ETrc_PM_RC(1:360 , : , ii);
