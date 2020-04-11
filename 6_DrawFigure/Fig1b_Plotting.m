@@ -221,23 +221,23 @@ end
 
 %% Plotting As of 2070-2099, How much historical Permafrost will change to Humid & Dry lands
 H_Bar = bar(Cold_Humid,'stacked');
-H_Bar(1).FaceColor = [8,29,88]./255;
-H_Bar(2).FaceColor = [34,94,168]./255;
-H_Bar(3).FaceColor = [65,182,196]./255;
-H_Bar(4).FaceColor = [199,233,180]./255;
+H_Bar(1).FaceColor = [28,167,74]./255; H_Bar(1).EdgeColor = 'none';
+H_Bar(2).FaceColor = [80,185,72]./255; H_Bar(2).EdgeColor = 'none';
+H_Bar(3).FaceColor = [121,194,80]./255; H_Bar(3).EdgeColor = 'none';
+H_Bar(4).FaceColor = [168,213,158]./255; H_Bar(4).EdgeColor = 'none';
 set(gca,'View',[90,90],'xTickLabel',['ssp126';'ssp245';'ssp370';'ssp585'],...
     'ylim',[0,35],'yTick',[0:5:35],...
     'FontSize',24,'FontName','Arial','LineWidth',2.5,'TickDir','out')
-ylabel('Permafrost to Humid Lands (%)','Color',[34,94,168]./255)
+ylabel('Permafrost to Humid Lands (%)','Color',[28,167,74]./255)
 
 disp('Adjust Figure Location and Press Enter to Continue')
 pause()
 
 axes('position', get(gca,'Position'));
-bar(flipud(Cold_Dry) , 'FaceColor' , [239,59,44]./255)
+bar(flipud(Cold_Dry) , 'FaceColor' , [252,184,73]./255 , 'EdgeColor' , 'none')
 set(gca,'View',[-90,90],'xTickLabel','',...
     'ylim',[0,35],'yTick',[0:5:35],'FontSize',24,'FontName','Arial',...
     'LineWidth',2.5,'TickDir','out','yaxislocation','right')
-ylabel('Permafrost to Drylands (%)','Color',[239,59,44]./255)
+ylabel('Permafrost to Drylands (%)','Color',[252,184,73]./255)
 set(gca,'color','none');
 end
