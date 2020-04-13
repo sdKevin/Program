@@ -16,5 +16,5 @@ PerChange = cat(2,...
     load(Path_PerChange_ssp126_GCM),load(Path_PerChange_ssp245_GCM),...
     load(Path_PerChange_ssp370_GCM),load(Path_PerChange_ssp585_GCM));
 
-Fig2b_Plotting(PerChange , Path_Fig2b2d_Output)
+Fig2b2d_Plotting(PerChange , Path_Fig2b2d_Output)
 

@@ -68,27 +68,43 @@ for i_Path = 2 : length(InputLandPath)
             (mean(Grid_AI.PM_RC_CO2_Jarvis_H(:,:,56:end-1),3) - AI_Con) ./ AI_Con .* 100;
         PerChange_AI(PerChange_AI>100) = 100; % Percentage from -100 to 100%
         PerChange_AI(PerChange_AI<-100) = -100; % Percentage from -100 to 100%
+        % Deal with where mrro_Con is zero
+        PerChange_AI(AI_Con==0) = 0;
+        PerChange_AI((mean(Grid_AI.PM_RC_CO2_Jarvis_H(:,:,56:end-1),3) - AI_Con)~=0 & AI_Con==0) = 100;
         
         PerChange_pr = ...
             (mean(Met_Var.pr(:,:,56:end-1),3) - pr_Con) ./ pr_Con .* 100;
         PerChange_pr(PerChange_pr>100) = 100; % Percentage from -100 to 100%
         PerChange_pr(PerChange_pr<-100) = -100; % Percentage from -100 to 100%
+        % Deal with where mrro_Con is zero
+        PerChange_pr(pr_Con==0) = 0;
+        PerChange_pr((mean(Met_Var.pr(:,:,56:end-1),3) - pr_Con)~=0 & pr_Con==0) = 100;
         
         PerChange_evspsbl = ...
             (mean(Land_Var.evspsbl(:,:,56:end-1),3) - evspsbl_Con) ./ evspsbl_Con .* 100;
         PerChange_evspsbl(PerChange_evspsbl>100) = 100; % Percentage from -100 to 100%
         PerChange_evspsbl(PerChange_evspsbl<-100) = -100; % Percentage from -100 to 100%
+        % Deal with where mrro_Con is zero
+        PerChange_evspsbl(evspsbl_Con==0) = 0;
+        PerChange_evspsbl((mean(Land_Var.evspsbl(:,:,56:end-1),3) - evspsbl_Con)~=0 & evspsbl_Con==0) = 100;
         
         PerChange_pr_evspsbl = ...
             (mean(Met_Var.pr(:,:,56:end-1),3) - mean(Land_Var.evspsbl(:,:,56:end-1),3)...
             - (pr_Con - evspsbl_Con) ) ./ (pr_Con - evspsbl_Con) .* 100;
         PerChange_pr_evspsbl(PerChange_pr_evspsbl>100) = 100; % Percentage from -100 to 100%
         PerChange_pr_evspsbl(PerChange_pr_evspsbl<-100) = -100; % Percentage from -100 to 100%
+        % Deal with where mrro_Con is zero
+        PerChange_pr_evspsbl((pr_Con - evspsbl_Con)==0) = 0;
+        PerChange_pr_evspsbl((mean(Met_Var.pr(:,:,56:end-1),3) - mean(Land_Var.evspsbl(:,:,56:end-1),3)...
+            - (pr_Con - evspsbl_Con) )~=0 & (pr_Con - evspsbl_Con)==0) = 100;
         
         PerChange_mrso = ...
             (mean(Land_Var.mrso(:,:,56:end-1),3) - mrso_Con) ./ mrso_Con .* 100;
         PerChange_mrso(PerChange_mrso>100) = 100; % Percentage from -100 to 100%
         PerChange_mrso(PerChange_mrso<-100) = -100; % Percentage from -100 to 100%
+        % Deal with where mrro_Con is zero
+        PerChange_mrso(mrso_Con==0) = 0;
+        PerChange_mrso((mean(Land_Var.mrso(:,:,56:end-1),3) - mrso_Con)~=0 & mrso_Con==0) = 100;
         
         PerChange_mrro = ...
             (mean(Land_Var.mrro(:,:,56:end-1),3) - mrro_Con) ./ mrro_Con .* 100;
