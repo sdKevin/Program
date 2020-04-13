@@ -68,6 +68,7 @@ for i_Path = 1 : length(InputPath)
     end
     clear i_GCM
     save(strcat(OutputPath{i_Path} , 'ETrc_Year') , 'ETrc_Year');
+    clear ETrc_Year
 end
 
 %% (2) Integrate Monthly Princeton data to yearly data
@@ -105,3 +106,4 @@ ETrc = GridYear; clear GridYear;
 save(strcat(OutputPath_Princeton , 'ETrc_Princeton') , 'ETrc');
 clear ETrc
 save(strcat(OutputPath_Princeton , 'ETrc_Year_Princeton') , 'ETrc_Year');
+clear ETrc_Year

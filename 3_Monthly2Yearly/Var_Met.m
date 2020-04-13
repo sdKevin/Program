@@ -80,6 +80,7 @@ for i_Path = 1 : length(InputPath)
     end
     clear GCM i_GCM
     save(strcat(OutputPath{i_Path} , 'Met_Year') , 'Met_Year');
+    clear Met_Year
 end
 
 %% (2) Integrate Monthly Princeton data to yearly data
