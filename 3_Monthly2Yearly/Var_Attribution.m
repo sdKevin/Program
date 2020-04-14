@@ -87,9 +87,11 @@ for i_Path = 1 : length(InputPath)
         save(strcat(OutputPath{i_Path} , GCM) , 'Attribution_Var');
         clear Attribution_Var GCM
     end
-    clear GCM i_GCM
+    clear i_GCM
     save(strcat(OutputPath{i_Path} , 'Attribution_Year') , 'Attribution_Year');
+    clear Attribution_Year GCM_Ensemble
 end
+clear i_Path
 
 %% (2) Integrate Monthly Princeton data to yearly data
 clc; clear all; close all;
