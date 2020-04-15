@@ -1,4 +1,4 @@
-function Fig2b2d_Plotting(PerChange , Path_Fig2b2d_Output)
+function Ensemble_Mean_PerChange = Fig2b2d_Plotting(PerChange , Path_Fig2b2d_Output)
 load LandInfo_05deg
 A = landmask_05deg(1:360 , :); B = landmask_05deg(361:end , :);
 landmask_05deg = [B;A]; clear B A
@@ -106,6 +106,15 @@ for i_ssp = 1 : length(ssp)
         extent , Ensemble_Mean_PerChange_mrso');
     SaveData2GeoTIFF([Path_Fig2b2d_Output 'consistency_PerChange_mrso_' ssp{i_ssp}],...
         extent , consistency_PerChange_mrso');
+    
+    % Ouput Ensemble_Mean_PerChange for latitudinal and longitudinal
+    % distribution analysis
+    Ensemble_Mean_PerChange(i_ssp).lat_05deg = lat_05deg;
+    Ensemble_Mean_PerChange(i_ssp).lon_05deg = lon_05deg;
+    Ensemble_Mean_PerChange(i_ssp).Ensemble_Mean_PerChange_AI = Ensemble_Mean_PerChange_AI;
+    Ensemble_Mean_PerChange(i_ssp).Ensemble_Mean_PerChange_pr_evspsbl = Ensemble_Mean_PerChange_pr_evspsbl;
+    Ensemble_Mean_PerChange(i_ssp).Ensemble_Mean_PerChange_mrro = Ensemble_Mean_PerChange_mrro;
+    Ensemble_Mean_PerChange(i_ssp).Ensemble_Mean_PerChange_mrso = Ensemble_Mean_PerChange_mrso;
 end
 end
 

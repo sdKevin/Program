@@ -50,5 +50,6 @@ PerChange = cat(2,...
     load(Path_PerChange_ssp126_GCM),load(Path_PerChange_ssp245_GCM),...
     load(Path_PerChange_ssp370_GCM),load(Path_PerChange_ssp585_GCM));
 
-Fig2b2d_Plotting(PerChange , Path_Fig2b2d_Output)
+Ensemble_Mean_PerChange = Fig2b2d_Plotting(PerChange , Path_Fig2b2d_Output);
 
+Fig2fg_Plotting(Ensemble_Mean_PerChange)
