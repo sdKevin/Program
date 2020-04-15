@@ -21,6 +21,7 @@ Path_Attribution_Year_ScenarioMIP_ssp245_GCM = 'D:\CMIP6\VariableStorage\YearlyV
 Path_Attribution_Year_ScenarioMIP_ssp370_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Attribution\ScenarioMIP_ssp370\Attribution_Var_ssp370_Attribution_Year.mat';
 Path_Attribution_Year_ScenarioMIP_ssp585_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Attribution\ScenarioMIP_ssp585\Attribution_Var_ssp585_Attribution_Year.mat';
 
+Path_Fig2a_Output = 'Fig2a_Output\';
 
 ETrc_Year = cat(2,load(Path_ETrc_Year_Historical_GCM),...
     load(Path_ETrc_Year_ScenarioMIP_ssp126_GCM),load(Path_ETrc_Year_ScenarioMIP_ssp245_GCM),...
@@ -35,8 +36,7 @@ Attribution_Year = cat(2,load(Path_Attribution_Year_Historical_GCM),...
     load(Path_Attribution_Year_ScenarioMIP_ssp370_GCM),load(Path_Attribution_Year_ScenarioMIP_ssp585_GCM));
 
 Fig2a_Left_Plotting(ETrc_Year , Met_Year)
-Fig2a_Right_Plotting(ETrc_Year , Met_Year , Attribution_Year)
-
+Fig2a_Right_Plotting(ETrc_Year , Met_Year , Attribution_Year , Path_Fig2a_Output)
 
 %%% Figure 2b
 clc; clear all; close all;

@@ -38,17 +38,26 @@ for ii = [2 : length(ETrc_Year)-1 , 1]
     end
 end
 clear ii iii
-figure
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205];RGB_Historical_Line = [23,23,23];
-RGB_ssp_Shade = [16,163,221;167,206,223;249,219,203;249,191,202];
+% RGB_ssp_Shade = [16,163,221;167,206,223;249,219,203;249,191,202];
 RGB_ssp_Shade = [211,178,150;229,206,175;197,220,211;160,199,202];
-RGB_ssp_Line = [57,83,164;114,177,225;245,130,105;238,33,37];
+% RGB_ssp_Line = [57,83,164;114,177,225;245,130,105;238,33,37];
 RGB_ssp_Line = [156,85,31;194,139,79;116,173,163;36,131,145];
 HatchAngle_ssp = [65,115,65,115];
 
 YlimRange_AI = [-0.01,0.09];YTickRange_AI = [-0.01:0.01:0.09];YTickLabel_AI = {'';'0';'';'0.02';'';'0.04';'';'0.06';'';'0.08';''};
 
+%% Three time windows
+figure
+%  Contemporary: 1948-2014
+fill([1948;2014;2014;1948],...
+    [YlimRange_AI(1); YlimRange_AI(1); YlimRange_AI(2); YlimRange_AI(2)],...
+    [240,240,242]./255,'EdgeAlpha',0,'FaceAlpha',0.9); hold on;
+% Far Future: 2070-2099
+fill([2070;2099;2099;2070],...
+    [YlimRange_AI(1); YlimRange_AI(1); YlimRange_AI(2); YlimRange_AI(2)],...
+    [240,240,242]./255,'EdgeAlpha',0,'FaceAlpha',0.9);
 %% Plotting Shade Area
 % Plot y=0 and x=2014
 plot([2014 2014],[YlimRange_AI(1) YlimRange_AI(2)],'k','LineWidth',1.5); hold on;
@@ -115,6 +124,6 @@ for i_ssp = [1,2,3,4]
     plot(0,'Color',RGB_ssp_Line(i_ssp,:)./255,'Linewidth',3.5);
 end
 legend('historical','ssp126','ssp245','ssp370','ssp585',...
-    'Location','NorthWest','EdgeColor','None','FontSize',24,'FontName','Arial')
+    'Location','NorthWest','Color','None','EdgeColor','None','FontSize',24,'FontName','Arial')
 set(gca,'visible','off')
 end
