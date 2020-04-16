@@ -126,7 +126,7 @@ end
 figure
 RGB_ssp_Line = [156,85,31;194,139,79;116,173,163;36,131,145];
 RGB_ssp_Shade = [211,178,150;229,206,175;197,220,211;160,199,202];
-Xlim_Range = [-0.1,8.6]; Ylim_Range = [-0.18,0.10];
+Xlim_Range = [-0.1,8.6]; Ylim_Range = [-0.185,0.10];
 % plot y=0
 plot(Xlim_Range,[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 
@@ -156,7 +156,7 @@ for ii = 4 : -1 : 1
         (std(Error(ii,:))./sqrt(length(Error(ii,:)))).*1.28],...
         'o','MarkerSize',3,'MarkerEdgeColor',RGB_ssp_Line(ii,:)./255,...
         'Color',[120,120,120]./255,'LineWidth',2.5)
-    
+    % upper boundary of 80% Confidence Interval
     A = mean([delta_AI_PM_RC_CO2_Jarvis_H(ii,:); dAI_dpr(ii,:);...
         dAI_drs_Jarvis_H(ii,:); dAI_dRn_s(ii,:); dAI_dVPD(ii,:);...
         dAI_ds(ii,:); dAI_dra(ii,:); Error(ii,:)],2)' +...
@@ -168,7 +168,7 @@ for ii = 4 : -1 : 1
         (std(dAI_ds(ii,:))./sqrt(length(dAI_ds(ii,:)))).*1.28  ,...
         (std(dAI_dra(ii,:))./sqrt(length(dAI_dra(ii,:)))).*1.28  ,...
         (std(Error(ii,:))./sqrt(length(Error(ii,:)))).*1.28];
-    
+    % lower boundary of 80% Confidence Interval
     B = mean([delta_AI_PM_RC_CO2_Jarvis_H(ii,:); dAI_dpr(ii,:);...
         dAI_drs_Jarvis_H(ii,:); dAI_dRn_s(ii,:); dAI_dVPD(ii,:);...
         dAI_ds(ii,:); dAI_dra(ii,:); Error(ii,:)],2)' -...
@@ -180,7 +180,7 @@ for ii = 4 : -1 : 1
         (std(dAI_ds(ii,:))./sqrt(length(dAI_ds(ii,:)))).*1.28  ,...
         (std(dAI_dra(ii,:))./sqrt(length(dAI_dra(ii,:)))).*1.28  ,...
         (std(Error(ii,:))./sqrt(length(Error(ii,:)))).*1.28];
-    
+    % Ouput 80% Confidence Interval
     if ii==4
         xlswrite([Path_Fig2a_Output '80% confidence interval.xlsx'] , A , 'Confidence interval' , 'B25:I25');
         xlswrite([Path_Fig2a_Output '80% confidence interval.xlsx'] , B , 'Confidence interval' , 'B26:I26');
@@ -200,8 +200,10 @@ end
 plot([1.25 1.25],Ylim_Range,'k--','LineWidth',1.5)
 plot([3.5 3.5],Ylim_Range,'k--','LineWidth',1.5)
 plot([7.5 7.5],Ylim_Range,'k--','LineWidth',1.5)
+view(-90,90)
 
 set(gca,'xlim',Xlim_Range,'ylim',Ylim_Range,...
+    'YMinorTick','on',...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5);
 ylabel('\Delta AI')
 

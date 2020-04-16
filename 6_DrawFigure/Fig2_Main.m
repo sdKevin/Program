@@ -53,3 +53,4 @@ PerChange = cat(2,...
 Ensemble_Mean_PerChange = Fig2b2d_Plotting(PerChange , Path_Fig2b2d_Output);
 
 Fig2fg_Plotting(Ensemble_Mean_PerChange)
+close all
