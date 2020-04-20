@@ -151,14 +151,14 @@ for i_ssp = 4
     plot(Lat2,Re_Change_pr_evspsbl_Mean_Lat,'--','Color',[82,82,82]./255,'LineWidth',2.5)
     plot(Lat3,Re_Change_mrro_Mean_Lat,':','Color',[115,115,115]./255,'LineWidth',2.5)
     
-    plot([-60 90],[0 0],'Color',[189,188,188]./255,'LineWidth',2)
+    plot([-60 90],[0 0],'Color',[50,50,50]./255,'LineWidth',1.5)
     view(-90,90)
-    legend('AI','\theta','Pr-ET','Q','Location','NorthEast',...
+    legend('AI','\theta','Pr-ET','Q','Position',[0.204,0.935,0.6,0.05],'Orientation','Horizontal',...
         'Color','None','EdgeColor','None','FontSize',24,'FontName','Arial')
     set(gca,'xlim',[-60,90],'ylim',[-100,100],'YTick',[-100:25:100],'XTick',[-60:30:90],...
         'XMinorTick','on','YMinorTick','on','visible','off',...
         'TickDir','out','FontSize',24,'FontName','Arial','LineWidth',2.5)
     
-    print(gcf,'-r600','-dpng','Fig2fg.png');
+    print(gcf,'-r900','-dpng','Fig2fg.png');
 end
 end
