@@ -1,4 +1,4 @@
-function Output = Fig3_InfoExtract(Path_Shapefile , lat , lon , Data)
+function Output = Fig3_InfoExtractMean(Path_Shapefile , lat , lon , Data)
 Map = shaperead(Path_Shapefile);
 % RiverName and RiverID
 % Amu Darya(0), Balkhash(1), Ganges-Brahmaputra(11), Helmand(2), Indus(7),
@@ -22,7 +22,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(1) = nansum(Data(GridIndex));
+Output(1) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Kazakhstan(95)
 MiddleIndex = find(CountryID(RiverIndex)==95);
@@ -32,7 +32,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(2) = nansum(Data(GridIndex));
+Output(2) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Tajikistan£¨178£©
 MiddleIndex = find(CountryID(RiverIndex)==178);
@@ -42,7 +42,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(3) = nansum(Data(GridIndex));
+Output(3) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Turkmenistan(186)
 MiddleIndex = find(CountryID(RiverIndex)==186);
@@ -52,7 +52,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(4) = nansum(Data(GridIndex));
+Output(4) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Uzbekistan(194)
 MiddleIndex = find(CountryID(RiverIndex)==194);
@@ -62,7 +62,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(5) = nansum(Data(GridIndex));
+Output(5) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 clear RiverIndex
 
@@ -76,7 +76,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(6) = nansum(Data(GridIndex));
+Output(6) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Kazakhstan(95)
 MiddleIndex = find(CountryID(RiverIndex)==95);
@@ -86,7 +86,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(7) = nansum(Data(GridIndex));
+Output(7) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Kyrgyzstan(102)
 MiddleIndex = find(CountryID(RiverIndex)==102);
@@ -96,7 +96,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(8) = nansum(Data(GridIndex));
+Output(8) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 clear RiverIndex
 
@@ -110,7 +110,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(9) = nansum(Data(GridIndex));
+Output(9) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Bhutan(20)
 MiddleIndex = find(CountryID(RiverIndex)==20);
@@ -120,7 +120,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(10) = nansum(Data(GridIndex));
+Output(10) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % China(37)
 MiddleIndex = find(CountryID(RiverIndex)==37);
@@ -130,7 +130,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(11) = nansum(Data(GridIndex));
+Output(11) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Myanmar(128)
 MiddleIndex = find(CountryID(RiverIndex)==128);
@@ -140,7 +140,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(12) = nansum(Data(GridIndex));
+Output(12) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Nepal(130)
 MiddleIndex = find(CountryID(RiverIndex)==130);
@@ -150,7 +150,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(13) = nansum(Data(GridIndex));
+Output(13) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % India(205)
 MiddleIndex = find(CountryID(RiverIndex)==205);
@@ -160,7 +160,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(14) = nansum(Data(GridIndex));
+Output(14) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 clear RiverIndex
 
@@ -174,7 +174,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(15) = nansum(Data(GridIndex));
+Output(15) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Iran(83)
 MiddleIndex = find(CountryID(RiverIndex)==83);
@@ -184,7 +184,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(16) = nansum(Data(GridIndex));
+Output(16) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Pakistan(140)
 MiddleIndex = find(CountryID(RiverIndex)==140);
@@ -194,7 +194,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(17) = nansum(Data(GridIndex));
+Output(17) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 clear RiverIndex
 
@@ -208,7 +208,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(18) = nansum(Data(GridIndex));
+Output(18) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Pakistan(140)
 MiddleIndex = find(CountryID(RiverIndex)==140);
@@ -218,7 +218,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(19) = nansum(Data(GridIndex));
+Output(19) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % India(205)
 MiddleIndex = find(CountryID(RiverIndex)==205);
@@ -228,7 +228,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(20) = nansum(Data(GridIndex));
+Output(20) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 clear RiverIndex
 
@@ -242,7 +242,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(21) = nansum(Data(GridIndex));
+Output(21) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Myanmar(128)
 MiddleIndex = find(CountryID(RiverIndex)==128);
@@ -252,7 +252,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(22) = nansum(Data(GridIndex));
+Output(22) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % India(205)
 MiddleIndex = find(CountryID(RiverIndex)==205);
@@ -262,7 +262,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(23) = nansum(Data(GridIndex));
+Output(23) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 clear RiverIndex
 
@@ -276,7 +276,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(24) = nansum(Data(GridIndex));
+Output(24) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % China(37)
 MiddleIndex = find(CountryID(RiverIndex)==37);
@@ -286,7 +286,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(25) = nansum(Data(GridIndex));
+Output(25) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Laos(103)
 MiddleIndex = find(CountryID(RiverIndex)==103);
@@ -296,7 +296,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(26) = nansum(Data(GridIndex));
+Output(26) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Myanmar(128)
 MiddleIndex = find(CountryID(RiverIndex)==128);
@@ -306,7 +306,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(27) = nansum(Data(GridIndex));
+Output(27) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Thailand(180)
 MiddleIndex = find(CountryID(RiverIndex)==180);
@@ -316,7 +316,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(28) = nansum(Data(GridIndex));
+Output(28) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Vietnam(197)
 MiddleIndex = find(CountryID(RiverIndex)==197);
@@ -326,7 +326,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(29) = nansum(Data(GridIndex));
+Output(29) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 clear RiverIndex
 
@@ -340,7 +340,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(30) = nansum(Data(GridIndex));
+Output(30) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Iran(83)
 MiddleIndex = find(CountryID(RiverIndex)==83);
@@ -350,7 +350,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(31) = nansum(Data(GridIndex));
+Output(31) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Turkmenistan(186)
 MiddleIndex = find(CountryID(RiverIndex)==186);
@@ -360,7 +360,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(32) = nansum(Data(GridIndex));
+Output(32) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 clear RiverIndex
 
@@ -374,7 +374,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(33) = nansum(Data(GridIndex));
+Output(33) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Myanmar(128)
 MiddleIndex = find(CountryID(RiverIndex)==128);
@@ -384,7 +384,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(34) = nansum(Data(GridIndex));
+Output(34) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Thailand(180)
 MiddleIndex = find(CountryID(RiverIndex)==180);
@@ -394,7 +394,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(35) = nansum(Data(GridIndex));
+Output(35) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 clear RiverIndex
 
@@ -408,7 +408,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(36) = nansum(Data(GridIndex));
+Output(36) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Kyrgyzstan(102)
 MiddleIndex = find(CountryID(RiverIndex)==102);
@@ -418,7 +418,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(37) = nansum(Data(GridIndex));
+Output(37) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Tajikistan£¨178£©
 MiddleIndex = find(CountryID(RiverIndex)==178);
@@ -428,7 +428,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(38) = nansum(Data(GridIndex));
+Output(38) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 % Uzbekistan(194)
 MiddleIndex = find(CountryID(RiverIndex)==194);
@@ -438,7 +438,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(39) = nansum(Data(GridIndex));
+Output(39) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 clear RiverIndex
 
@@ -452,7 +452,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(40) = nansum(Data(GridIndex));
+Output(40) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 clear RiverIndex
 
@@ -466,7 +466,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(41) = nansum(Data(GridIndex));
+Output(41) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 clear RiverIndex
 
@@ -480,7 +480,7 @@ for ii = 1 : length(CountryIndex)
     GridIndex = GridIndex | inpolygon(lon , lat ,...
         Map(CountryIndex(ii)).X,Map(CountryIndex(ii)).Y);
 end
-Output(42) = nansum(Data(GridIndex));
+Output(42) = nanmean(Data(GridIndex));
 clear MiddleIndex CountryIndex GridIndex ii
 clear RiverIndex
 end
