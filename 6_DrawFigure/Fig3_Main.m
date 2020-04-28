@@ -186,7 +186,49 @@ try
 catch
     disp('Error!');
 end
-
-
-
-
+%% (5) BioMass
+try
+    % (5.1) Nematodes
+    clc; clear all; close all;
+    % Nematodes Data
+    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\SoilMicrobial\Nematodes_HR.mat';
+    load(Path_Data);
+    % Path of Tibet Shapefile
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_inTibet.shp';
+    % Density of Nematodes in Tibet Plateau
+    Tibet_Nematodes = Fig3_InfoExtractTibetMean(Path_Shapefile , lat , lon , Nematodes_HR);
+    
+    % Path of Watershed-Country Shapefile
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_outTibet_Country.shp';
+    % Density of Nematodes in downstream watershed
+    Country_Nematodes = Fig3_InfoExtractMean(Path_Shapefile , lat , lon , Nematodes_HR);
+    
+    Nematodes_Gradient = Tibet_Nematodes - Country_Nematodes;
+    
+    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , Nematodes_Gradient' , 'Quantity' , 'E3:E44');
+    clear Tibet_Nematodes Country_Nematodes Nematodes_Gradient
+    clear Nematodes_HR Path_Data lat lon
+    
+    % (5.2) SoilMicroBiomass
+    clc; clear all; close all;
+    % SoilMicroBiomass Data
+    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\SoilMicrobial\SoilMicroBiomass.mat';
+    load(Path_Data);
+    % Path of Tibet Shapefile
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_inTibet.shp';
+    % Density of SoilMicroBiomass in Tibet Plateau
+    Tibet_SoilMicroBiomass = Fig3_InfoExtractTibetMean(Path_Shapefile , lat , lon , SoilMicroBiomass);
+    
+    % Path of Watershed-Country Shapefile
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_outTibet_Country.shp';
+    % Density of SoilMicroBiomass in downstream watershed
+    Country_SoilMicroBiomass = Fig3_InfoExtractMean(Path_Shapefile , lat , lon , SoilMicroBiomass);
+    
+    SoilMicroBiomass_Gradient = Tibet_SoilMicroBiomass - Country_SoilMicroBiomass;
+    
+    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , SoilMicroBiomass_Gradient' , 'Quantity' , 'D3:D44');
+    clear Tibet_SoilMicroBiomass Country_SoilMicroBiomass SoilMicroBiomass_Gradient
+    clear SoilMicroBiomass Path_Data lat lon
+catch
+    disp('Error!');
+end
