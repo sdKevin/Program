@@ -10,7 +10,6 @@ lat_HR = lat; lon_HR = lon; clear lat lon Nematodes_Path_Data;
 SoilMicroBiomass_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\SoilMicrobial\SoilMicroBiomass.mat';
 load(SoilMicroBiomass_Path_Data);
 SoilMicroBiomass_HR = interp2(lat,lon,SoilMicroBiomass,lat_HR,lon_HR);
-SoilMicroBiomass_HR(isnan(SoilMicroBiomass_HR)) = nanmean(nanmean(SoilMicroBiomass_HR)); %Fill the empty value to Mean Value
 clear lat lon SoilMicroBiomass SoilMicroBiomass_Path_Data
 %% CroplandRatio Data
 CroplandRatio_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Crop\CroplandRatio.mat';
@@ -105,7 +104,12 @@ clear Cattle_HR Chickens_HR Ducks_HR Goats_HR Pigs_HR Sheep_HR
 %% (6.2) Generate Occurrence Probability of Hazard (Range: [0,1])
 % HazardProbability represents the Occurrence probability of water
 % transfering dangerous Soil microorganisms
-HazardProbability_HR = Nematodes_HR .* Mrro_HR .* SoilMicroBiomass_HR;
+% Fill the empty value to Mean Value and use Nematodes_HR mask as Land Mask
+SoilMicroBiomass_HR(isnan(SoilMicroBiomass_HR)) = nanmean(nanmean(SoilMicroBiomass_HR));
+Mrro_HR(isnan(Mrro_HR)) = nanmean(nanmean(Mrro_HR));
+HazardProbability_HR = Nematodes_HR./nanmax(nanmax(Nematodes_HR)) .* ...
+    SoilMicroBiomass_HR./nanmax(nanmax(SoilMicroBiomass_HR)) .* ...
+    Mrro_HR./nanmax(nanmax(Mrro_HR));
 % Make HazardProbability_HR > 0, where runoff change <0 will be 0, which means no
 % possibility to transfer dangerous Soil microorganisms
 HazardProbability_HR(HazardProbability_HR<0) = 0;
@@ -144,27 +148,32 @@ A = CroplandRatio(:,1:3601); B = CroplandRatio(:,3602:end);
 CroplandRatio = [B,A]; clear A B
 A = Ratio_Rural_Population(:,1:3601); B = Ratio_Rural_Population(:,3602:end);
 Ratio_Rural_Population = [B,A]; clear A B
-% Delete the NAN crack
+% Interpolate the seam
 HazardProbability(:,3585:3616) = ones(2961,32) .* ...
     nanmean(HazardProbability(:,[3584,3617]),2);
 Ratio_Rural_Population(:,3599:3602) = ones(2961,4) .* ...
     nanmean(Ratio_Rural_Population(:,[3598,3603]),2);
 % output tiff extent -180~180
 extent = [-180 , 180 , -60 , 88];
-% HazardProbability
+% Hazard Layer£º Hazard Probability
 HazardProbability(isnan(HazardProbability)) = -1;
 SaveData2GeoTIFF(['Fig3_OutputTable\HazardProbability.tif' ],...
     extent , HazardProbability);
-% Exposure which includes total population, livestock and cropland
+% Exposure Layer: Exposure which includes total population, livestock and cropland
 Exposure = Total_Population./nanmax(nanmax(Total_Population)) +...
     LiveStock./nanmax(nanmax(LiveStock)) + CroplandRatio;
+Exposure(:,3599:3602) = ones(2961,4) .* ...
+    nanmean(Exposure(:,[3598,3603]),2); % Delete the NAN crack
 Exposure(isnan(Exposure)) = -1;
 SaveData2GeoTIFF(['Fig3_OutputTable\Exposure.tif' ],...
     extent , Exposure);
-% Ratio_Rural_Population
+% Vulnerability Layer: Ratio_Rural_Population
 Ratio_Rural_Population(isnan(Ratio_Rural_Population)) = -1;
 SaveData2GeoTIFF(['Fig3_OutputTable\Ratio_Rural_Population.tif' ],...
     extent , Ratio_Rural_Population);
+
+
+
 
 %% (6.4) Calculating Risk Probability
 Times = 10; % Times of Monte Carlo Simulation
