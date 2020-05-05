@@ -1,234 +1,177 @@
 %% Figure 3
+% Risk Analysis: Hazard Layer, Exposure Layer and Vulnerability Layer
 clc; clear all; close all;
-% Path of Watershed-Country Shapefile
-Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_outTibet_Country.shp';
-%% (1) Livestock
-try
-    % Cattle
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Cattle_HR.mat';
-    load(Path_Data);
-    Cattle = Fig3_InfoExtractSum(Path_Shapefile , lat , lon , Cattle_HR);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , Cattle' , 'Quantity' , 'N3:N44');
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , Cattle'./nansum(nansum(Cattle_HR)).*100 , 'Percentage' , 'N3:N44');
-    clear Cattle Path_Data lat lon Cattle_HR
-    % Chickens
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Chickens_HR.mat';
-    load(Path_Data);
-    Chickens = Fig3_InfoExtractSum(Path_Shapefile , lat , lon , Chickens_HR);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , Chickens' , 'Quantity' , 'O3:O44');
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , Chickens'./nansum(nansum(Chickens_HR)).*100 , 'Percentage' , 'O3:O44');
-    clear Chickens Path_Data lat lon Chickens_HR
-    % Ducks
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Ducks_HR.mat';
-    load(Path_Data);
-    Ducks = Fig3_InfoExtractSum(Path_Shapefile , lat , lon , Ducks_HR);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , Ducks' , 'Quantity' , 'P3:P44');
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , Ducks'./nansum(nansum(Ducks_HR)).*100 , 'Percentage' , 'P3:P44');
-    clear Ducks Path_Data lat lon Ducks_HR
-    % Goats
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Goats_HR.mat';
-    load(Path_Data);
-    Goats = Fig3_InfoExtractSum(Path_Shapefile , lat , lon , Goats_HR);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , Goats' , 'Quantity' , 'Q3:Q44');
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , Goats'./nansum(nansum(Goats_HR)).*100 , 'Percentage' , 'Q3:Q44');
-    clear Goats Path_Data lat lon Goats_HR
-    % Pigs
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Pigs_HR.mat';
-    load(Path_Data);
-    Pigs = Fig3_InfoExtractSum(Path_Shapefile , lat , lon , Pigs_HR);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , Pigs' , 'Quantity' , 'R3:R44');
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , Pigs'./nansum(nansum(Pigs_HR)).*100 , 'Percentage' , 'R3:R44');
-    clear Pigs Path_Data lat lon Pigs_HR
-    % Sheep
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Sheep_HR.mat';
-    load(Path_Data);
-    Sheep = Fig3_InfoExtractSum(Path_Shapefile , lat , lon , Sheep_HR);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , Sheep' , 'Quantity' , 'S3:S44');
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , Sheep'./nansum(nansum(Sheep_HR)).*100 , 'Percentage' , 'S3:S44');
-    clear Sheep Path_Data lat lon Sheep_HR
-catch
-    disp('Error!');
-end
-%% (2) Crop
-try
-    % Cotton
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Crop\Cotton.mat';
-    load(Path_Data);
-    cotton = Fig3_InfoExtractSum(Path_Shapefile , lat , lon , Cotton);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , cotton' , 'Quantity' , 'T3:T44');
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , cotton'./nansum(nansum(Cotton)).*100 , 'Percentage' , 'T3:T44');
-    clear cotton Path_Data lat lon Cotton
-    % Maize
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Crop\Maize.mat';
-    load(Path_Data);
-    maize = Fig3_InfoExtractSum(Path_Shapefile , lat , lon , Maize);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , maize' , 'Quantity' , 'U3:U44');
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , maize'./nansum(nansum(Maize)).*100 , 'Percentage' , 'U3:U44');
-    clear maize Path_Data lat lon Maize
-    % Rice
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Crop\Rice.mat';
-    load(Path_Data);
-    rice = Fig3_InfoExtractSum(Path_Shapefile , lat , lon , Rice);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , rice' , 'Quantity' , 'V3:V44');
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , rice'./nansum(nansum(Rice)).*100 , 'Percentage' , 'V3:V44');
-    clear rice Path_Data lat lon Rice
-    % Rubber
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Crop\Rubber.mat';
-    load(Path_Data);
-    rubber = Fig3_InfoExtractSum(Path_Shapefile , lat , lon , Rubber);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , rubber' , 'Quantity' , 'W3:W44');
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , rubber'./nansum(nansum(Rubber)).*100 , 'Percentage' , 'W3:W44');
-    clear rubber Path_Data lat lon Rubber
-    % Soybean
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Crop\Soybean.mat';
-    load(Path_Data);
-    soybean = Fig3_InfoExtractSum(Path_Shapefile , lat , lon , Soybean);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , soybean' , 'Quantity' , 'X3:X44');
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , soybean'./nansum(nansum(Soybean)).*100 , 'Percentage' , 'X3:X44');
-    clear soybean Path_Data lat lon Soybean
-    % Sugarcane
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Crop\Sugarcane.mat';
-    load(Path_Data);
-    sugarcane = Fig3_InfoExtractSum(Path_Shapefile , lat , lon , Sugarcane);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , sugarcane' , 'Quantity' , 'Y3:Y44');
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , sugarcane'./nansum(nansum(Sugarcane)).*100 , 'Percentage' , 'Y3:Y44');
-    clear sugarcane Path_Data lat lon Sugarcane
-    % Wheat
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Crop\Wheat.mat';
-    load(Path_Data);
-    wheat = Fig3_InfoExtractSum(Path_Shapefile , lat , lon , Wheat);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , wheat' , 'Quantity' , 'Z3:Z44');
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , wheat'./nansum(nansum(Wheat)).*100 , 'Percentage' , 'Z3:Z44');
-    clear wheat Path_Data lat lon Wheat
-catch
-    disp('Error!');
-end
-%% (3) Population (Total includes both urban and rural population)
-try
-    % ssp126
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP1\Total\Mat\lat.mat';
-    load(Path_Data);
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP1\Total\Mat\lon.mat';
-    load(Path_Data);
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP1\Total\Mat\ssp1_2100.mat';
-    load(Path_Data);
-    population = Fig3_InfoExtractSum(Path_Shapefile , lat , lon , Population);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , population' , 'Quantity' , 'J3:J44');
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , population'./nansum(nansum(Population)).*100 , 'Percentage' , 'J3:J44');
-    clear population Path_Data Population
-    % ssp245
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP2\Total\Mat\ssp2_2100.mat';
-    load(Path_Data);
-    population = Fig3_InfoExtractSum(Path_Shapefile , lat , lon , Population);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , population' , 'Quantity' , 'K3:K44');
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , population'./nansum(nansum(Population)).*100 , 'Percentage' , 'K3:K44');
-    clear population Path_Data Population
-    % ssp370
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP3\Total\Mat\ssp3_2100.mat';
-    load(Path_Data);
-    population = Fig3_InfoExtractSum(Path_Shapefile , lat , lon , Population);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , population' , 'Quantity' , 'L3:L44');
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , population'./nansum(nansum(Population)).*100 , 'Percentage' , 'L3:L44');
-    clear population Path_Data Population
-    % ssp585
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP5\Total\Mat\ssp5_2100.mat';
-    load(Path_Data);
-    population = Fig3_InfoExtractSum(Path_Shapefile , lat , lon , Population);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , population' , 'Quantity' , 'M3:M44');
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , population'./nansum(nansum(Population)).*100 , 'Percentage' , 'M3:M44');
-    clear lat lon population Path_Data Population
-catch
-    disp('Error!');
-end
-%% (4) Runoff
-try
-    % ssp126
-    load LandInfo_05deg
-    Path_Data = 'D:\CMIP6\VariableStorage\ClimatologicalChange\PerChange_ssp126.mat';
-    load(Path_Data);
-    Mrro = nanmean(PerChange.PerChange_mrro,3);
-    % Adjust to uniform Coordinate
-    A = Mrro(1:360,:); B = Mrro(361:end,:);
-    Mrro = [B;A]; clear A B
-    mrro = Fig3_InfoExtractMean(Path_Shapefile , lat_05deg , lon_05deg , Mrro);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , mrro' , 'Quantity' , 'F3:F44');
-    clear mrro Path_Data Mrro PerChange elevation_05deg landmask_05deg
-    % ssp245
-    Path_Data = 'D:\CMIP6\VariableStorage\ClimatologicalChange\PerChange_ssp245.mat';
-    load(Path_Data);
-    Mrro = nanmean(PerChange.PerChange_mrro,3);
-    % Adjust to uniform Coordinate
-    A = Mrro(1:360,:); B = Mrro(361:end,:);
-    Mrro = [B;A]; clear A B
-    mrro = Fig3_InfoExtractMean(Path_Shapefile , lat_05deg , lon_05deg , Mrro);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , mrro' , 'Quantity' , 'G3:G44');
-    clear mrro Path_Data Mrro PerChange elevation_05deg landmask_05deg
-    % ssp370
-    Path_Data = 'D:\CMIP6\VariableStorage\ClimatologicalChange\PerChange_ssp370.mat';
-    load(Path_Data);
-    Mrro = nanmean(PerChange.PerChange_mrro,3);
-    % Adjust to uniform Coordinate
-    A = Mrro(1:360,:); B = Mrro(361:end,:);
-    Mrro = [B;A]; clear A B
-    mrro = Fig3_InfoExtractMean(Path_Shapefile , lat_05deg , lon_05deg , Mrro);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , mrro' , 'Quantity' , 'H3:H44');
-    clear mrro Path_Data Mrro PerChange elevation_05deg landmask_05deg
-    % ssp585
-    Path_Data = 'D:\CMIP6\VariableStorage\ClimatologicalChange\PerChange_ssp585.mat';
-    load(Path_Data);
-    Mrro = nanmean(PerChange.PerChange_mrro,3);
-    % Adjust to uniform Coordinate
-    A = Mrro(1:360,:); B = Mrro(361:end,:);
-    Mrro = [B;A]; clear A B
-    mrro = Fig3_InfoExtractMean(Path_Shapefile , lat_05deg , lon_05deg , Mrro);
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , mrro' , 'Quantity' , 'I3:I44');
-    clear lat_05deg lon_05deg mrro Path_Data Mrro PerChange elevation_05deg landmask_05deg
-catch
-    disp('Error!');
-end
-%% (5) BioMass
-try
-    % (5.1) Nematodes
-    clc; clear all; close all;
-    % Nematodes Data
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\SoilMicrobial\Nematodes_HR.mat';
-    load(Path_Data);
-    % Path of Tibet Shapefile
-    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_inTibet.shp';
-    % Density of Nematodes in Tibet Plateau
-    Tibet_Nematodes = Fig3_InfoExtractTibetMean(Path_Shapefile , lat , lon , Nematodes_HR);
-    
-    % Path of Watershed-Country Shapefile
-    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_outTibet_Country.shp';
-    % Density of Nematodes in downstream watershed
-    Country_Nematodes = Fig3_InfoExtractMean(Path_Shapefile , lat , lon , Nematodes_HR);
-    
-    Nematodes_Gradient = Tibet_Nematodes - Country_Nematodes;
-    
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , Nematodes_Gradient' , 'Quantity' , 'E3:E44');
-    clear Tibet_Nematodes Country_Nematodes Nematodes_Gradient
-    clear Nematodes_HR Path_Data lat lon
-    
-    % (5.2) SoilMicroBiomass
-    clc; clear all; close all;
-    % SoilMicroBiomass Data
-    Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\SoilMicrobial\SoilMicroBiomass.mat';
-    load(Path_Data);
-    % Path of Tibet Shapefile
-    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_inTibet.shp';
-    % Density of SoilMicroBiomass in Tibet Plateau
-    Tibet_SoilMicroBiomass = Fig3_InfoExtractTibetMean(Path_Shapefile , lat , lon , SoilMicroBiomass);
-    
-    % Path of Watershed-Country Shapefile
-    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_outTibet_Country.shp';
-    % Density of SoilMicroBiomass in downstream watershed
-    Country_SoilMicroBiomass = Fig3_InfoExtractMean(Path_Shapefile , lat , lon , SoilMicroBiomass);
-    
-    SoilMicroBiomass_Gradient = Tibet_SoilMicroBiomass - Country_SoilMicroBiomass;
-    
-    xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] , SoilMicroBiomass_Gradient' , 'Quantity' , 'D3:D44');
-    clear Tibet_SoilMicroBiomass Country_SoilMicroBiomass SoilMicroBiomass_Gradient
-    clear SoilMicroBiomass Path_Data lat lon
-catch
-    disp('Error!');
-end
+%% (6.1) Load Data and Uniform Resolution
+%% Nematodes Data, Extent: -88~88 0~360
+Nematodes_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\SoilMicrobial\Nematodes_HR.mat';
+load(Nematodes_Path_Data);
+lat_HR = lat; lon_HR = lon; clear lat lon Nematodes_Path_Data;
+%% SoilMicroBiomass Data
+SoilMicroBiomass_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\SoilMicrobial\SoilMicroBiomass.mat';
+load(SoilMicroBiomass_Path_Data);
+SoilMicroBiomass_HR = interp2(lat,lon,SoilMicroBiomass,lat_HR,lon_HR);
+SoilMicroBiomass_HR(isnan(SoilMicroBiomass_HR)) = nanmean(nanmean(SoilMicroBiomass_HR)); %Fill the empty value to Mean Value
+clear lat lon SoilMicroBiomass SoilMicroBiomass_Path_Data
+%% CroplandRatio Data
+CroplandRatio_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Crop\CroplandRatio.mat';
+load(CroplandRatio_Path_Data);
+CroplandRatio_HR = interp2(lat',lon',CroplandRatio',lat_HR,lon_HR);
+clear lat lon CroplandRatio CroplandRatio_Path_Data
+%% Runoff ssp585 Data
+load LandInfo_05deg
+Runoff_Path_Data = 'D:\CMIP6\VariableStorage\ClimatologicalChange\PerChange_ssp585.mat';
+load(Runoff_Path_Data);
+Mrro = nanmean(PerChange.PerChange_mrro,3);
+clear PerChange elevation_05deg landmask_05deg Runoff_Path_Data
+% Adjust to uniform Coordinate
+A = Mrro(1:360,:); B = Mrro(361:end,:);
+Mrro = [B;A]; clear A B
+Mrro_HR = interp2(lat_05deg,lon_05deg,Mrro,lat_HR,lon_HR);
+clear lat_05deg lon_05deg Mrro
+%% Total Population ssp585 Data
+Population_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP5\Total\Mat\ssp5_2100.mat';
+load(Population_Path_Data);clear Population_Path_Data
+Population_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP5\Total\Mat\lat.mat';
+load(Population_Path_Data);clear Population_Path_Data
+Population_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP5\Total\Mat\lon.mat';
+load(Population_Path_Data);clear Population_Path_Data
+% Adjust to uniform Coordinate
+A = Population(1:1440,:); B = Population(1441:end,:);
+Population = [B;A]; clear A B;
+A = lat(1:1440,:); B = lat(1441:end,:);
+lat = [B;A]; clear A B;
+A = lon(1:1440,:); B = lon(1441:end,:);
+lon = [B;A]; lon(lon<0) = lon(lon<0) + 360; clear A B;
+Total_Population_HR = interp2(lat,lon,Population,lat_HR,lon_HR);
+clear lat lon Population
+%% Rural Population ssp585 Data
+Population_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP5\Rural\Mat\ssp5rur2100.mat';
+load(Population_Path_Data);clear Population_Path_Data
+Population_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP5\Rural\Mat\lat.mat';
+load(Population_Path_Data);clear Population_Path_Data
+Population_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP5\Rural\Mat\lon.mat';
+load(Population_Path_Data);clear Population_Path_Data
+% Adjust to uniform Coordinate
+A = Population(1:1440,:); B = Population(1441:end,:);
+Population = [B;A]; clear A B
+A = lat(1:1440,:); B = lat(1441:end,:);
+lat = [B;A]; clear A B
+A = lon(1:1440,:); B = lon(1441:end,:);
+lon = [B;A]; lon(lon<0) = lon(lon<0)+360;clear A B
+Rural_Population_HR = interp2(lat,lon,Population,lat_HR,lon_HR);
+Ratio_Rural_Population_HR = Rural_Population_HR./Total_Population_HR;
+Ratio_Rural_Population_HR(Total_Population_HR<1) = nan; % For No People Grid
+clear lat lon Population Rural_Population_HR
+%% Livestock
+% Cattle
+Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Cattle_HR.mat';
+load(Path_Data);Cattle_HR = double(Cattle_HR);
+clear lat lon Path_Data
+% Chickens
+Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Chickens_HR.mat';
+load(Path_Data);Chickens_HR = double(Chickens_HR);
+clear lat lon Path_Data
+% Ducks
+Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Ducks_HR.mat';
+load(Path_Data);Ducks_HR = double(Ducks_HR);
+clear lat lon Path_Data
+% Goats
+Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Goats_HR.mat';
+load(Path_Data);Goats_HR = double(Goats_HR);
+clear lat lon Path_Data
+% Pigs
+Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Pigs_HR.mat';
+load(Path_Data);Pigs_HR = double(Pigs_HR);
+clear lat lon Path_Data
+% Sheep
+Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Sheep_HR.mat';
+load(Path_Data);Sheep_HR = double(Sheep_HR);
+clear lat lon Path_Data
+% Sum all different types of livestock
+LiveStock_HR = Cattle_HR + Chickens_HR + Ducks_HR + Goats_HR + Pigs_HR + Sheep_HR;
+clear Cattle_HR Chickens_HR Ducks_HR Goats_HR Pigs_HR Sheep_HR
+
+% %% (6.2) Extract The Tibet Plateau outflow area
+% % Path of Tibet Plateau outflow area Shapefile
+% Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\BasinAsWhole_Topo_MergeOriginalData_inTibet.shp';
+% Map_TibetPlateau = shaperead(Path_Shapefile);
+% GridIndex_TibetPlateau = inpolygon(lon_HR , lat_HR ,...
+%     Map_TibetPlateau(1).X,Map_TibetPlateau(1).Y);
+% % Delete Other Area
+% Nematodes_HR(~GridIndex_TibetPlateau) = nan;
+% Mrro_HR(~GridIndex_TibetPlateau) = nan;
+% % SoilMicroBiomass_HR(isnan(SoilMicroBiomass_HR)) = 1; %Fill the empty value to 1
+% SoilMicroBiomass_HR(~GridIndex_TibetPlateau) = nan;
+%% (6.2) Generate Occurrence Probability of Hazard (Range: [0,1])
+% HazardProbability represents the Occurrence probability of water
+% transfering dangerous Soil microorganisms
+HazardProbability_HR = Nematodes_HR .* Mrro_HR .* SoilMicroBiomass_HR;
+% Make HazardProbability_HR > 0, where runoff change <0 will be 0, which means no
+% possibility to transfer dangerous Soil microorganisms
+HazardProbability_HR(HazardProbability_HR<0) = 0;
+% Normalize HazardProbability_HR to [0,1]
+HazardProbability_HR = HazardProbability_HR./nanmax(nanmax(HazardProbability_HR));
+% Using 1-1./(e.^HazardProbability_HR) to estimate the Occurrence probability
+% of water transfering dangerous Soil microorganisms
+HazardProbability_HR = 1 - 1./exp(1).^HazardProbability_HR;
+clear Nematodes_HR Mrro_HR SoilMicroBiomass_HR
+%% (6.3) Map Output
+% From -88~88 to -60~88
+lat_HR(1:3360,:) = [];
+lon_HR(1:3360,:) = [];
+HazardProbability_HR(1:3360,:) = [];
+Total_Population_HR(1:3360,:) = [];
+LiveStock_HR(1:3360,:) = [];
+CroplandRatio_HR(1:3360,:) = [];
+Ratio_Rural_Population_HR(1:3360,:) = [];
+% Interpolate the High Resoluition Image to Low Resolution
+% Extent: -60~60 , 0~360; Resolution: 0.05 deg.
+lat_con = -60 : 0.05 : 88; lon_con = 0:0.05:360;
+[lon,lat] = meshgrid(lon_con,lat_con);clear lat_con lon_con;
+HazardProbability = interp2(lat_HR',lon_HR',HazardProbability_HR',lat,lon);
+Total_Population = interp2(lat_HR',lon_HR',Total_Population_HR',lat,lon);
+LiveStock = interp2(lat_HR',lon_HR',LiveStock_HR',lat,lon);
+CroplandRatio = interp2(lat_HR',lon_HR',CroplandRatio_HR',lat,lon);
+Ratio_Rural_Population = interp2(lat_HR',lon_HR',Ratio_Rural_Population_HR',lat,lon);
+% Change from 0~360 to -180~180
+A = HazardProbability(:,1:3601); B = HazardProbability(:,3602:end);
+HazardProbability = [B,A]; clear A B
+A = Total_Population(:,1:3601); B = Total_Population(:,3602:end);
+Total_Population = [B,A]; clear A B
+A = LiveStock(:,1:3601); B = LiveStock(:,3602:end);
+LiveStock = [B,A]; clear A B
+A = CroplandRatio(:,1:3601); B = CroplandRatio(:,3602:end);
+CroplandRatio = [B,A]; clear A B
+A = Ratio_Rural_Population(:,1:3601); B = Ratio_Rural_Population(:,3602:end);
+Ratio_Rural_Population = [B,A]; clear A B
+% Delete the NAN crack
+HazardProbability(:,3585:3616) = ones(2961,32) .* ...
+    nanmean(HazardProbability(:,[3584,3617]),2);
+Ratio_Rural_Population(:,3599:3602) = ones(2961,4) .* ...
+    nanmean(Ratio_Rural_Population(:,[3598,3603]),2);
+% output tiff extent -180~180
+extent = [-180 , 180 , -60 , 88];
+% HazardProbability
+HazardProbability(isnan(HazardProbability)) = -1;
+SaveData2GeoTIFF(['Fig3_OutputTable\HazardProbability.tif' ],...
+    extent , HazardProbability);
+% Exposure which includes total population, livestock and cropland
+Exposure = Total_Population./nanmax(nanmax(Total_Population)) +...
+    LiveStock./nanmax(nanmax(LiveStock)) + CroplandRatio;
+Exposure(isnan(Exposure)) = -1;
+SaveData2GeoTIFF(['Fig3_OutputTable\Exposure.tif' ],...
+    extent , Exposure);
+% Ratio_Rural_Population
+Ratio_Rural_Population(isnan(Ratio_Rural_Population)) = -1;
+SaveData2GeoTIFF(['Fig3_OutputTable\Ratio_Rural_Population.tif' ],...
+    extent , Ratio_Rural_Population);
+
+%% (6.4) Calculating Risk Probability
+Times = 10; % Times of Monte Carlo Simulation
+AssumeMaxProp = 0.0001; % (e.g., 0.0001 is 0.01%) Assuming the maximum probability of releasing Dangerous Soil microorganisms
+% Path of Tibet Watershed Shapefile
+Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_inTibet.shp';
+RiskProbability = Fig3_RiskProbability(lat_HR , lon_HR , RiskIndex ,...
+    Times , AssumeMaxProp , GridIndex_TibetPlateau , Path_Shapefile);
+
+
