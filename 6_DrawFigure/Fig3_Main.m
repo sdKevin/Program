@@ -142,7 +142,7 @@ HazardProbability = HazardProbability./nanmax(nanmax(HazardProbability));
 % Using 1-1./(e.^HazardProbability) to estimate the Occurrence probability
 % of water transfering dangerous Soil microorganisms
 HazardProbability = 1 - 1./exp(1).^HazardProbability;
-clear Nematodes_HR Mrro_HR SoilMicroBiomass_HR
+clear Nematodes Mrro SoilMicroBiomass
 %% (6.3) Calculate Exposure
 Exposure = Total_Population./nanmax(nanmax(Total_Population)) +...
     LiveStock./nanmax(nanmax(LiveStock)) + CroplandRatio;
