@@ -101,56 +101,65 @@ clear Cattle_HR Chickens_HR Ducks_HR Goats_HR Pigs_HR Sheep_HR
 % Mrro_HR(~GridIndex_TibetPlateau) = nan;
 % % SoilMicroBiomass_HR(isnan(SoilMicroBiomass_HR)) = 1; %Fill the empty value to 1
 % SoilMicroBiomass_HR(~GridIndex_TibetPlateau) = nan;
-%% (6.2) Generate Occurrence Probability of Hazard (Range: [0,1])
-% HazardProbability represents the Occurrence probability of water
-% transfering dangerous Soil microorganisms
-% Fill the empty value to Mean Value and use Nematodes_HR mask as Land Mask
-SoilMicroBiomass_HR(isnan(SoilMicroBiomass_HR)) = nanmean(nanmean(SoilMicroBiomass_HR));
-Mrro_HR(isnan(Mrro_HR)) = nanmean(nanmean(Mrro_HR));
-HazardProbability_HR = Nematodes_HR./nanmax(nanmax(Nematodes_HR)) .* ...
-    SoilMicroBiomass_HR./nanmax(nanmax(SoilMicroBiomass_HR)) .* ...
-    Mrro_HR./nanmax(nanmax(Mrro_HR));
-% Make HazardProbability_HR > 0, where runoff change <0 will be 0, which means no
-% possibility to transfer dangerous Soil microorganisms
-HazardProbability_HR(HazardProbability_HR<0) = 0;
-% Normalize HazardProbability_HR to [0,1]
-HazardProbability_HR = HazardProbability_HR./nanmax(nanmax(HazardProbability_HR));
-% Using 1-1./(e.^HazardProbability_HR) to estimate the Occurrence probability
-% of water transfering dangerous Soil microorganisms
-HazardProbability_HR = 1 - 1./exp(1).^HazardProbability_HR;
-clear Nematodes_HR Mrro_HR SoilMicroBiomass_HR
-%% (6.3) Map Output
+%% (6.2) Interpolate to Low Resolution
 % From -88~88 to -60~88
 lat_HR(1:3360,:) = [];
 lon_HR(1:3360,:) = [];
-HazardProbability_HR(1:3360,:) = [];
-Total_Population_HR(1:3360,:) = [];
-LiveStock_HR(1:3360,:) = [];
 CroplandRatio_HR(1:3360,:) = [];
+LiveStock_HR(1:3360,:) = [];
+Mrro_HR(1:3360,:) = [];
+Nematodes_HR(1:3360,:) = [];
+SoilMicroBiomass_HR(1:3360,:) = [];
+Total_Population_HR(1:3360,:) = [];
 Ratio_Rural_Population_HR(1:3360,:) = [];
 % Interpolate the High Resoluition Image to Low Resolution
 % Extent: -60~60 , 0~360; Resolution: 0.05 deg.
 lat_con = -60 : 0.05 : 88; lon_con = 0:0.05:360;
 [lon,lat] = meshgrid(lon_con,lat_con);clear lat_con lon_con;
-HazardProbability = interp2(lat_HR',lon_HR',HazardProbability_HR',lat,lon);
-Total_Population = interp2(lat_HR',lon_HR',Total_Population_HR',lat,lon);
-LiveStock = interp2(lat_HR',lon_HR',LiveStock_HR',lat,lon);
 CroplandRatio = interp2(lat_HR',lon_HR',CroplandRatio_HR',lat,lon);
+LiveStock = interp2(lat_HR',lon_HR',LiveStock_HR',lat,lon);
+Mrro = interp2(lat_HR',lon_HR',Mrro_HR',lat,lon);
+Nematodes = interp2(lat_HR',lon_HR',Nematodes_HR',lat,lon);
+SoilMicroBiomass = interp2(lat_HR',lon_HR',SoilMicroBiomass_HR',lat,lon);
+Total_Population = interp2(lat_HR',lon_HR',Total_Population_HR',lat,lon);
 Ratio_Rural_Population = interp2(lat_HR',lon_HR',Ratio_Rural_Population_HR',lat,lon);
+clear lat_HR lon_HR CroplandRatio_HR LiveStock_HR Mrro_HR Nematodes_HR
+clear SoilMicroBiomass_HR Total_Population_HR Ratio_Rural_Population_HR
+%% (6.2) Generate Occurrence Probability of Hazard (Range: [0,1])
+% HazardProbability represents the Occurrence probability of water
+% transfering dangerous Soil microorganisms
+% Fill the empty value to Mean Value and use Nematodes_HR mask as Land Mask
+SoilMicroBiomass(isnan(SoilMicroBiomass)) = nanmean(nanmean(SoilMicroBiomass));
+Mrro(isnan(Mrro)) = nanmean(nanmean(Mrro));
+HazardProbability = Nematodes./nanmax(nanmax(Nematodes)) .* ...
+    SoilMicroBiomass./nanmax(nanmax(SoilMicroBiomass)) .* ...
+    Mrro./nanmax(nanmax(Mrro));
+% Make HazardProbability > 0, where runoff change <0 will be 0, which means no
+% possibility to transfer dangerous Soil microorganisms
+HazardProbability(HazardProbability<0) = 0;
+% Normalize HazardProbability to [0,1]
+HazardProbability = HazardProbability./nanmax(nanmax(HazardProbability));
+% Using 1-1./(e.^HazardProbability) to estimate the Occurrence probability
+% of water transfering dangerous Soil microorganisms
+HazardProbability = 1 - 1./exp(1).^HazardProbability;
+clear Nematodes_HR Mrro_HR SoilMicroBiomass_HR
+%% (6.3) Calculate Exposure
+Exposure = Total_Population./nanmax(nanmax(Total_Population)) +...
+    LiveStock./nanmax(nanmax(LiveStock)) + CroplandRatio;
+clear Total_Population LiveStock CroplandRatio
+%% (6.3) Map Output
 % Change from 0~360 to -180~180
 A = HazardProbability(:,1:3601); B = HazardProbability(:,3602:end);
 HazardProbability = [B,A]; clear A B
-A = Total_Population(:,1:3601); B = Total_Population(:,3602:end);
-Total_Population = [B,A]; clear A B
-A = LiveStock(:,1:3601); B = LiveStock(:,3602:end);
-LiveStock = [B,A]; clear A B
-A = CroplandRatio(:,1:3601); B = CroplandRatio(:,3602:end);
-CroplandRatio = [B,A]; clear A B
+A = Exposure(:,1:3601); B = Exposure(:,3602:end);
+Exposure = [B,A]; clear A B
 A = Ratio_Rural_Population(:,1:3601); B = Ratio_Rural_Population(:,3602:end);
 Ratio_Rural_Population = [B,A]; clear A B
 % Interpolate the seam
 HazardProbability(:,3585:3616) = ones(2961,32) .* ...
     nanmean(HazardProbability(:,[3584,3617]),2);
+Exposure(:,3599:3602) = ones(2961,4) .* ...
+    nanmean(Exposure(:,[3598,3603]),2);
 Ratio_Rural_Population(:,3599:3602) = ones(2961,4) .* ...
     nanmean(Ratio_Rural_Population(:,[3598,3603]),2);
 % output tiff extent -180~180
@@ -160,10 +169,6 @@ HazardProbability(isnan(HazardProbability)) = -1;
 SaveData2GeoTIFF(['Fig3_OutputTable\HazardProbability.tif' ],...
     extent , HazardProbability);
 % Exposure Layer: Exposure which includes total population, livestock and cropland
-Exposure = Total_Population./nanmax(nanmax(Total_Population)) +...
-    LiveStock./nanmax(nanmax(LiveStock)) + CroplandRatio;
-Exposure(:,3599:3602) = ones(2961,4) .* ...
-    nanmean(Exposure(:,[3598,3603]),2); % Delete the NAN crack
 Exposure(isnan(Exposure)) = -1;
 SaveData2GeoTIFF(['Fig3_OutputTable\Exposure.tif' ],...
     extent , Exposure);
@@ -175,12 +180,10 @@ SaveData2GeoTIFF(['Fig3_OutputTable\Ratio_Rural_Population.tif' ],...
 
 
 
-%% (6.4) Calculating Risk Probability
-Times = 10; % Times of Monte Carlo Simulation
-AssumeMaxProp = 0.0001; % (e.g., 0.0001 is 0.01%) Assuming the maximum probability of releasing Dangerous Soil microorganisms
-% Path of Tibet Watershed Shapefile
-Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_inTibet.shp';
-RiskProbability = Fig3_RiskProbability(lat_HR , lon_HR , RiskIndex ,...
-    Times , AssumeMaxProp , GridIndex_TibetPlateau , Path_Shapefile);
-
-
+% %% (6.4) Calculating Risk Probability
+% Times = 10; % Times of Monte Carlo Simulation
+% AssumeMaxProp = 0.0001; % (e.g., 0.0001 is 0.01%) Assuming the maximum probability of releasing Dangerous Soil microorganisms
+% % Path of Tibet Watershed Shapefile
+% Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_inTibet.shp';
+% RiskProbability = Fig3_RiskProbability(lat_HR , lon_HR , RiskIndex ,...
+%     Times , AssumeMaxProp , GridIndex_TibetPlateau , Path_Shapefile);
