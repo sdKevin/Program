@@ -232,54 +232,30 @@ try
 catch
     disp('Error in (5)!');
 end
-%% (6) HazardProbability
+%% (6) Mean Risk Index
 try
     clc; clear all; close all;
-    %% Nematodes Data, Extent: -88~88 0~360
-    Nematodes_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\SoilMicrobial\Nematodes_HR.mat';
-    load(Nematodes_Path_Data);
-    lat_HR = lat; lon_HR = lon; clear lat lon Nematodes_Path_Data;
-    %% SoilMicroBiomass Data
-    SoilMicroBiomass_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\SoilMicrobial\SoilMicroBiomass.mat';
-    load(SoilMicroBiomass_Path_Data);
-    SoilMicroBiomass_HR = interp2(lat,lon,SoilMicroBiomass,lat_HR,lon_HR);
-    clear lat lon SoilMicroBiomass SoilMicroBiomass_Path_Data
-    %% Runoff ssp585 Data
-    load LandInfo_05deg
-    Runoff_Path_Data = 'D:\CMIP6\VariableStorage\ClimatologicalChange\PerChange_ssp585.mat';
-    load(Runoff_Path_Data);
-    Mrro = nanmean(PerChange.PerChange_mrro,3);
-    clear PerChange elevation_05deg landmask_05deg Runoff_Path_Data
-    % Adjust to uniform Coordinate
-    A = Mrro(1:360,:); B = Mrro(361:end,:);
-    Mrro = [B;A]; clear A B
-    Mrro_HR = interp2(lat_05deg,lon_05deg,Mrro,lat_HR,lon_HR);
-    clear lat_05deg lon_05deg Mrro
-    %% Calculate HazardProbability
-    SoilMicroBiomass_HR(isnan(SoilMicroBiomass_HR)) = nanmean(nanmean(SoilMicroBiomass_HR));
-    Mrro_HR(isnan(Mrro_HR)) = nanmean(nanmean(Mrro_HR));
-    HazardProbability = Nematodes_HR./nanmax(nanmax(Nematodes_HR)) .* ...
-        SoilMicroBiomass_HR./nanmax(nanmax(SoilMicroBiomass_HR)) .* ...
-        Mrro_HR./nanmax(nanmax(Mrro_HR));
-    % Make HazardProbability > 0, where runoff change <0 will be 0, which means no
-    % possibility to transfer dangerous Soil microorganisms
-    HazardProbability(HazardProbability<0) = 0;
-    % Normalize HazardProbability to [0,1]
-    HazardProbability = HazardProbability./nanmax(nanmax(HazardProbability));
-    % Using 1-1./(e.^HazardProbability) to estimate the Occurrence probability
-    % of water transfering dangerous Soil microorganisms
-    HazardProbability = 1 - 1./exp(1).^HazardProbability;
-    clear Nematodes_HR Mrro_HR SoilMicroBiomass_HR
-    % Path of Tibet Shapefile
-    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_inTibet.shp';
-    % HazardProbability in Tibet Plateau
-    Tibet_HazardProbability = Fig3_InfoExtractTibetMean(Path_Shapefile , lat_HR , lon_HR , HazardProbability);
+    %% Hazard Index Data, Extent: -88~88 0~360
+    Hazard_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Hazard.mat';
+    load(Hazard_Path_Data);clear Hazard_Path_Data;
+    %% Exposure Index Data, Extent: -88~88 0~360
+    Exposure_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Exposure.mat';
+    load(Exposure_Path_Data);clear Exposure_Path_Data;
+    %% Ratio_Rural_Population Data, Extent: -88~88 0~360
+    Ratio_Rural_Population_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Ratio_Rural_Population.mat';
+    load(Ratio_Rural_Population_Path_Data);clear Ratio_Rural_Population_Path_Data;
+    % Calculating Risk
+    Risk = Hazard .* Exposure .* Ratio_Rural_Population;
+    % Path of Asian Water Tower different watersheds Shapefile
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData.shp';
+    % Mean Risk Index
+    Mean_Risk_Index = Fig3_InfoExtractTibetMean(Path_Shapefile , lat , lon , Risk);
     % Save Results to Table
     Index = [1,6,9,15,18,21,24,30,33,36,40,41,42];
     Pos = {'C3','C8','C11','C17','C20','C23','C26','C32','C35','C38','C42','C43','C44'};
     for ii = 1:length(Index)
         xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
-            Tibet_HazardProbability(Index(ii))' ,...
+            Mean_Risk_Index(Index(ii))' ,...
             'Quantity' , Pos{ii});
     end
     clear ii Pos Index Path_Shapefile
