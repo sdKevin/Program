@@ -280,19 +280,21 @@ try
             'Fig3' , Pos{ii});
     end
     clear ii Pos Index Path_Shapefile
-    %% Calculating Risk
-    Risk = Hazard .* Exposure .* Ratio_Rural_Population;
-    % Mean Risk Index
-    Mean_Risk_Index = Fig3_InfoExtractTibetMean(Path_Shapefile , lat , lon , Risk);
-    % Save Results to Table
-    Index = [1,6,9,15,18,21,24,30,33,36,40,41,42];
-    Pos = {'C3','C8','C11','C17','C20','C23','C26','C32','C35','C38','C42','C43','C44'};
-    for ii = 1:length(Index)
-        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
-            Mean_Risk_Index(Index(ii))' ,...
-            'Quantity' , Pos{ii});
-    end
-    clear ii Pos Index Path_Shapefile
+    %     %% Calculating Risk
+    %     Risk = Hazard .* Exposure .* Ratio_Rural_Population;
+    %     % Path of Asian Water Tower different watersheds Shapefile
+    %     Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData.shp';
+    %     % Mean Risk Index
+    %     Mean_Risk_Index = Fig3_InfoExtractTibetMean(Path_Shapefile , lat , lon , Risk);
+    %     % Save Results to Table
+    %     Index = [1,6,9,15,18,21,24,30,33,36,40,41,42];
+    %     Pos = {'C3','C8','C11','C17','C20','C23','C26','C32','C35','C38','C42','C43','C44'};
+    %     for ii = 1:length(Index)
+    %         xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+    %             Mean_Risk_Index(Index(ii))' ,...
+    %             'Quantity' , Pos{ii});
+    %     end
+    %     clear ii Pos Index Path_Shapefile
 catch
     disp('Error in (6)!');
 end
