@@ -12,6 +12,10 @@ CMIP_DryWetRegion = cat(2,load(Path_DryWetRegion_Historical_GCM),...
     load(Path_DryWetRegion_ScenarioMIP_ssp126_GCM),load(Path_DryWetRegion_ScenarioMIP_ssp245_GCM),...
     load(Path_DryWetRegion_ScenarioMIP_ssp370_GCM),load(Path_DryWetRegion_ScenarioMIP_ssp585_GCM));
 
+% Plotting Global Cold Lands under different scenarios
+Fig1a_ColdLands_Left_Plotting( CMIP_DryWetRegion , Path_DryWetRegion_Princeton );
+
+% Plotting Global Cold Lands, Dry Lands, and Humid Lands
 Fig1a_Left_Plotting( cat(2,CMIP_DryWetRegion(1),CMIP_DryWetRegion(5)) , Path_DryWetRegion_Princeton );
 Fig1a_Right_Plotting( CMIP_DryWetRegion );
 
