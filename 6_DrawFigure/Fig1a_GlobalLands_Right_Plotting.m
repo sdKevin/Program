@@ -1,4 +1,4 @@
-function Fig1a_Right_Plotting(CMIP_DryWetRegion)
+function Fig1a_GlobalLands_Right_Plotting(CMIP_DryWetRegion)
 %% Setting Color
 % Color for cold region
 RGB_Cold_Shade = [191 , 220 , 237]; RGB_Cold_Line = [57 , 83 , 164];

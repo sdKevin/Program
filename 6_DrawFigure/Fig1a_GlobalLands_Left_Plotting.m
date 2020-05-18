@@ -1,4 +1,4 @@
-function Fig1a_Left_Plotting(CMIP_DryWetRegion , Path_DryWetRegion_Princeton)
+function Fig1a_GlobalLands_Left_Plotting(CMIP_DryWetRegion , Path_DryWetRegion_Princeton)
 %% DryWetRegionData
 % Cold_PM_RC_CO2_Jarvis_H is cold region area ratio from 1850 to 2100
 Cold_PM_RC_CO2_Jarvis_H = cat(2 ,...
