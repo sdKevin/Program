@@ -1,5 +1,6 @@
 function Ensemble_Mean_PerChange = Fig2b2d_Plotting(PerChange , Path_Fig2b2d_Output)
 load LandInfo_05deg
+% from 0-360 to -180~180
 A = landmask_05deg(1:360 , :); B = landmask_05deg(361:end , :);
 landmask_05deg = [B;A]; clear B A
 A = lat_05deg(1:360 , :); B = lat_05deg(361:end , :);

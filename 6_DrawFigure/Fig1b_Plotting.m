@@ -146,6 +146,8 @@ Cold = nanmean(ETrc_PM_RC_CO2_Jarvis_H_Princeton,3)<400;
 AI_PM_RC_CO2_Jarvis_H_Princeton(Humid) = 1;AI_PM_RC_CO2_Jarvis_H_Princeton(Hyper_arid) = 5;
 AI_PM_RC_CO2_Jarvis_H_Princeton(Arid) = 4;AI_PM_RC_CO2_Jarvis_H_Princeton(Semi_arid) = 3;
 AI_PM_RC_CO2_Jarvis_H_Princeton(Dry_Sub_humid) = 2;AI_PM_RC_CO2_Jarvis_H_Princeton(Cold) = 6;
+% save mat for Figure2 Statistic analysis
+save([Path_Fig1b_Output 'AI_PM_RC_CO2_Jarvis_H_Princeton.mat'],'AI_PM_RC_CO2_Jarvis_H_Princeton')
 AI_PM_RC_CO2_Jarvis_H_Princeton(isnan(AI_PM_RC_CO2_Jarvis_H_Princeton))=-9999;
 SaveData2GeoTIFF([Path_Fig1b_Output 'AI_PM_RC_CO2_Jarvis_H_Princeton'],extent,AI_PM_RC_CO2_Jarvis_H_Princeton');
 clear Humid Hyper_arid Arid Semi_arid Dry_Sub_humid Cold
