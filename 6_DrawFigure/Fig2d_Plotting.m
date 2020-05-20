@@ -61,7 +61,7 @@ RGB_ssp_Line = [156,85,31;194,139,79;116,173,163;36,131,145];
 RGB_ssp_Shade = [211,178,150;229,206,175;197,220,211;160,199,202];
 for i_ssp = 4 : -1 : 1
     load LandInfo_05deg
-    % from 0-360 to -180~180
+    % from 0-360 to -180~180 and interpolate the seam
     A = landmask_05deg(1:360 , :); B = landmask_05deg(361:end , :);
     landmask_05deg = [B;A]; clear B A
     A = lat_05deg(1:360 , :); B = lat_05deg(361:end , :);
