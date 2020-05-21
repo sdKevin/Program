@@ -222,9 +222,6 @@ Ratio_Rural_Population(isnan(Ratio_Rural_Population)) = -1;
 SaveData2GeoTIFF(['Fig3_OutputTable\Ratio_Rural_Population.tif' ],...
     extent , Ratio_Rural_Population);
 
-
-
-
 % %% (6.4) Calculating Risk Probability
 % Times = 10; % Times of Monte Carlo Simulation
 % AssumeMaxProp = 0.0001; % (e.g., 0.0001 is 0.01%) Assuming the maximum probability of releasing Dangerous Soil microorganisms

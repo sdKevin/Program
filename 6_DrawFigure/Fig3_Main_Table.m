@@ -232,7 +232,7 @@ try
 catch
     disp('Error in (5)!');
 end
-%% (6) Mean Risk Index
+%% (6) Mean Hazard, Exposure, and Vulnerability Index in different watersheds
 try
     clc; clear all; close all;
     %% Hazard Index Data, Extent: -88~88 0~360
@@ -280,6 +280,71 @@ try
             'Fig3' , Pos{ii});
     end
     clear ii Pos Index Path_Shapefile
+    %     %% Calculating Risk
+    %     Risk = Hazard .* Exposure .* Ratio_Rural_Population;
+    %     % Path of Asian Water Tower different watersheds Shapefile
+    %     Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData.shp';
+    %     % Mean Risk Index
+    %     Mean_Risk_Index = Fig3_InfoExtractTibetMean(Path_Shapefile , lat , lon , Risk);
+    %     % Save Results to Table
+    %     Index = [1,6,9,15,18,21,24,30,33,36,40,41,42];
+    %     Pos = {'C3','C8','C11','C17','C20','C23','C26','C32','C35','C38','C42','C43','C44'};
+    %     for ii = 1:length(Index)
+    %         xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+    %             Mean_Risk_Index(Index(ii))' ,...
+    %             'Quantity' , Pos{ii});
+    %     end
+    %     clear ii Pos Index Path_Shapefile
+catch
+    disp('Error in (6)!');
+end
+%% (7) Mean Hazard, Exposure, and Vulnerability Index in different countries
+try
+    clc; clear all; close all;
+    %% Hazard Index Data, Extent: -88~88 0~360
+    Hazard_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Hazard.mat';
+    load(Hazard_Path_Data);clear Hazard_Path_Data;
+    % Path of Asian Water Tower different watersheds Shapefile
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+    Mean_Hazard_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Hazard);
+    % Save Results to Table
+    Pos = {'C3','C4','C5','C6','C7','C8','C9','C10','C11','C12','C13','C14','C15','C16','C17','C18','C19','C20'};
+    for ii = 1:length(Mean_Hazard_Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Hazard_Index(ii)' ,...
+            'Fig3_Supplement' , Pos{ii});
+    end
+    clear ii Pos Path_Shapefile
+    %% Exposure Index Data, Extent: -88~88 0~360
+    clc; clear all; close all;
+    Exposure_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Exposure.mat';
+    load(Exposure_Path_Data);clear Exposure_Path_Data;
+    % Path of Asian Water Tower different watersheds Shapefile
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+    Mean_Exposure_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Exposure);
+    % Save Results to Table
+    Pos = {'D3','D4','D5','D6','D7','D8','D9','D10','D11','D12','D13','D14','D15','D16','D17','D18','D19','D20'};
+    for ii = 1:length(Mean_Exposure_Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Exposure_Index(ii)' ,...
+            'Fig3_Supplement' , Pos{ii});
+    end
+    clear ii Pos Path_Shapefile
+    %% Mean_Vulnerability_Index £º Ratio_Rural_Population Data, Extent: -88~88 0~360
+    clc; clear all; close all;
+    Ratio_Rural_Population_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Ratio_Rural_Population.mat';
+    load(Ratio_Rural_Population_Path_Data);clear Ratio_Rural_Population_Path_Data;
+    % Path of Asian Water Tower different watersheds Shapefile
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+    Mean_Vulnerability_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Ratio_Rural_Population);
+    % Save Results to Table
+    Pos = {'E3','E4','E5','E6','E7','E8','E9','E10','E11','E12','E13','E14','E15','E16','E17','E18','E19','E20'};
+    for ii = 1:length(Mean_Vulnerability_Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Vulnerability_Index(ii)' ,...
+            'Fig3_Supplement' , Pos{ii});
+    end
+    clear ii Pos Path_Shapefile
     %     %% Calculating Risk
     %     Risk = Hazard .* Exposure .* Ratio_Rural_Population;
     %     % Path of Asian Water Tower different watersheds Shapefile
