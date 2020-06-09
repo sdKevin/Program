@@ -118,7 +118,7 @@ axes('position', [0.1300    0.1100    0.7750    0.8150]);
 % Cold Region Moving average
 plot([1948:2014],smooth(Cold_PM_RC_CO2_Jarvis_H,7),'--',...
     'Color',1.0-1*(1.0-RGB_Princeton_Cold./255),'EraseMode','xor','Linewidth',2.5);
-h = legend('Princeton Reanalysis');
+h = legend('Princeton-GMFD');
 set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Princeton_Cold./255)
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Cold,'xlim',[1948,2100]);
 end

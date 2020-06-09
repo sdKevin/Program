@@ -30,11 +30,11 @@ fVPD = 1 - 0.025 .* VPD;
 fVPD(fVPD<0.05) = 0.05; fVPD(fVPD>1) = 1; % Kumar 2014
 fCO2_H = 1 ./ (1 + 0.663.*(CO2./330-1));
 fCO2_L = 1-0.4.*(CO2./330-1);
-rl_H = 100 ./ ( LAI .* fSg .* fTa .* fVPD .* fCO2_H);
+rl_H = 100 ./ ( 	 .* fSg .* fTa .* fVPD .* fCO2_H);
 rl_L = 100 ./ ( LAI .* fSg .* fTa .* fVPD .* fCO2_L);
 rs_H = rl_H./(0.5*LAI);
 rs_L = rl_L./(0.5*LAI);
-rs_Yang = 70+0.05.*(CO2-300);
+rs_Yang = 70 + 0.05.*(CO2-300);
 % For Attribution Analysis
 Attribution_Var.s = s; Attribution_Var.lamda = 2.501 - 0.002361.*Ta;
 Attribution_Var.gamma = gamma; Attribution_Var.rs_H = rs_H;
