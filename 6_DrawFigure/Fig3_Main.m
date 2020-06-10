@@ -20,15 +20,23 @@ CroplandRatio_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Crop\Croplan
 load(CroplandRatio_Path_Data);
 CroplandRatio_HR = interp2(lat',lon',CroplandRatio',lat_HR,lon_HR);
 clear lat lon CroplandRatio CroplandRatio_Path_Data
-%% Runoff ssp585 Data
+%% Percentage Change of Runoff ssp585 Data
 load LandInfo_05deg
 Runoff_Path_Data = 'D:\CMIP6\VariableStorage\ClimatologicalChange\PerChange_ssp585.mat';
 load(Runoff_Path_Data);
-Mrro = nanmean(PerChange.PerChange_mrro,3);
+PerChange_Mrro = nanmean(PerChange.PerChange_mrro,3);
 clear PerChange elevation_05deg landmask_05deg Runoff_Path_Data
 % Adjust to uniform Coordinate
-A = Mrro(1:360,:); B = Mrro(361:end,:);
-Mrro = [B;A]; clear A B
+A = PerChange_Mrro(1:360,:); B = PerChange_Mrro(361:end,:);
+PerChange_Mrro = [B;A]; clear A B
+PerChange_Mrro_HR = interp2(lat_05deg,lon_05deg,PerChange_Mrro,lat_HR,lon_HR);
+clear lat_05deg lon_05deg PerChange_Mrro
+%% Runoff ssp585 Data
+load LandInfo_05deg
+Runoff_Path_Data = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Land\ScenarioMIP_ssp585\Land_Var_ssp585_Ensemble_Land_Var_Mrro.mat';
+load(Runoff_Path_Data);
+Mrro = nanmean(Ensemble_Land_Var_Mrro(:,:,56:85),3); Mrro(Mrro<0)=nan; %mean mrro over 2070-2099
+clear Ensemble_Land_Var_Mrro elevation_05deg landmask_05deg Runoff_Path_Data
 Mrro_HR = interp2(lat_05deg,lon_05deg,Mrro,lat_HR,lon_HR);
 clear lat_05deg lon_05deg Mrro
 %% Total Population ssp585 Data
@@ -113,6 +121,7 @@ DEM_HR(1:3360,:) = [];
 CroplandRatio_HR(1:3360,:) = [];
 LiveStock_HR(1:3360,:) = [];
 Mrro_HR(1:3360,:) = [];
+PerChange_Mrro_HR(1:3360,:) = [];
 Nematodes_HR(1:3360,:) = [];
 SoilMicroBiomass_HR(1:3360,:) = [];
 Total_Population_HR(1:3360,:) = [];
@@ -125,87 +134,89 @@ DEM = interp2(lat_HR',lon_HR',DEM_HR',lat,lon);
 CroplandRatio = interp2(lat_HR',lon_HR',CroplandRatio_HR',lat,lon);
 LiveStock = interp2(lat_HR',lon_HR',LiveStock_HR',lat,lon);
 Mrro = interp2(lat_HR',lon_HR',Mrro_HR',lat,lon);
+PerChange_Mrro = interp2(lat_HR',lon_HR',PerChange_Mrro_HR',lat,lon);
 Nematodes = interp2(lat_HR',lon_HR',Nematodes_HR',lat,lon);
 SoilMicroBiomass = interp2(lat_HR',lon_HR',SoilMicroBiomass_HR',lat,lon);
 Total_Population = interp2(lat_HR',lon_HR',Total_Population_HR',lat,lon);
 Ratio_Rural_Population = interp2(lat_HR',lon_HR',Ratio_Rural_Population_HR',lat,lon);
-clear lat_HR lon_HR DEM_HR CroplandRatio_HR LiveStock_HR Mrro_HR Nematodes_HR
-clear SoilMicroBiomass_HR Total_Population_HR Ratio_Rural_Population_HR
-%% (6.2) Generate Occurrence Probability of Hazard (Range: [0,1])
-% HazardProbability represents the Occurrence probability of water
-% transfering dangerous Soil microorganisms
-% Fill the empty value to Mean Value and use Nematodes_HR mask as Land Mask
-SoilMicroBiomass(isnan(SoilMicroBiomass)) = nanmean(nanmean(SoilMicroBiomass));
-Mrro(isnan(Mrro)) = nanmean(nanmean(Mrro));
-% Calculate F_Hazard
-F_Hazard = Nematodes./nanmax(nanmax(Nematodes)) .* ...
-    SoilMicroBiomass./nanmax(nanmax(SoilMicroBiomass)) .* ...
-    Mrro./nanmax(nanmax(Mrro));
-% Make F_Hazard > 0, where runoff change <0 will be 0, which means no
-% possibility to transfer dangerous Soil microorganisms
+clear lat_HR lon_HR DEM_HR CroplandRatio_HR LiveStock_HR Mrro_HR PerChange_Mrro_HR
+clear Nematodes_HR SoilMicroBiomass_HR Total_Population_HR Ratio_Rural_Population_HR
+%% (6.2) Deriving the Hazard index (Range: [0,1])
+% Fill the empty value to Mean Value
+SoilMicroBiomass(isnan(SoilMicroBiomass)) = nanmean(nanmean(SoilMicroBiomass)); %SoilMicroBiomass was not used in this study 
+PerChange_Mrro(isnan(PerChange_Mrro)) = nanmean(nanmean(PerChange_Mrro));
+% Calculate stressor: F_Hazard
+F_Hazard = Nematodes .* PerChange_Mrro;
+% Make F_Hazard > 0, and if PerChange_Mrro <0, F_Hazard will be 0, which
+% means no risk increasing
 F_Hazard(F_Hazard<0) = 0;
 % Calculating routed F_Hazard
 [Route_F_Hazard , I] = d8alg(DEM , F_Hazard);
-Route_F_Hazard(isnan(F_Hazard))=nan; clear F_Hazard I
-% Standardize Route_F_Hazard to [0,1] based on a cumulative distribution function (CDF)
-A = sort(Route_F_Hazard(:)); A(isnan(A)) = [];
-for i_row = 1 : size(Route_F_Hazard , 1)
+Route_F_Hazard(isnan(F_Hazard)) = nan; clear F_Hazard I
+% Normalizing Route_F_Hazard by runoff
+NF = Route_F_Hazard ./ Mrro;
+% Standardize NF to [0,1] based on a cumulative distribution function (CDF)
+A = sort(NF(:)); A(isnan(A)) = [];
+for i_row = 1 : size(NF , 1)
     disp(strcat('Calculating to row NO.' , num2str(i_row)))
-    for i_col = 1 : size(Route_F_Hazard , 2)
-        if isnan(Route_F_Hazard(i_row,i_col))
+    for i_col = 1 : size(NF , 2)
+        if isnan(NF(i_row,i_col))
             Hazard(i_row,i_col) = nan;
             continue;
         else
-            Index = find(A==Route_F_Hazard(i_row,i_col));
-            Hazard(i_row,i_col) = max(Index)./length(A);
+            Index = find(A==NF(i_row,i_col));
+            Hazard(i_row,i_col) = min(Index)./length(A);
             clear Index
         end
     end
 end
-clear i_row i_col A Route_F_Hazard
-save('D:\CMIP6\VariableStorage\ImplicationResearch\Hazard.mat','Hazard','lat','lon');
-clear Nematodes Mrro SoilMicroBiomass DEM
-%% (6.3) Calculate Exposure
-F_Exposure = Total_Population./nanmax(nanmax(Total_Population)) +...
-    LiveStock./nanmax(nanmax(LiveStock)) + CroplandRatio;
-% Standardize Exposure to [0,1] based on a cumulative distribution function (CDF)
-A = sort(F_Exposure(:)); A(isnan(A)) = [];
-for i_row = 1 : size(F_Exposure , 1)
+clear i_row i_col A Route_F_Hazard NF
+save('D:\CMIP6\VariableStorage\ImplicationResearch\Hazard_ssp585.mat','Hazard','lat','lon');
+clear Nematodes Mrro PerChange_Mrro SoilMicroBiomass DEM
+%% (6.3) Deriving the Exposure and Vulnerability index (Range: [0,1])
+% Calculate exposure indicator (EIn)
+EIn = Total_Population./nanmax(nanmax(Total_Population)) .*...
+    LiveStock./nanmax(nanmax(LiveStock)) .* CroplandRatio./nanmax(nanmax(CroplandRatio));
+% Standardize EIn to [0,1] based on a cumulative distribution function (CDF)
+A = sort(EIn(:)); A(isnan(A)) = [];
+for i_row = 1 : size(EIn , 1)
     disp(strcat('Calculating to row NO.' , num2str(i_row)))
-    for i_col = 1 : size(F_Exposure , 2)
-        if isnan(F_Exposure(i_row,i_col))
+    for i_col = 1 : size(EIn , 2)
+        if isnan(EIn(i_row,i_col))
             Exposure(i_row,i_col) = nan;
             continue;
         else
-            Index = find(A==F_Exposure(i_row,i_col));
-            Exposure(i_row,i_col) = max(Index)./length(A);
+            Index = find(A==EIn(i_row,i_col));
+            Exposure(i_row,i_col) = min(Index)./length(A);
             clear Index
         end
     end
 end
-clear i_row i_col A F_Exposure
-save('D:\CMIP6\VariableStorage\ImplicationResearch\Exposure.mat','Exposure','lat','lon')
-save('D:\CMIP6\VariableStorage\ImplicationResearch\Ratio_Rural_Population.mat','Ratio_Rural_Population','lat','lon')
-clear Total_Population LiveStock CroplandRatio
+clear i_row i_col A EIn
+save('D:\CMIP6\VariableStorage\ImplicationResearch\Exposure.mat','Exposure_ssp585','lat','lon')
+% Deriving Vulnerability Index
+Vulnerability = Ratio_Rural_Population;
+save('D:\CMIP6\VariableStorage\ImplicationResearch\Vulnerability_ssp585.mat','Vulnerability','lat','lon')
+clear Total_Population LiveStock CroplandRatio Ratio_Rural_Population
 %% (6.3) Map Output
 % Change from 0~360 to -180~180
 A = Hazard(:,1:3601); B = Hazard(:,3602:end);
 Hazard = [B,A]; clear A B
 A = Exposure(:,1:3601); B = Exposure(:,3602:end);
 Exposure = [B,A]; clear A B
-A = Ratio_Rural_Population(:,1:3601); B = Ratio_Rural_Population(:,3602:end);
-Ratio_Rural_Population = [B,A]; clear A B
+A = Vulnerability(:,1:3601); B = Vulnerability(:,3602:end);
+Vulnerability = [B,A]; clear A B
 % Interpolate the seam
 Hazard(:,3585:3616) = ones(2961,32) .* ...
     Hazard(:,3585);
 Exposure(:,3599:3602) = ones(2961,4) .* ...
     Exposure(:,3603);
-Ratio_Rural_Population(:,3599:3602) = ones(2961,4) .* ...
-    nanmean(Ratio_Rural_Population(:,[3598,3603]),2);
+Vulnerability(:,3599:3602) = ones(2961,4) .* ...
+    nanmean(Vulnerability(:,[3598,3603]),2);
 % output tiff extent -180~180
 extent = [-180 , 180 , -60 , 88];
-% Risk = Hazard*ExposureRatio_Rural_Population
-Risk = Hazard .* Exposure .* Ratio_Rural_Population;
+% Risk = Hazard*Exposure*Vulnerability
+Risk = Hazard .* Exposure .* Vulnerability;
 Risk(isnan(Risk)) = -1;
 SaveData2GeoTIFF(['Fig3_OutputTable\Risk.tif' ],...
     extent , Risk);
@@ -217,10 +228,10 @@ SaveData2GeoTIFF(['Fig3_OutputTable\Hazard.tif' ],...
 Exposure(isnan(Exposure)) = -1;
 SaveData2GeoTIFF(['Fig3_OutputTable\Exposure.tif' ],...
     extent , Exposure);
-% Vulnerability Layer: Ratio_Rural_Population
-Ratio_Rural_Population(isnan(Ratio_Rural_Population)) = -1;
-SaveData2GeoTIFF(['Fig3_OutputTable\Ratio_Rural_Population.tif' ],...
-    extent , Ratio_Rural_Population);
+% Vulnerability Layer: Vulnerability
+Vulnerability(isnan(Vulnerability)) = -1;
+SaveData2GeoTIFF(['Fig3_OutputTable\Vulnerability.tif' ],...
+    extent , Vulnerability);
 
 % %% (6.4) Calculating Risk Probability
 % Times = 10; % Times of Monte Carlo Simulation

@@ -62,10 +62,14 @@ for i_Path = 1 : length(InputPath)
         end
         clear ii r1
         Land_Var = GridYear; clear GridYear;
+        All_Land_Var_Mrro(:,:,:,i_GCM) = Land_Var.mrro;
         %% (1.2) Output GridYear from 1850-2100
         save(strcat(OutputPath{i_Path} , GCM) , 'Land_Var');
         clear Land_Var GCM
     end
-    clear GCM i_GCM
+    clear GCM i_GCM GCM_Ensemble
     save(strcat(OutputPath{i_Path} , 'Land_Year') , 'Land_Year');
+    Ensemble_Land_Var_Mrro = nanmean(All_Land_Var_Mrro,4);
+    save(strcat(OutputPath{i_Path} , 'Ensemble_Land_Var_Mrro') , 'Ensemble_Land_Var_Mrro');
+    clear All_Land_Var_Mrro Ensemble_Land_Var_Mrro Land_Year
 end
