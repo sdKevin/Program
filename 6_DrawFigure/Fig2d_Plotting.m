@@ -27,9 +27,9 @@ errorbar([1 , 2 , 3] ,...
 ylabel('CMIC (gCMIC/m2)');
 % Adjust Color
 Bar.FaceColor = 'flat';
-Bar.CData(1,:) = [251 , 191 , 164] ./ 255; Bar.CData(2,:) = [206 , 230 , 192] ./ 255; Bar.CData(3,:) = [191 , 220 , 237] ./ 255;
+Bar.CData(1,:) = [203 , 183 , 174] ./ 255; Bar.CData(2,:) = [166 , 128 , 141] ./ 255; Bar.CData(3,:) = [120 , 117 , 130] ./ 255;
 Bar.EdgeColor = 'flat';
-Bar.CData(1,:) = [251 , 191 , 164] ./ 255; Bar.CData(2,:) = [206 , 230 , 192] ./ 255; Bar.CData(3,:) = [191 , 220 , 237] ./ 255;
+Bar.CData(1,:) = [203 , 183 , 174] ./ 255; Bar.CData(2,:) = [166 , 128 , 141] ./ 255; Bar.CData(3,:) = [120 , 117 , 130] ./ 255;
 set(gca,'YMinorTick','on',...
         'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5);
 clear S_DryLands S_HumidLands S_ColdLands
@@ -49,9 +49,9 @@ errorbar([1 , 2 , 3] ,...
 ylabel('DNem (Nematodes/m2)');
 % Adjust Color
 Bar.FaceColor = 'flat';
-Bar.CData(1,:) = [251 , 191 , 164] ./ 255; Bar.CData(2,:) = [206 , 230 , 192] ./ 255; Bar.CData(3,:) = [191 , 220 , 237] ./ 255;
+Bar.CData(1,:) = [203 , 183 , 174] ./ 255; Bar.CData(2,:) = [166 , 128 , 141] ./ 255; Bar.CData(3,:) = [120 , 117 , 130] ./ 255;
 Bar.EdgeColor = 'flat';
-Bar.CData(1,:) = [251 , 191 , 164] ./ 255; Bar.CData(2,:) = [206 , 230 , 192] ./ 255; Bar.CData(3,:) = [191 , 220 , 237] ./ 255;
+Bar.CData(1,:) = [203 , 183 , 174] ./ 255; Bar.CData(2,:) = [166 , 128 , 141] ./ 255; Bar.CData(3,:) = [120 , 117 , 130] ./ 255;
 set(gca,'YMinorTick','on',...
         'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5);
 clear S_DryLands S_HumidLands S_ColdLands
