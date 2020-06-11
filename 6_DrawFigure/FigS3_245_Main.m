@@ -20,9 +20,9 @@ CroplandRatio_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Crop\Croplan
 load(CroplandRatio_Path_Data);
 CroplandRatio_HR = interp2(lat',lon',CroplandRatio',lat_HR,lon_HR);
 clear lat lon CroplandRatio CroplandRatio_Path_Data
-%% Percentage Change of Runoff ssp585 Data
+%% Percentage Change of Runoff ssp245 Data
 load LandInfo_05deg
-Runoff_Path_Data = 'D:\CMIP6\VariableStorage\ClimatologicalChange\PerChange_ssp585.mat';
+Runoff_Path_Data = 'D:\CMIP6\VariableStorage\ClimatologicalChange\PerChange_ssp245.mat';
 load(Runoff_Path_Data);
 PerChange_Mrro = nanmean(PerChange.PerChange_mrro,3);
 clear PerChange elevation_05deg landmask_05deg Runoff_Path_Data
@@ -31,20 +31,20 @@ A = PerChange_Mrro(1:360,:); B = PerChange_Mrro(361:end,:);
 PerChange_Mrro = [B;A]; clear A B
 PerChange_Mrro_HR = interp2(lat_05deg,lon_05deg,PerChange_Mrro,lat_HR,lon_HR);
 clear lat_05deg lon_05deg PerChange_Mrro
-%% Runoff ssp585 Data
+%% Runoff ssp245 Data
 load LandInfo_05deg
-Runoff_Path_Data = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Land\ScenarioMIP_ssp585\Land_Var_ssp585_Ensemble_Land_Var_Mrro.mat';
+Runoff_Path_Data = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Land\ScenarioMIP_ssp245\Land_Var_ssp245_Ensemble_Land_Var_Mrro.mat';
 load(Runoff_Path_Data);
 Mrro = nanmean(Ensemble_Land_Var_Mrro(:,:,56:85),3); Mrro(Mrro<0)=nan; %mean mrro over 2070-2099
 clear Ensemble_Land_Var_Mrro elevation_05deg landmask_05deg Runoff_Path_Data
 Mrro_HR = interp2(lat_05deg,lon_05deg,Mrro,lat_HR,lon_HR);
 clear lat_05deg lon_05deg Mrro
-%% Total Population ssp585 Data
-Population_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP5\Total\Mat\ssp5_2100.mat';
+%% Total Population ssp245 Data
+Population_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP2\Total\Mat\ssp2_2100.mat';
 load(Population_Path_Data);clear Population_Path_Data
-Population_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP5\Total\Mat\lat.mat';
+Population_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP2\Total\Mat\lat.mat';
 load(Population_Path_Data);clear Population_Path_Data
-Population_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP5\Total\Mat\lon.mat';
+Population_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP2\Total\Mat\lon.mat';
 load(Population_Path_Data);clear Population_Path_Data
 % Adjust to uniform Coordinate
 A = Population(1:1440,:); B = Population(1441:end,:);
@@ -55,12 +55,12 @@ A = lon(1:1440,:); B = lon(1441:end,:);
 lon = [B;A]; lon(lon<0) = lon(lon<0) + 360; clear A B;
 Total_Population_HR = interp2(lat,lon,Population,lat_HR,lon_HR);
 clear lat lon Population
-%% Rural Population ssp585 Data
-Population_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP5\Rural\Mat\ssp5rur2100.mat';
+%% Rural Population ssp245 Data
+Population_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP2\Rural\Mat\ssp2rur2100.mat';
 load(Population_Path_Data);clear Population_Path_Data
-Population_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP5\Rural\Mat\lat.mat';
+Population_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP2\Rural\Mat\lat.mat';
 load(Population_Path_Data);clear Population_Path_Data
-Population_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP5\Rural\Mat\lon.mat';
+Population_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP2\Rural\Mat\lon.mat';
 load(Population_Path_Data);clear Population_Path_Data
 % Adjust to uniform Coordinate
 A = Population(1:1440,:); B = Population(1441:end,:);
@@ -171,7 +171,7 @@ for i_row = 1 : size(NF , 1)
     end
 end
 clear i_row i_col A Route_F_Hazard NF
-save('D:\CMIP6\VariableStorage\ImplicationResearch\Hazard_ssp585.mat','Hazard','lat','lon');
+save('D:\CMIP6\VariableStorage\ImplicationResearch\Hazard_ssp245.mat','Hazard','lat','lon');
 clear Nematodes Mrro PerChange_Mrro SoilMicroBiomass DEM
 %% (6.3) Deriving the Exposure and Vulnerability index (Range: [0,1])
 % Calculate exposure indicator (EIn)
@@ -193,10 +193,10 @@ for i_row = 1 : size(EIn , 1)
     end
 end
 clear i_row i_col A EIn
-save('D:\CMIP6\VariableStorage\ImplicationResearch\Exposure.mat','Exposure_ssp585','lat','lon')
+save('D:\CMIP6\VariableStorage\ImplicationResearch\Exposure_ssp245.mat','Exposure','lat','lon')
 % Deriving Vulnerability Index
 Vulnerability = Ratio_Rural_Population;
-save('D:\CMIP6\VariableStorage\ImplicationResearch\Vulnerability_ssp585.mat','Vulnerability','lat','lon')
+save('D:\CMIP6\VariableStorage\ImplicationResearch\Vulnerability_ssp245.mat','Vulnerability','lat','lon')
 clear Total_Population LiveStock CroplandRatio Ratio_Rural_Population
 %% (6.3) Map Output
 % Change from 0~360 to -180~180
@@ -215,8 +215,25 @@ Vulnerability(:,3599:3602) = ones(2961,4) .* ...
     nanmean(Vulnerability(:,[3598,3603]),2);
 % output tiff extent -180~180
 extent = [-180 , 180 , -60 , 88];
-% Risk = Hazard*Exposure*Vulnerability
-Risk = Hazard .* Exposure .* Vulnerability;
+% The risk indicator: RIn
+RIn = Hazard .* Exposure .* Vulnerability;
+% Standardize RIn to [0,1] based on a cumulative distribution function (CDF)
+A = sort(RIn(:)); A(isnan(A)) = [];
+for i_row = 1 : size(RIn , 1)
+    disp(strcat('Calculating to row NO.' , num2str(i_row)))
+    for i_col = 1 : size(RIn , 2)
+        if isnan(RIn(i_row,i_col))
+            Risk(i_row,i_col) = nan;
+            continue;
+        else
+            Index = find(A==RIn(i_row,i_col));
+            Risk(i_row,i_col) = min(Index)./length(A);
+            clear Index
+        end
+    end
+end
+clear i_row i_col A RIn
+%% Output Figure
 Risk(isnan(Risk)) = -1;
 SaveData2GeoTIFF(['Fig3_OutputTable\Risk.tif' ],...
     extent , Risk);
@@ -232,11 +249,3 @@ SaveData2GeoTIFF(['Fig3_OutputTable\Exposure.tif' ],...
 Vulnerability(isnan(Vulnerability)) = -1;
 SaveData2GeoTIFF(['Fig3_OutputTable\Vulnerability.tif' ],...
     extent , Vulnerability);
-
-% %% (6.4) Calculating Risk Probability
-% Times = 10; % Times of Monte Carlo Simulation
-% AssumeMaxProp = 0.0001; % (e.g., 0.0001 is 0.01%) Assuming the maximum probability of releasing Dangerous Soil microorganisms
-% % Path of Tibet Watershed Shapefile
-% Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_inTibet.shp';
-% RiskProbability = Fig3_RiskProbability(lat_HR , lon_HR , RiskIndex ,...
-%     Times , AssumeMaxProp , GridIndex_TibetPlateau , Path_Shapefile);
