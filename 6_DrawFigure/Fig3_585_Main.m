@@ -198,7 +198,7 @@ save('D:\CMIP6\VariableStorage\ImplicationResearch\Exposure_ssp585.mat','Exposur
 Vulnerability = Ratio_Rural_Population;
 save('D:\CMIP6\VariableStorage\ImplicationResearch\Vulnerability_ssp585.mat','Vulnerability','lat','lon')
 clear Total_Population LiveStock CroplandRatio Ratio_Rural_Population
-%% (6.3) Map Output
+%% (6.3) Deriving the Risk Index (Range: [0,1])
 % Change from 0~360 to -180~180
 A = Hazard(:,1:3601); B = Hazard(:,3602:end);
 Hazard = [B,A]; clear A B
@@ -233,6 +233,7 @@ for i_row = 1 : size(RIn , 1)
     end
 end
 clear i_row i_col A RIn
+save('D:\CMIP6\VariableStorage\ImplicationResearch\Risk_ssp585.mat','Risk','lat','lon')
 %% Output Figure
 Risk(isnan(Risk)) = -1;
 SaveData2GeoTIFF(['Fig3_OutputTable\Risk_585.tif' ],...
