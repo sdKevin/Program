@@ -232,11 +232,11 @@ try
 catch
     disp('Error in (5)!');
 end
-%% (6) Mean Hazard, Exposure, and Vulnerability Index in different watersheds
+%% (6) Mean Hazard, Exposure, Vulnerability and Risk Index in different watersheds
 try
     clc; clear all; close all;
     %% Hazard Index Data, Extent: -88~88 0~360
-    Hazard_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Hazard.mat';
+    Hazard_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Hazard_ssp585.mat';
     load(Hazard_Path_Data);clear Hazard_Path_Data;
     % Path of Asian Water Tower different watersheds Shapefile
     Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData.shp';
@@ -251,7 +251,7 @@ try
     end
     clear ii Pos Index Path_Shapefile
     %% Exposure Index Data, Extent: -88~88 0~360
-    Exposure_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Exposure.mat';
+    Exposure_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Exposure_ssp585.mat';
     load(Exposure_Path_Data);clear Exposure_Path_Data;
     % Path of Asian Water Tower different watersheds Shapefile
     Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData.shp';
@@ -265,12 +265,12 @@ try
             'Fig3' , Pos{ii});
     end
     clear ii Pos Index Path_Shapefile
-    %% Mean_Vulnerability_Index £º Ratio_Rural_Population Data, Extent: -88~88 0~360
-    Ratio_Rural_Population_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Ratio_Rural_Population.mat';
-    load(Ratio_Rural_Population_Path_Data);clear Ratio_Rural_Population_Path_Data;
+    %% Vulnerability Index Data, Extent: -88~88 0~360
+    Vulnerability_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Vulnerability_ssp585.mat';
+    load(Vulnerability_Path_Data);clear Vulnerability_Path_Data;
     % Path of Asian Water Tower different watersheds Shapefile
     Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData.shp';
-    Mean_Vulnerability_Index = Fig3_InfoExtractTibetMean(Path_Shapefile , lat , lon , Ratio_Rural_Population);
+    Mean_Vulnerability_Index = Fig3_InfoExtractTibetMean(Path_Shapefile , lat , lon , Vulnerability);
     % Save Results to Table
     Index = [1,6,9,15,18,21,24,30,33,36,40,41,42];
     Pos = {'E3','E4','E5','E6','E7','E8','E9','E10','E11','E12','E13','E14','E15'};
@@ -280,29 +280,29 @@ try
             'Fig3' , Pos{ii});
     end
     clear ii Pos Index Path_Shapefile
-    %     %% Calculating Risk
-    %     Risk = Hazard .* Exposure .* Ratio_Rural_Population;
-    %     % Path of Asian Water Tower different watersheds Shapefile
-    %     Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData.shp';
-    %     % Mean Risk Index
-    %     Mean_Risk_Index = Fig3_InfoExtractTibetMean(Path_Shapefile , lat , lon , Risk);
-    %     % Save Results to Table
-    %     Index = [1,6,9,15,18,21,24,30,33,36,40,41,42];
-    %     Pos = {'C3','C8','C11','C17','C20','C23','C26','C32','C35','C38','C42','C43','C44'};
-    %     for ii = 1:length(Index)
-    %         xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
-    %             Mean_Risk_Index(Index(ii))' ,...
-    %             'Quantity' , Pos{ii});
-    %     end
-    %     clear ii Pos Index Path_Shapefile
+    %% Risk Index Data, Extent: -88~88 0~360
+    Risk_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Risk_ssp585.mat';
+    load(Risk_Path_Data);clear Risk_Path_Data;
+    % Path of Asian Water Tower different watersheds Shapefile
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData.shp';
+    Mean_Risk_Index = Fig3_InfoExtractTibetMean(Path_Shapefile , lat , lon , Risk);
+    % Save Results to Table
+    Index = [1,6,9,15,18,21,24,30,33,36,40,41,42];
+    Pos = {'B3','B4','B5','B6','B7','B8','B9','B10','B11','B12','B13','B14','B15'};
+    for ii = 1:length(Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Risk_Index(Index(ii))' ,...
+            'Fig3' , Pos{ii});
+    end
+    clear ii Pos Index Path_Shapefile
 catch
     disp('Error in (6)!');
 end
-%% (7) Mean Hazard, Exposure, and Vulnerability Index in different countries
+%% (7) Mean Hazard, Exposure, Vulnerability and Risk Index in different countries
 try
     clc; clear all; close all;
     %% Hazard Index Data, Extent: -88~88 0~360
-    Hazard_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Hazard.mat';
+    Hazard_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Hazard_ssp585.mat';
     load(Hazard_Path_Data);clear Hazard_Path_Data;
     % Path of Asian Water Tower different watersheds Shapefile
     Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
@@ -317,7 +317,7 @@ try
     clear ii Pos Path_Shapefile
     %% Exposure Index Data, Extent: -88~88 0~360
     clc; clear all; close all;
-    Exposure_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Exposure.mat';
+    Exposure_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Exposure_ssp585.mat';
     load(Exposure_Path_Data);clear Exposure_Path_Data;
     % Path of Asian Water Tower different watersheds Shapefile
     Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
@@ -330,13 +330,13 @@ try
             'Fig3_Supplement' , Pos{ii});
     end
     clear ii Pos Path_Shapefile
-    %% Mean_Vulnerability_Index £º Ratio_Rural_Population Data, Extent: -88~88 0~360
+    %% Vulnerability Index Data, Extent: -88~88 0~360
     clc; clear all; close all;
-    Ratio_Rural_Population_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Ratio_Rural_Population.mat';
-    load(Ratio_Rural_Population_Path_Data);clear Ratio_Rural_Population_Path_Data;
+    Vulnerability_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Vulnerability_ssp585.mat';
+    load(Vulnerability_Path_Data);clear Vulnerability_Path_Data;
     % Path of Asian Water Tower different watersheds Shapefile
     Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
-    Mean_Vulnerability_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Ratio_Rural_Population);
+    Mean_Vulnerability_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Vulnerability);
     % Save Results to Table
     Pos = {'E3','E4','E5','E6','E7','E8','E9','E10','E11','E12','E13','E14','E15','E16','E17','E18','E19','E20'};
     for ii = 1:length(Mean_Vulnerability_Index)
@@ -345,21 +345,21 @@ try
             'Fig3_Supplement' , Pos{ii});
     end
     clear ii Pos Path_Shapefile
-    %     %% Calculating Risk
-    %     Risk = Hazard .* Exposure .* Ratio_Rural_Population;
-    %     % Path of Asian Water Tower different watersheds Shapefile
-    %     Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData.shp';
-    %     % Mean Risk Index
-    %     Mean_Risk_Index = Fig3_InfoExtractTibetMean(Path_Shapefile , lat , lon , Risk);
-    %     % Save Results to Table
-    %     Index = [1,6,9,15,18,21,24,30,33,36,40,41,42];
-    %     Pos = {'C3','C8','C11','C17','C20','C23','C26','C32','C35','C38','C42','C43','C44'};
-    %     for ii = 1:length(Index)
-    %         xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
-    %             Mean_Risk_Index(Index(ii))' ,...
-    %             'Quantity' , Pos{ii});
-    %     end
-    %     clear ii Pos Index Path_Shapefile
+    %% Risk Index Data, Extent: -88~88 0~360
+    clc; clear all; close all;
+    Risk_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Risk_ssp585.mat';
+    load(Risk_Path_Data);clear Risk_Path_Data;
+    % Path of Asian Water Tower different watersheds Shapefile
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+    Mean_Risk_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Risk);
+    % Save Results to Table
+    Pos = {'B3','B4','B5','B6','B7','B8','B9','B10','B11','B12','B13','B14','B15','B16','B17','B18','B19','B20'};
+    for ii = 1:length(Mean_Risk_Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Risk_Index(ii)' ,...
+            'Fig3_Supplement' , Pos{ii});
+    end
+    clear ii Pos Path_Shapefile
 catch
     disp('Error in (6)!');
 end

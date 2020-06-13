@@ -199,22 +199,6 @@ Vulnerability = Ratio_Rural_Population;
 save('D:\CMIP6\VariableStorage\ImplicationResearch\Vulnerability_ssp370.mat','Vulnerability','lat','lon')
 clear Total_Population LiveStock CroplandRatio Ratio_Rural_Population
 %% (6.3) Deriving the Risk Index (Range: [0,1])
-% Change from 0~360 to -180~180
-A = Hazard(:,1:3601); B = Hazard(:,3602:end);
-Hazard = [B,A]; clear A B
-A = Exposure(:,1:3601); B = Exposure(:,3602:end);
-Exposure = [B,A]; clear A B
-A = Vulnerability(:,1:3601); B = Vulnerability(:,3602:end);
-Vulnerability = [B,A]; clear A B
-% Interpolate the seam
-Hazard(:,3585:3616) = ones(2961,32) .* ...
-    Hazard(:,3585);
-Exposure(:,3599:3602) = ones(2961,4) .* ...
-    Exposure(:,3603);
-Vulnerability(:,3599:3602) = ones(2961,4) .* ...
-    nanmean(Vulnerability(:,[3598,3603]),2);
-% output tiff extent -180~180
-extent = [-180 , 180 , -60 , 88];
 % The risk indicator: RIn
 RIn = Hazard .* Exposure .* Vulnerability;
 % Standardize RIn to [0,1] based on a cumulative distribution function (CDF)
@@ -235,18 +219,39 @@ end
 clear i_row i_col A RIn
 save('D:\CMIP6\VariableStorage\ImplicationResearch\Risk_ssp370.mat','Risk','lat','lon')
 %% Output Figure
+% Change from 0~360 to -180~180
+A = Hazard(:,1:3601); B = Hazard(:,3602:end);
+Hazard = [B,A]; clear A B
+A = Exposure(:,1:3601); B = Exposure(:,3602:end);
+Exposure = [B,A]; clear A B
+A = Vulnerability(:,1:3601); B = Vulnerability(:,3602:end);
+Vulnerability = [B,A]; clear A B
+A = Risk(:,1:3601); B = Risk(:,3602:end);
+Risk = [B,A]; clear A B
+% Interpolate the seam
+Hazard(:,3585:3616) = ones(2961,32) .* ...
+    Hazard(:,3583);
+Exposure(:,3599:3602) = ones(2961,4) .* ...
+    Exposure(:,3603);
+Vulnerability(:,3599:3602) = ones(2961,4) .* ...
+    nanmean(Vulnerability(:,[3598,3603]),2);
+Risk(:,3585:3616) = ones(2961,32) .* ...
+    Risk(:,3583);
+% output tiff extent -180~180
+extent = [-180 , 180 , -60 , 88];
+% Risk Layer
 Risk(isnan(Risk)) = -1;
 SaveData2GeoTIFF(['Fig3_OutputTable\Risk_370.tif' ],...
     extent , Risk);
-% Hazard Layer£º Hazard
+% Hazard Layer
 Hazard(isnan(Hazard)) = -1;
 SaveData2GeoTIFF(['Fig3_OutputTable\Hazard_370.tif' ],...
     extent , Hazard);
-% Exposure Layer: Exposure which includes total population, livestock and cropland
+% Exposure Layer
 Exposure(isnan(Exposure)) = -1;
 SaveData2GeoTIFF(['Fig3_OutputTable\Exposure_370.tif' ],...
     extent , Exposure);
-% Vulnerability Layer: Vulnerability
+% Vulnerability Layer
 Vulnerability(isnan(Vulnerability)) = -1;
 SaveData2GeoTIFF(['Fig3_OutputTable\Vulnerability_370.tif' ],...
     extent , Vulnerability);
