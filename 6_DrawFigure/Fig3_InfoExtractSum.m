@@ -8,7 +8,7 @@ Map = shaperead(Path_Shapefile);
 % CountryName and CountryID
 % Afghanistan(0), Bangladesh(14), Bhutan(20), Cambodia(30), China(37),
 % India(205), Iran(83), Kazakhstan(95), Kyrgyzstan(102), Laos(103),
-% Myanmar(128), Nepal(130), Pakistan(140), Tajikistan£¨178£©,
+% Myanmar(128), Nepal(130), Pakistan(140), Tajikistan£¨178£©,Thailand(180)
 % Turkmenistan(186), Uzbekistan(194), Vietnam(197)
 RiverID = cell2mat({Map.FID_Basin_}');
 CountryID = cell2mat({Map.FID_Countr}');
