@@ -634,3 +634,255 @@ try
 catch
     disp('Error in (8)!');
 end
+%% (9) All SSPs: Mean Hazard, Exposure, Vulnerability and Risk Index of different countries influenced by Asian Water Tower
+try
+    %% Risk Index, Extent: -88~88 0~360
+    % SSP126
+    clc; clear all; close all;
+    Risk_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Risk_ssp126.mat';
+    load(Risk_Path_Data); clear Risk_Path_Data;
+    % Path of different countries influenced by Asian Water Tower
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+    Mean_Risk_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Risk);
+    % Save Results to Table
+    Pos = {'B21','B22','B23','B24','B25','B26','B27','B28','B29','B30','B31','B32','B33','B34','B35','B36','B37','B38'};
+    for ii = 1:length(Mean_Risk_Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Risk_Index(ii)' ,...
+            'Risk_Assessment' , Pos{ii});
+    end
+    clear ii Pos Path_Shapefile
+    % SSP245
+    clc; clear all; close all;
+    Risk_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Risk_ssp245.mat';
+    load(Risk_Path_Data); clear Risk_Path_Data;
+    % Path of different countries influenced by Asian Water Tower
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+    Mean_Risk_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Risk);
+    % Save Results to Table
+    Pos = {'C21','C22','C23','C24','C25','C26','C27','C28','C29','C30','C31','C32','C33','C34','C35','C36','C37','C38'};
+    for ii = 1:length(Mean_Risk_Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Risk_Index(ii)' ,...
+            'Risk_Assessment' , Pos{ii});
+    end
+    clear ii Pos Path_Shapefile
+    % SSP370
+    clc; clear all; close all;
+    Risk_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Risk_ssp370.mat';
+    load(Risk_Path_Data); clear Risk_Path_Data;
+    % Path of different countries influenced by Asian Water Tower
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+    Mean_Risk_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Risk);
+    % Save Results to Table
+    Pos = {'D21','D22','D23','D24','D25','D26','D27','D28','D29','D30','D31','D32','D33','D34','D35','D36','D37','D38'};
+    for ii = 1:length(Mean_Risk_Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Risk_Index(ii)' ,...
+            'Risk_Assessment' , Pos{ii});
+    end
+    clear ii Pos Path_Shapefile
+    % SSP585
+    clc; clear all; close all;
+    Risk_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Risk_ssp585.mat';
+    load(Risk_Path_Data); clear Risk_Path_Data;
+    % Path of different countries influenced by Asian Water Tower
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+    Mean_Risk_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Risk);
+    % Save Results to Table
+    Pos = {'E21','E22','E23','E24','E25','E26','E27','E28','E29','E30','E31','E32','E33','E34','E35','E36','E37','E38'};
+    for ii = 1:length(Mean_Risk_Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Risk_Index(ii)' ,...
+            'Risk_Assessment' , Pos{ii});
+    end
+    clear ii Pos Path_Shapefile
+    
+    %% Hazard Index, Extent: -88~88 0~360
+    % SSP126
+    clc; clear all; close all;
+    Hazard_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Hazard_ssp126.mat';
+    load(Hazard_Path_Data); clear Hazard_Path_Data;
+    % Path of different countries influenced by Asian Water Tower
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+    Mean_Hazard_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Hazard);
+    % Save Results to Table
+    Pos = {'F21','F22','F23','F24','F25','F26','F27','F28','F29','F30','F31','F32','F33','F34','F35','F36','F37','F38'};
+    for ii = 1:length(Mean_Hazard_Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Hazard_Index(ii)' ,...
+            'Risk_Assessment' , Pos{ii});
+    end
+    clear ii Pos Path_Shapefile
+    % SSP245
+    clc; clear all; close all;
+    Hazard_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Hazard_ssp245.mat';
+    load(Hazard_Path_Data); clear Hazard_Path_Data;
+    % Path of different countries influenced by Asian Water Tower
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+    Mean_Hazard_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Hazard);
+    % Save Results to Table
+    Pos = {'G21','G22','G23','G24','G25','G26','G27','G28','G29','G30','G31','G32','G33','G34','G35','G36','G37','G38'};
+    for ii = 1:length(Mean_Hazard_Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Hazard_Index(ii)' ,...
+            'Risk_Assessment' , Pos{ii});
+    end
+    clear ii Pos Path_Shapefile
+    % SSP370
+    clc; clear all; close all;
+    Hazard_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Hazard_ssp370.mat';
+    load(Hazard_Path_Data); clear Hazard_Path_Data;
+    % Path of different countries influenced by Asian Water Tower
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+    Mean_Hazard_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Hazard);
+    % Save Results to Table
+    Pos = {'H21','H22','H23','H24','H25','H26','H27','H28','H29','H30','H31','H32','H33','H34','H35','H36','H37','H38'};
+    for ii = 1:length(Mean_Hazard_Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Hazard_Index(ii)' ,...
+            'Risk_Assessment' , Pos{ii});
+    end
+    clear ii Pos Path_Shapefile
+    % SSP585
+    clc; clear all; close all;
+    Hazard_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Hazard_ssp585.mat';
+    load(Hazard_Path_Data); clear Hazard_Path_Data;
+    % Path of different countries influenced by Asian Water Tower
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+    Mean_Hazard_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Hazard);
+    % Save Results to Table
+    Pos = {'I21','I22','I23','I24','I25','I26','I27','I28','I29','I30','I31','I32','I33','I34','I35','I36','I37','I38'};
+    for ii = 1:length(Mean_Hazard_Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Hazard_Index(ii)' ,...
+            'Risk_Assessment' , Pos{ii});
+    end
+    clear ii Pos Path_Shapefile
+    
+    %% Exposure Index, Extent: -88~88 0~360
+    % SSP126
+    clc; clear all; close all;
+    Exposure_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Exposure_ssp126.mat';
+    load(Exposure_Path_Data); clear Exposure_Path_Data;
+    % Path of different countries influenced by Asian Water Tower
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+    Mean_Exposure_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Exposure);
+    % Save Results to Table
+    Pos = {'J21','J22','J23','J24','J25','J26','J27','J28','J29','J30','J31','J32','J33','J34','J35','J36','J37','J38'};
+    for ii = 1:length(Mean_Exposure_Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Exposure_Index(ii)' ,...
+            'Risk_Assessment' , Pos{ii});
+    end
+    clear ii Pos Path_Shapefile
+    % SSP245
+    clc; clear all; close all;
+    Exposure_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Exposure_ssp245.mat';
+    load(Exposure_Path_Data); clear Exposure_Path_Data;
+    % Path of different countries influenced by Asian Water Tower
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+    Mean_Exposure_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Exposure);
+    % Save Results to Table
+    Pos = {'K21','K22','K23','K24','K25','K26','K27','K28','K29','K30','K31','K32','K33','K34','K35','K36','K37','K38'};
+    for ii = 1:length(Mean_Exposure_Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Exposure_Index(ii)' ,...
+            'Risk_Assessment' , Pos{ii});
+    end
+    clear ii Pos Path_Shapefile
+    % SSP370
+    clc; clear all; close all;
+    Exposure_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Exposure_ssp370.mat';
+    load(Exposure_Path_Data); clear Exposure_Path_Data;
+    % Path of different countries influenced by Asian Water Tower
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+    Mean_Exposure_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Exposure);
+    % Save Results to Table
+    Pos = {'L21','L22','L23','L24','L25','L26','L27','L28','L29','L30','L31','L32','L33','L34','L35','L36','L37','L38'};
+    for ii = 1:length(Mean_Exposure_Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Exposure_Index(ii)' ,...
+            'Risk_Assessment' , Pos{ii});
+    end
+    clear ii Pos Path_Shapefile
+    % SSP585
+    clc; clear all; close all;
+    Exposure_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Exposure_ssp585.mat';
+    load(Exposure_Path_Data); clear Exposure_Path_Data;
+    % Path of different countries influenced by Asian Water Tower
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+    Mean_Exposure_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Exposure);
+    % Save Results to Table
+    Pos = {'M21','M22','M23','M24','M25','M26','M27','M28','M29','M30','M31','M32','M33','M34','M35','M36','M37','M38'};
+    for ii = 1:length(Mean_Exposure_Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Exposure_Index(ii)' ,...
+            'Risk_Assessment' , Pos{ii});
+    end
+    clear ii Pos Path_Shapefile
+    
+    %% Vulnerability Index, Extent: -88~88 0~360
+    % SSP126
+    clc; clear all; close all;
+    Vulnerability_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Vulnerability_ssp126.mat';
+    load(Vulnerability_Path_Data); clear Vulnerability_Path_Data;
+    % Path of different countries influenced by Asian Water Tower
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+    Mean_Vulnerability_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Vulnerability);
+    % Save Results to Table
+    Pos = {'N21','N22','N23','N24','N25','N26','N27','N28','N29','N30','N31','N32','N33','N34','N35','N36','N37','N38'};
+    for ii = 1:length(Mean_Vulnerability_Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Vulnerability_Index(ii)' ,...
+            'Risk_Assessment' , Pos{ii});
+    end
+    clear ii Pos Path_Shapefile
+    % SSP245
+    clc; clear all; close all;
+    Vulnerability_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Vulnerability_ssp245.mat';
+    load(Vulnerability_Path_Data); clear Vulnerability_Path_Data;
+    % Path of different countries influenced by Asian Water Tower
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+    Mean_Vulnerability_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Vulnerability);
+    % Save Results to Table
+    Pos = {'O21','O22','O23','O24','O25','O26','O27','O28','O29','O30','O31','O32','O33','O34','O35','O36','O37','O38'};
+    for ii = 1:length(Mean_Vulnerability_Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Vulnerability_Index(ii)' ,...
+            'Risk_Assessment' , Pos{ii});
+    end
+    clear ii Pos Path_Shapefile
+    % SSP370
+    clc; clear all; close all;
+    Vulnerability_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Vulnerability_ssp370.mat';
+    load(Vulnerability_Path_Data); clear Vulnerability_Path_Data;
+    % Path of different countries influenced by Asian Water Tower
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+    Mean_Vulnerability_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Vulnerability);
+    % Save Results to Table
+    Pos = {'P21','P22','P23','P24','P25','P26','P27','P28','P29','P30','P31','P32','P33','P34','P35','P36','P37','P38'};
+    for ii = 1:length(Mean_Vulnerability_Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Vulnerability_Index(ii)' ,...
+            'Risk_Assessment' , Pos{ii});
+    end
+    clear ii Pos Path_Shapefile
+    % SSP585
+    clc; clear all; close all;
+    Vulnerability_Path_Data = 'D:\CMIP6\VariableStorage\ImplicationResearch\Vulnerability_ssp585.mat';
+    load(Vulnerability_Path_Data); clear Vulnerability_Path_Data;
+    % Path of different countries influenced by Asian Water Tower
+    Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+    Mean_Vulnerability_Index = Fig3_InfoExtractCountryMean(Path_Shapefile , lat , lon , Vulnerability);
+    % Save Results to Table
+    Pos = {'Q21','Q22','Q23','Q24','Q25','Q26','Q27','Q28','Q29','Q30','Q31','Q32','Q33','Q34','Q35','Q36','Q37','Q38'};
+    for ii = 1:length(Mean_Vulnerability_Index)
+        xlswrite(['Fig3_OutputTable\ImplicationResearch.xlsx'] ,...
+            Mean_Vulnerability_Index(ii)' ,...
+            'Risk_Assessment' , Pos{ii});
+    end
+    clear ii Pos Path_Shapefile
+catch
+    disp('Error in (9)!');
+end
