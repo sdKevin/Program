@@ -1,7 +1,7 @@
 %% Figure 3 Table and Figure S3 supplement Material
 clc; clear all; close all;
 % Path of Watershed-Country Shapefile
-Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\Basin_Topo_MergeOriginalData_Country.shp';
+Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\basins_vector_Tibetan_Country.shp';
 %% (1) Livestock
 try
     % Cattle
