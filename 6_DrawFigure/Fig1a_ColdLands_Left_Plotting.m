@@ -1,24 +1,24 @@
 function Fig1a_ColdLands_Left_Plotting(CMIP_DryWetRegion , Path_DryWetRegion_Princeton)
-%% Cold Lands Data
-% Cold_ssp126 is cold lands area ratio from 1850 to 2100
+%% Cold Regions Data
+% Cold_ssp126 is cold regions area ratio from 1850 to 2100
 Cold_historical = CMIP_DryWetRegion(1).Cold_PM_RC_CO2_Jarvis_H;
-% Cold_ssp126 is cold lands area ratio from 1850 to 2100
+% Cold_ssp126 is cold regions area ratio from 1850 to 2100
 Cold_ssp126 = [Cold_historical(:,end) , CMIP_DryWetRegion(2).Cold_PM_RC_CO2_Jarvis_H];
-% Cold_ssp245 is cold lands area ratio from 1850 to 2100
+% Cold_ssp245 is cold regions area ratio from 1850 to 2100
 % Cold_ssp245 = [Cold_historical(:,end) , CMIP_DryWetRegion(3).Cold_PM_RC_CO2_Jarvis_H];
-% Cold_ssp370 is cold lands area ratio from 1850 to 2100
+% Cold_ssp370 is cold regions area ratio from 1850 to 2100
 % Cold_ssp370 = [Cold_historical([1:15,17:end],end) , CMIP_DryWetRegion(4).Cold_PM_RC_CO2_Jarvis_H];
-% Cold_ssp585 is cold lands area ratio from 1850 to 2100
+% Cold_ssp585 is cold regions area ratio from 1850 to 2100
 Cold_ssp585 = [Cold_historical(:,end) , CMIP_DryWetRegion(5).Cold_PM_RC_CO2_Jarvis_H];
 
 %% Setting Color
 % Color for Historical Period
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
-% Color for Princeton cold lands
+% Color for Princeton cold regions
 RGB_Princeton_Cold = [112,131,164];
-% Color for ssp126 cold lands
+% Color for ssp126 cold regions
 RGB_ssp126_Shade = [234 , 208 , 220]; RGB_ssp126_Line = [159 , 73 , 116];
-% Color for ssp585 cold lands
+% Color for ssp585 cold regions
 RGB_ssp585_Shade = [191 , 220 , 237]; RGB_ssp585_Line = [57 , 83 , 164];
 
 %% Setting axis range
@@ -38,7 +38,7 @@ fill([2070;2099;2099;2070],...
 %% Plotting axis and Cold region Shade Area
 % Plotting axis
 plot(0,0); hold on;
-ylabel('Cold Lands Area  (%)')
+ylabel('Cold Regions Area  (%)')
 set(gca,'ylim',YlimRange_Cold,'xlim',[1948,2100],...
     'YMinorTick','on', 'YTick',YTickRange_Cold,'XTick',[1850:50:2100],...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5);
@@ -53,7 +53,7 @@ fill([[1850:2014]';flipud([1850:2014]')],...
     RGB_Historical_Shade./255,'EdgeAlpha',0,'FaceAlpha',0.5); hold on;
 clear A ax B h1 h2 ii mycolormap;
 
-%% Plotting Cold lands for ssp126 and ssp585
+%% Plotting Cold regions for ssp126 and ssp585
 axes('position', [0.1300    0.1100    0.7750    0.8150]);
 %%% Plotting Shade Area and Ensemble Mean for ssp126 and ssp585
 % ssp126 Shade Area
