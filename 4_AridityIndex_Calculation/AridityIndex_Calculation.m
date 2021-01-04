@@ -31,7 +31,8 @@ for i_Path = 1 : length(InputETrcPath)
             'INM-CM5-0','IPSL-CM6A-LR','MIROC6','MIROC-ES2L','MPI-ESM1-2-HR','MPI-ESM1-2-LR',...
             'MRI-ESM2-0','NorESM2-MM','UKESM1-0-LL'};
     else
-        % Name of Global Climate Model
+        % Name of Global Climate Model, since HadGEM3-GC31-LL model does
+        % not have ssp370
         GCM_Ensemble = {'ACCESS-CM2','ACCESS-ESM1-5','BCC-CSM2-MR','CanESM5','CanESM5-CanOE',...
             'CESM2','CESM2-WACCM','CNRM-CM6-1','CNRM-ESM2-1','EC-Earth3','EC-Earth3-Veg',...
             'FGOALS-f3-L','FGOALS-g3','GFDL-ESM4','GISS-E2-1-G','HadGEM3-GC31-LL','INM-CM4-8',...
@@ -129,7 +130,7 @@ for ii = 1 : size(Met_Var.pr , 3)
     Grid_AI.PM_RC_CO2_Jarvis_H(:,:,ii) = Met_Var.pr(:,:,ii) ./ ETrc.PM_RC_CO2_Jarvis_H(:,:,ii);
     Grid_AI.PM_RC_CO2_Yang(:,:,ii) = Met_Var.pr(:,:,ii) ./ ETrc.PM_RC_CO2_Yang(:,:,ii);
 end
-clear ii% Yearly Grid to Yearly series
+clear ii % Yearly Grid to Yearly series
 for ii = 1 : size( ETrc.PM_RC,3)
     Cold_PM_RC(1,ii) = nansum(EarthLandArea_05deg([(ETrc.PM_RC(:,1:250,ii))<400,(ETrc.PM_RC(:,251:end,ii))<400]))...
         ./nansum(nansum(EarthLandArea_05deg(~isnan(landmask_05deg)))) .* 100;

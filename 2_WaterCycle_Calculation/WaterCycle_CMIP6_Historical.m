@@ -3,7 +3,7 @@ clc; clear all; close all;
 %% (1) Setting the input/output paths
 % CMIP6 Ensemble Meteorological Data
 InputPath_CMIP6_Ensemble = 'D:\CMIP6\ProcessData\Ensemble_Land';
-% Climate Data Record includes water balance fluxes
+% Princeton Climate Data Record (Princeton-CDR)
 InputPath_CDR= 'D:\CMIP6\ProcessData\Climate Data Record (CDR)';
 % Save Meteorological variables
 OutputPath_LandVar = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Land';
@@ -21,7 +21,7 @@ for i_GCM = 1 : length(GCM_Ensemble)
     GCM = GCM_Ensemble{i_GCM}
     load(strcat(InputPath_CMIP6_Ensemble , '\Historical\' , GCM , '.mat'));
     %% (2.2) Interpolating Forcing Data to Uniform Resolution i.e., 0.5deg
-    % Load Global 0.5 Degree Coordinate Data from Princeton reanalysis
+    % Load Global 0.5 Degree Coordinate Data from Princeton-CDR
     load LandInfo_05deg;
     % Bilinear Interpolation Unit kg/(m2s)
     R1.lat = lat_05deg; R1.lon = lon_05deg;
@@ -36,7 +36,7 @@ for i_GCM = 1 : length(GCM_Ensemble)
     clear r1 ii elevation_05deg
     r1 = R1; clear R1
     
-    %% (2.3) Bias Correction : Using CDR Data to correct CMIP6 Historical Data
+    %% (2.3) Bias Correction : Using Princeton-CDR Data to correct CMIP6 Historical Data
     % CDR Unit: mm/month and [./  (1000 .* 2592000 ./ 997))] to convert to kg/(m2s)
     load([InputPath_CDR , '\evspsbl.mat']); %1984-2010
     C.evspsbl = (nanmean(evspsbl,3) ./  (1000 .* 2592000 ./ 997)) ./ nanmean(r1.evspsbl(:,:,1609:1932),3); C.evspsbl(C.evspsbl>10)=10; clear evspsbl;

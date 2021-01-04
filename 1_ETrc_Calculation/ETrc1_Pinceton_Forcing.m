@@ -1,7 +1,7 @@
 clc; clear all; close all;
 
 %% Setting the input/output paths
-% Princeton Meteorological Forcing Reanalysis Data
+% Princeton Global Meteorological Forcing (Princeton-GMFD) Data
 InputPath_Princeton = 'D:\CMIP6\ProcessData\Princeton\monthly';
 % CMIP6 CO2 Concentration Data
 InputPath_CO2 = 'D:\CMIP6\ProcessData\CO2Data';
@@ -12,17 +12,17 @@ OutputPath_MetVar = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Met';
 % Save Reference Crop Evapotranspiration (ETrc) Data
 OutputPath_ETrc = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_ETrc';
 
-%% Princeton Reanalysis Data Preparation
-% Load Global 0.5 Degree Coordinate Data from Princeton reanalysis
+%% Princeton-GMFD Data Preparation
+% Load Global 0.5 Degree Coordinate Data from Princeton-GMFD
 load LandInfo_05deg
-% Load Princeton Meteorological Forcing Data
-load([InputPath_Princeton , '\huss.mat']); huss(:,:,805:828)=[]; %1948-2016 to 1948-2014
-load([InputPath_Princeton , '\pr.mat']); pr(:,:,805:828)=[]; %1948-2016 to 1948-2014
-load([InputPath_Princeton , '\ps.mat']); ps(:,:,805:828)=[]; %1948-2016 to 1948-2014
-load([InputPath_Princeton , '\rlds.mat']); rlds(:,:,805:828)=[]; %1948-2016 to 1948-2014
-load([InputPath_Princeton , '\rsds.mat']); rsds(:,:,805:828)=[]; %1948-2016 to 1948-2014
-load([InputPath_Princeton , '\sfcWind.mat']); sfcWind(:,:,805:828)=[]; %1948-2016 to 1948-2014
-load([InputPath_Princeton , '\tas.mat']); tas(:,:,805:828)=[]; %1948-2016 to 1948-2014
+% Load Princeton-GMFD
+load([InputPath_Princeton , '\huss.mat']); huss(:,:,805:828) = []; %1948-2016 to 1948-2014
+load([InputPath_Princeton , '\pr.mat']); pr(:,:,805:828) = []; %1948-2016 to 1948-2014
+load([InputPath_Princeton , '\ps.mat']); ps(:,:,805:828) = []; %1948-2016 to 1948-2014
+load([InputPath_Princeton , '\rlds.mat']); rlds(:,:,805:828) = []; %1948-2016 to 1948-2014
+load([InputPath_Princeton , '\rsds.mat']); rsds(:,:,805:828) = []; %1948-2016 to 1948-2014
+load([InputPath_Princeton , '\sfcWind.mat']); sfcWind(:,:,805:828) = []; %1948-2016 to 1948-2014
+load([InputPath_Princeton , '\tas.mat']); tas(:,:,805:828) = []; %1948-2016 to 1948-2014
 % load Historical global average CO2 Concentration Series
 load([InputPath_CO2 , '\historical_CO2.mat']); historical_CO2(1:98*12) = []; % 1850-2014 to 1948-2014
 % Transform global average CO2 Series into well-mixing distributed CO2 series
@@ -44,7 +44,7 @@ PM_RC = Penman_Mothith(rsds , rlds , sfcWind , tas , huss , ps);
 
 %% Save the result
 % strcat(OutputPath_ETrc , '\Princeton\ETrc') is for saving 'PM_RC','PM_RC_CO2_Yang','PM_RC_CO2_Jarvis_H','PM_RC_CO2_Jarvis_L' in
-% ETrc.mat, which is the reference crop evapotranspiration calculated by different methods
+% ETrc_Princeton.mat, which is the reference crop evapotranspiration calculated by different methods
 save(strcat(OutputPath_ETrc , '\Princeton\ETrc_Princeton'),...
     'PM_RC','PM_RC_CO2_Yang','PM_RC_CO2_Jarvis_H','PM_RC_CO2_Jarvis_L');
 

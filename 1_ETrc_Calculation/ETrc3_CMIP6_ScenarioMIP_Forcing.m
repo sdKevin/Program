@@ -5,7 +5,7 @@ clc; clear all; close all;
 InputPath_CMIP6_Ensemble = 'D:\CMIP6\ProcessData\Ensemble_Met';
 % CMIP6 CO2 Concentration Data
 InputPath_CO2 = 'D:\CMIP6\ProcessData\CO2Data';
-% Princeton Meteorological Forcing Reanalysis Data
+% Princeton-GMFD Data
 InputPath_Princeton = 'D:\CMIP6\ProcessData\Princeton\monthly';
 % Save variables for Attribution Analysis
 OutputPath_Attribution = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Attribution';
@@ -28,7 +28,7 @@ for i_GCM = 1 : length(GCM_Ensemble)
     load(strcat(InputPath_CMIP6_Ensemble , '\Historical\' , GCM , '.mat'));
     
     %% (2.1.2) Interpolating Forcing Data to Uniform Resolution i.e., 0.5deg
-    % Load Global 0.5 Degree Coordinate Data from Princeton reanalysis
+    % Load Global 0.5 Degree Coordinate Data from Princeton-GMFD Data
     load LandInfo_05deg;
     R1.lat = lat_05deg; R1.lon = lon_05deg;
     for ii = 1 : size(r1.huss,3)
@@ -51,19 +51,19 @@ for i_GCM = 1 : length(GCM_Ensemble)
     r1 = R1; clear R1
     
     %% (2.1.3) Generate Bias Correction Coefficient
-    load([InputPath_Princeton , '\huss.mat']);huss(:,:,805:828)=[];%1948-2016 to 1948-2014
-    C.huss = nanmean(huss,3) ./ nanmean(r1.huss(:,:,1177:end),3);C.huss(C.huss>10)=10;clear huss;
-    load([InputPath_Princeton , '\pr.mat']);pr(:,:,805:828)=[];%1948-2016 to 1948-2014
-    C.pr = nanmean(pr,3) ./ nanmean(r1.pr(:,:,1177:end),3);C.pr(C.pr>10)=10;clear pr;
-    load([InputPath_Princeton , '\ps.mat']);ps(:,:,805:828)=[];%1948-2016 to 1948-2014
-    C.ps = nanmean(ps,3) ./ nanmean(r1.ps(:,:,1177:end),3);C.ps(C.ps>10)=10;clear ps;
-    load([InputPath_Princeton , '\rlds.mat']);rlds(:,:,805:828)=[];%1948-2016 to 1948-2014
-    C.rlds = nanmean(rlds,3) ./ nanmean(r1.rlds(:,:,1177:end),3);C.rlds(C.rlds>10)=10;clear rlds;
-    load([InputPath_Princeton , '\rsds.mat']);rsds(:,:,805:828)=[];%1948-2016 to 1948-2014
-    C.rsds = nanmean(rsds,3) ./ nanmean(r1.rsds(:,:,1177:end),3);C.rsds(C.rsds>10)=10;clear rsds;
-    load([InputPath_Princeton , '\sfcWind.mat']);sfcWind(:,:,805:828)=[];%1948-2016 to 1948-2014
-    C.sfcWind = nanmean(sfcWind,3) ./ nanmean(r1.sfcWind(:,:,1177:end),3);C.sfcWind(C.sfcWind>10)=10;clear sfcWind;
-    load([InputPath_Princeton , '\tas.mat']);tas(:,:,805:828)=[];%1948-2016 to 1948-2014
+    load([InputPath_Princeton , '\huss.mat']); huss(:,:,805:828)=[];%1948-2016 to 1948-2014
+    C.huss = nanmean(huss,3) ./ nanmean(r1.huss(:,:,1177:end),3); C.huss(C.huss>10)=10;clear huss;
+    load([InputPath_Princeton , '\pr.mat']); pr(:,:,805:828)=[];%1948-2016 to 1948-2014
+    C.pr = nanmean(pr,3) ./ nanmean(r1.pr(:,:,1177:end),3); C.pr(C.pr>10)=10;clear pr;
+    load([InputPath_Princeton , '\ps.mat']); ps(:,:,805:828)=[];%1948-2016 to 1948-2014
+    C.ps = nanmean(ps,3) ./ nanmean(r1.ps(:,:,1177:end),3); C.ps(C.ps>10)=10;clear ps;
+    load([InputPath_Princeton , '\rlds.mat']); rlds(:,:,805:828)=[];%1948-2016 to 1948-2014
+    C.rlds = nanmean(rlds,3) ./ nanmean(r1.rlds(:,:,1177:end),3); C.rlds(C.rlds>10)=10;clear rlds;
+    load([InputPath_Princeton , '\rsds.mat']); rsds(:,:,805:828)=[];%1948-2016 to 1948-2014
+    C.rsds = nanmean(rsds,3) ./ nanmean(r1.rsds(:,:,1177:end),3); C.rsds(C.rsds>10)=10;clear rsds;
+    load([InputPath_Princeton , '\sfcWind.mat']); sfcWind(:,:,805:828)=[];%1948-2016 to 1948-2014
+    C.sfcWind = nanmean(sfcWind,3) ./ nanmean(r1.sfcWind(:,:,1177:end),3); C.sfcWind(C.sfcWind>10)=10;clear sfcWind;
+    load([InputPath_Princeton , '\tas.mat']); tas(:,:,805:828)=[];%1948-2016 to 1948-2014
     C.tas = nanmean(tas,3) - nanmean(r1.tas(:,:,1177:end),3);clear tas;
     clear r1
     
@@ -71,18 +71,18 @@ for i_GCM = 1 : length(GCM_Ensemble)
     load(strcat(InputPath_CMIP6_Ensemble , '\ScenarioMIP\' , ssp , '\',GCM,'.mat'))
     
     %% (2.3) Interpolating Forcing Data to Uniform Resolution i.e., 0.5deg
-    % Load Global 0.5 Degree Coordinate Data from Princeton reanalysis
+    % Load Global 0.5 Degree Coordinate Data from Princeton-GMFD Data
     load LandInfo_05deg
     R1.lat = lat_05deg;
     R1.lon = lon_05deg;
     for ii = 1 : size(r1.huss,3)
-        R1.huss(:,:,ii) = interp2(r1.lat,r1.lon,r1.huss(:,:,ii),lat_05deg,lon_05deg).*landmask_05deg;
-        R1.pr(:,:,ii) = interp2(r1.lat,r1.lon,r1.pr(:,:,ii),lat_05deg,lon_05deg).*landmask_05deg;
-        R1.ps(:,:,ii) = interp2(r1.lat,r1.lon,r1.ps(:,:,ii),lat_05deg,lon_05deg).*landmask_05deg;
-        R1.rlds(:,:,ii) = interp2(r1.lat,r1.lon,r1.rlds(:,:,ii),lat_05deg,lon_05deg).*landmask_05deg;
-        R1.rsds(:,:,ii) = interp2(r1.lat,r1.lon,r1.rsds(:,:,ii),lat_05deg,lon_05deg).*landmask_05deg;
-        R1.sfcWind(:,:,ii) = interp2(r1.lat,r1.lon,r1.sfcWind(:,:,ii),lat_05deg,lon_05deg).*landmask_05deg;
-        R1.tas(:,:,ii) = interp2(r1.lat,r1.lon,r1.tas(:,:,ii),lat_05deg,lon_05deg).*landmask_05deg;
+        R1.huss(:,:,ii) = interp2(r1.lat,r1.lon,r1.huss(:,:,ii),lat_05deg,lon_05deg) .* landmask_05deg;
+        R1.pr(:,:,ii) = interp2(r1.lat,r1.lon,r1.pr(:,:,ii),lat_05deg,lon_05deg) .* landmask_05deg;
+        R1.ps(:,:,ii) = interp2(r1.lat,r1.lon,r1.ps(:,:,ii),lat_05deg,lon_05deg) .* landmask_05deg;
+        R1.rlds(:,:,ii) = interp2(r1.lat,r1.lon,r1.rlds(:,:,ii),lat_05deg,lon_05deg) .* landmask_05deg;
+        R1.rsds(:,:,ii) = interp2(r1.lat,r1.lon,r1.rsds(:,:,ii),lat_05deg,lon_05deg) .* landmask_05deg;
+        R1.sfcWind(:,:,ii) = interp2(r1.lat,r1.lon,r1.sfcWind(:,:,ii),lat_05deg,lon_05deg) .* landmask_05deg;
+        R1.tas(:,:,ii) = interp2(r1.lat,r1.lon,r1.tas(:,:,ii),lat_05deg,lon_05deg) .* landmask_05deg;
     end
     clear r1 ii elevation_05deg
     r1 = R1; clear R1
