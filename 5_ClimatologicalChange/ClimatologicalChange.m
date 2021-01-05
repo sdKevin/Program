@@ -1,23 +1,23 @@
 clc; clear all; close all;
 
 %% Setting the input/output paths
-% CMIP6 Historical Meteorological Data
+% CMIP6 Historical Water cycle, Met, and AI Data
 InputLandPath{1} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Land\Historical\Land_Var_Historical_';
 InputMetPath{1} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Met\Historical\Met_Var_Historical_';
 InputAIPath{1} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_AridityIndex\Historical\AI_Historical_';
-% CMIP6 ScenarioMIP ssp126 Meteorological Data
+% CMIP6 ScenarioMIP ssp126 Water cycle, Met, and AI Data
 InputLandPath{2} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Land\ScenarioMIP_ssp126\Land_Var_ssp126_';
 InputMetPath{2} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Met\ScenarioMIP_ssp126\Met_Var_ssp126_';
 InputAIPath{2} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_AridityIndex\ScenarioMIP_ssp126\AI_ssp126_';
-% CMIP6 ScenarioMIP ssp245 Meteorological Data
+% CMIP6 ScenarioMIP ssp245 Water cycle, Met, and AI Data
 InputLandPath{3} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Land\ScenarioMIP_ssp245\Land_Var_ssp245_';
 InputMetPath{3} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Met\ScenarioMIP_ssp245\Met_Var_ssp245_';
 InputAIPath{3} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_AridityIndex\ScenarioMIP_ssp245\AI_ssp245_';
-% CMIP6 ScenarioMIP ssp370 Meteorological Data
+% CMIP6 ScenarioMIP ssp370 Water cycle, Met, and AI Data
 InputLandPath{4} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Land\ScenarioMIP_ssp370\Land_Var_ssp370_';
 InputMetPath{4} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Met\ScenarioMIP_ssp370\Met_Var_ssp370_';
 InputAIPath{4} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_AridityIndex\ScenarioMIP_ssp370\AI_ssp370_';
-% CMIP6 ScenarioMIP ssp585 Meteorological Data
+% CMIP6 ScenarioMIP ssp585 Water cycle, Met, and AI Data
 InputLandPath{5} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Land\ScenarioMIP_ssp585\Land_Var_ssp585_';
 InputMetPath{5} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Met\ScenarioMIP_ssp585\Met_Var_ssp585_';
 InputAIPath{5} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_AridityIndex\ScenarioMIP_ssp585\AI_ssp585_';
@@ -33,7 +33,8 @@ for i_Path = 2 : length(InputLandPath)
             'INM-CM5-0','IPSL-CM6A-LR','MIROC6','MIROC-ES2L','MPI-ESM1-2-HR','MPI-ESM1-2-LR',...
             'MRI-ESM2-0','NorESM2-MM','UKESM1-0-LL'};
     else
-        % Name of Global Climate Model
+        % Name of Global Climate Model, since HadGEM3-GC31-LL model does
+        % not have ssp370
         GCM_Ensemble = {'ACCESS-CM2','ACCESS-ESM1-5','BCC-CSM2-MR','CanESM5','CanESM5-CanOE',...
             'CESM2','CESM2-WACCM','CNRM-CM6-1','CNRM-ESM2-1','EC-Earth3','EC-Earth3-Veg',...
             'GISS-E2-1-G','HadGEM3-GC31-LL','INM-CM4-8',...
@@ -48,7 +49,7 @@ for i_Path = 2 : length(InputLandPath)
         load([InputMetPath{1} , GCM_Ensemble{i_GCM} , '.mat'])
         % Load GCM Historical yearly AI data
         load([InputAIPath{1} , GCM_Ensemble{i_GCM} , '.mat'])
-        % AI,pr,evspsbl,mrso£¬mrro for contemporary [1948-2014]
+        % Mean AI,pr,evspsbl,mrso£¬mrro for contemporary [1948-2014]
         AI_Con = mean(Grid_AI.PM_RC_CO2_Jarvis_H(:,:,99:end),3);
         pr_Con = mean(Met_Var.pr(:,:,99:end),3);
         evspsbl_Con = mean(Land_Var.evspsbl(:,:,99:end),3);
@@ -62,7 +63,7 @@ for i_Path = 2 : length(InputLandPath)
         load([InputMetPath{i_Path} , GCM_Ensemble{i_GCM} , '.mat'])
         % Load GCM ssp yearly AI data
         load([InputAIPath{i_Path} , GCM_Ensemble{i_GCM} , '.mat'])
-        % AI,pr,evspsbl,mrso£¬mrro percentage change from contemporary to
+        % AI, pr, evspsbl, mrso£¬mrro percentage change from contemporary to
         % far future [2070-2099]
         PerChange_AI = ...
             (mean(Grid_AI.PM_RC_CO2_Jarvis_H(:,:,56:end-1),3) - AI_Con) ./ AI_Con .* 100;
