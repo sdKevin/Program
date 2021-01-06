@@ -5,23 +5,28 @@ clc; clear all; close all;
 % CMIP6 Historical Data
 InputETrcPath{1} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_ETrc\Historical\ETrc_Historical_';
 InputMetPath{1} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Met\Historical\Met_Var_Historical_';
-OutputPath{1} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_PDSI\Historical\PDSI_Historical_';
+OutputPDSIPath{1} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_PDSI\Historical\PDSI_Historical_';
+OutputscPDSIPath{1} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_scPDSI\Historical\scPDSI_Historical_';
 % CMIP6 ScenarioMIP ssp126 Data
 InputETrcPath{2} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_ETrc\ScenarioMIP_ssp126\ETrc_ssp126_';
 InputMetPath{2} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Met\ScenarioMIP_ssp126\Met_Var_ssp126_';
-OutputPath{2} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_PDSI\ScenarioMIP_ssp126\PDSI_ssp126_';
+OutputPDSIPath{2} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_PDSI\ScenarioMIP_ssp126\PDSI_ssp126_';
+OutputscPDSIPath{2} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_scPDSI\ScenarioMIP_ssp126\scPDSI_ssp126_';
 % CMIP6 ScenarioMIP ssp245 Data
 InputETrcPath{3} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_ETrc\ScenarioMIP_ssp245\ETrc_ssp245_';
 InputMetPath{3} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Met\ScenarioMIP_ssp245\Met_Var_ssp245_';
-OutputPath{3} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_PDSI\ScenarioMIP_ssp245\PDSI_ssp245_';
+OutputPDSIPath{3} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_PDSI\ScenarioMIP_ssp245\PDSI_ssp245_';
+OutputscPDSIPath{3} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_scPDSI\ScenarioMIP_ssp245\scPDSI_ssp245_';
 % CMIP6 ScenarioMIP ssp370 Data
 InputETrcPath{4} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_ETrc\ScenarioMIP_ssp370\ETrc_ssp370_';
 InputMetPath{4} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Met\ScenarioMIP_ssp370\Met_Var_ssp370_';
-OutputPath{4} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_PDSI\ScenarioMIP_ssp370\PDSI_ssp370_';
+OutputPDSIPath{4} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_PDSI\ScenarioMIP_ssp370\PDSI_ssp370_';
+OutputscPDSIPath{4} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_scPDSI\ScenarioMIP_ssp370\scPDSI_ssp370_';
 % CMIP6 ScenarioMIP ssp585 Data
 InputETrcPath{5} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_ETrc\ScenarioMIP_ssp585\ETrc_ssp585_';
 InputMetPath{5} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Met\ScenarioMIP_ssp585\Met_Var_ssp585_';
-OutputPath{5} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_PDSI\ScenarioMIP_ssp585\PDSI_ssp585_';
+OutputPDSIPath{5} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_PDSI\ScenarioMIP_ssp585\PDSI_ssp585_';
+OutputscPDSIPath{5} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_scPDSI\ScenarioMIP_ssp585\scPDSI_ssp585_';
 
 % Name of Global Climate Model
 GCM_Ensemble = {'ACCESS-CM2','ACCESS-ESM1-5','BCC-CSM2-MR','CanESM5','CanESM5-CanOE',...
@@ -30,7 +35,7 @@ GCM_Ensemble = {'ACCESS-CM2','ACCESS-ESM1-5','BCC-CSM2-MR','CanESM5','CanESM5-Ca
     'INM-CM5-0','IPSL-CM6A-LR','MIROC6','MIROC-ES2L','MPI-ESM1-2-HR','MPI-ESM1-2-LR',...
     'MRI-ESM2-0','NorESM2-MM','UKESM1-0-LL'};
 
-for i_GCM = 1 : length(GCM_Ensemble)
+for i_GCM = 12 : length(GCM_Ensemble)
     GCM = GCM_Ensemble{i_GCM}
     if strcmp(GCM_Ensemble{i_GCM} , 'HadGEM3-GC31-LL') %since HadGEM3-GC31-LL model does not have ssp370
         ssp = [1 , 2 , 4];
@@ -97,11 +102,17 @@ for i_GCM = 1 : length(GCM_Ensemble)
                     DATA_PM_RC_CO2_Jarvis_H = [DateGens(Year) , data2_PM_RC_CO2_Jarvis_H , data1 , awc*ones(cal_mon,1)];
                     DATA_PM_RC_CO2_Yang = [DateGens(Year) , data2_PM_RC_CO2_Yang , data1 , awc*ones(cal_mon,1)];
                     % Calculate PDSI.
-                    % In this case, the calibration period is from 1901 to 2014
+                    % In this case, the calibration period is from 1850 to 2014
                     PDSI_v_PM_RC = PDSI(DATA_PM_RC,1850,2014); PDSI_v_PM_RC = real(PDSI_v_PM_RC);
                     PDSI_v_PM_RC_CO2_Jarvis_H = PDSI(DATA_PM_RC_CO2_Jarvis_H,1850,2014); PDSI_v_PM_RC_CO2_Jarvis_H = real(PDSI_v_PM_RC_CO2_Jarvis_H);
                     PDSI_v_PM_RC_CO2_Yang = PDSI(DATA_PM_RC_CO2_Yang,1850,2014); PDSI_v_PM_RC_CO2_Yang = real(PDSI_v_PM_RC_CO2_Yang);
+                    % Calculate scPDSI.
+                    % In this case, the calibration period is from 1850 to 2014
+                    scPDSI_v_PM_RC = sc_PDSI(DATA_PM_RC,1850,2014,1,1); scPDSI_v_PM_RC = real(scPDSI_v_PM_RC);
+                    scPDSI_v_PM_RC_CO2_Jarvis_H = sc_PDSI(DATA_PM_RC_CO2_Jarvis_H,1850,2014,1,1); scPDSI_v_PM_RC_CO2_Jarvis_H = real(scPDSI_v_PM_RC_CO2_Jarvis_H);
+                    scPDSI_v_PM_RC_CO2_Yang = sc_PDSI(DATA_PM_RC_CO2_Yang,1850,2014,1,1); scPDSI_v_PM_RC_CO2_Yang = real(scPDSI_v_PM_RC_CO2_Yang);
                     clear DATA_PM_RC DATA_PM_RC_CO2_Jarvis_H DATA_PM_RC_CO2_Yang
+                    
                     if nansum(PDSI_v_PM_RC)==0
                         pdsi_q_PM_RC(ii,j,[1:cal_mon]) = NaN; clear PDSI_v_PM_RC;
                         pdsi_q_PM_RC_CO2_Jarvis_H(ii,j,[1:cal_mon]) = NaN; clear PDSI_v_PM_RC_CO2_Jarvis_H;
@@ -111,38 +122,76 @@ for i_GCM = 1 : length(GCM_Ensemble)
                         pdsi_q_PM_RC_CO2_Jarvis_H(ii,j,[1:cal_mon]) = PDSI_v_PM_RC_CO2_Jarvis_H; clear PDSI_v_PM_RC_CO2_Jarvis_H;
                         pdsi_q_PM_RC_CO2_Yang(ii,j,[1:cal_mon]) = PDSI_v_PM_RC_CO2_Yang; clear PDSI_v_PM_RC_CO2_Yang;
                     end
+                    
+                    if nansum(scPDSI_v_PM_RC)==0
+                        scpdsi_q_PM_RC(ii,j,[1:cal_mon]) = NaN; clear scPDSI_v_PM_RC;
+                        scpdsi_q_PM_RC_CO2_Jarvis_H(ii,j,[1:cal_mon]) = NaN; clear scPDSI_v_PM_RC_CO2_Jarvis_H;
+                        scpdsi_q_PM_RC_CO2_Yang(ii,j,[1:cal_mon]) = NaN; clear scPDSI_v_PM_RC_CO2_Yang;
+                    else
+                        scpdsi_q_PM_RC(ii,j,[1:cal_mon]) = scPDSI_v_PM_RC; clear scPDSI_v_PM_RC;
+                        scpdsi_q_PM_RC_CO2_Jarvis_H(ii,j,[1:cal_mon]) = scPDSI_v_PM_RC_CO2_Jarvis_H; clear scPDSI_v_PM_RC_CO2_Jarvis_H;
+                        scpdsi_q_PM_RC_CO2_Yang(ii,j,[1:cal_mon]) = scPDSI_v_PM_RC_CO2_Yang; clear scPDSI_v_PM_RC_CO2_Yang;
+                    end
+                    
                 else
                     pdsi_q_PM_RC(ii,j,[1:cal_mon]) = NaN; clear PDSI_v_PM_RC;
                     pdsi_q_PM_RC_CO2_Jarvis_H(ii,j,[1:cal_mon]) = NaN; clear PDSI_v_PM_RC_CO2_Jarvis_H;
                     pdsi_q_PM_RC_CO2_Yang(ii,j,[1:cal_mon]) = NaN; clear PDSI_v_PM_RC_CO2_Yang;
+                    
+                    scpdsi_q_PM_RC(ii,j,[1:cal_mon]) = NaN; clear scPDSI_v_PM_RC;
+                    scpdsi_q_PM_RC_CO2_Jarvis_H(ii,j,[1:cal_mon]) = NaN; clear scPDSI_v_PM_RC_CO2_Jarvis_H;
+                    scpdsi_q_PM_RC_CO2_Yang(ii,j,[1:cal_mon]) = NaN; clear scPDSI_v_PM_RC_CO2_Yang;
                 end
                 clear data1 data2_PM_RC data2_PM_RC_CO2_Jarvis_H data2_PM_RC_CO2_Yang awc
             end
         end
         clear ii j m n p cal_mon Year
-        %% (5) Output PDSI
+        %% (5) Output PDSI and scPDSI
         pdsi_PM_RC = pdsi_q_PM_RC(: , : , [1981:end]);
         pdsi_PM_RC_CO2_Jarvis_H = pdsi_q_PM_RC_CO2_Jarvis_H(:,:,[1981:end]);
         pdsi_PM_RC_CO2_Yang = pdsi_q_PM_RC_CO2_Yang(:,:,[1981:end]);
+        
+        scpdsi_PM_RC = scpdsi_q_PM_RC(: , : , [1981:end]);
+        scpdsi_PM_RC_CO2_Jarvis_H = scpdsi_q_PM_RC_CO2_Jarvis_H(:,:,[1981:end]);
+        scpdsi_PM_RC_CO2_Yang = scpdsi_q_PM_RC_CO2_Yang(:,:,[1981:end]);
         if i_ssp == 1
-            save(strcat(OutputPath{ssp(i_ssp) + 1} , GCM) ,...
+            % save PDSI for future period
+            save(strcat(OutputPDSIPath{ssp(i_ssp) + 1} , GCM) ,...
                 'pdsi_PM_RC' , 'pdsi_PM_RC_CO2_Jarvis_H' , 'pdsi_PM_RC_CO2_Yang');
             clear pdsi_PM_RC pdsi_PM_RC_CO2_Jarvis_H pdsi_PM_RC_CO2_Yang
-            % PDSI for historical period
+            % save scPDSI for future period
+            save(strcat(OutputscPDSIPath{ssp(i_ssp) + 1} , GCM) ,...
+                'scpdsi_PM_RC' , 'scpdsi_PM_RC_CO2_Jarvis_H' , 'scpdsi_PM_RC_CO2_Yang');
+            clear scpdsi_PM_RC scpdsi_PM_RC_CO2_Jarvis_H scpdsi_PM_RC_CO2_Yang
+            
+            % save PDSI and scPDSI for historical period
             pdsi_PM_RC = pdsi_q_PM_RC(: , : , [1:1980]);
             pdsi_PM_RC_CO2_Jarvis_H = pdsi_q_PM_RC_CO2_Jarvis_H(: , : , [1:1980]);
             pdsi_PM_RC_CO2_Yang = pdsi_q_PM_RC_CO2_Yang(: , : , [1:1980]);
-            save(strcat(OutputPath{1} , GCM) ,...
+            
+            scpdsi_PM_RC = scpdsi_q_PM_RC(: , : , [1:1980]);
+            scpdsi_PM_RC_CO2_Jarvis_H = scpdsi_q_PM_RC_CO2_Jarvis_H(: , : , [1:1980]);
+            scpdsi_PM_RC_CO2_Yang = scpdsi_q_PM_RC_CO2_Yang(: , : , [1:1980]);
+            
+            save(strcat(OutputPDSIPath{1} , GCM) ,...
                 'pdsi_PM_RC' , 'pdsi_PM_RC_CO2_Jarvis_H' , 'pdsi_PM_RC_CO2_Yang');
             clear pdsi_PM_RC pdsi_PM_RC_CO2_Jarvis_H pdsi_PM_RC_CO2_Yang
+            save(strcat(OutputscPDSIPath{1} , GCM) ,...
+                'scpdsi_PM_RC' , 'scpdsi_PM_RC_CO2_Jarvis_H' , 'scpdsi_PM_RC_CO2_Yang');
+            clear scpdsi_PM_RC scpdsi_PM_RC_CO2_Jarvis_H scpdsi_PM_RC_CO2_Yang
             clear Pr PET_PM_RC PET_PM_RC_CO2_Jarvis_H PET_PM_RC_CO2_Yang
             clear pdsi_q_PM_RC pdsi_q_PM_RC_CO2_Jarvis_H pdsi_q_PM_RC_CO2_Yang
+            clear scpdsi_q_PM_RC scpdsi_q_PM_RC_CO2_Jarvis_H scpdsi_q_PM_RC_CO2_Yang
         else
-            save(strcat(OutputPath{ssp(i_ssp) + 1} , GCM) ,...
+            save(strcat(OutputPDSIPath{ssp(i_ssp) + 1} , GCM) ,...
                 'pdsi_PM_RC' , 'pdsi_PM_RC_CO2_Jarvis_H' , 'pdsi_PM_RC_CO2_Yang');
             clear pdsi_PM_RC pdsi_PM_RC_CO2_Jarvis_H pdsi_PM_RC_CO2_Yang
+            save(strcat(OutputscPDSIPath{ssp(i_ssp) + 1} , GCM) ,...
+                'scpdsi_PM_RC' , 'scpdsi_PM_RC_CO2_Jarvis_H' , 'scpdsi_PM_RC_CO2_Yang');
+            clear scpdsi_PM_RC scpdsi_PM_RC_CO2_Jarvis_H scpdsi_PM_RC_CO2_Yang
             clear Pr PET_PM_RC PET_PM_RC_CO2_Jarvis_H PET_PM_RC_CO2_Yang
             clear pdsi_q_PM_RC pdsi_q_PM_RC_CO2_Jarvis_H pdsi_q_PM_RC_CO2_Yang
+            clear scpdsi_q_PM_RC scpdsi_q_PM_RC_CO2_Jarvis_H scpdsi_q_PM_RC_CO2_Yang
         end
     end
     clear i_ssp ssp GCM Pr_hist PM_RC_hist PM_RC_CO2_Jarvis_H_hist PM_RC_CO2_Yang_hist
