@@ -35,7 +35,7 @@ GCM_Ensemble = {'ACCESS-CM2','ACCESS-ESM1-5','BCC-CSM2-MR','CanESM5','CanESM5-Ca
     'INM-CM5-0','IPSL-CM6A-LR','MIROC6','MIROC-ES2L','MPI-ESM1-2-HR','MPI-ESM1-2-LR',...
     'MRI-ESM2-0','NorESM2-MM','UKESM1-0-LL'};
 
-for i_GCM = 12 : length(GCM_Ensemble)
+for i_GCM = 21 : length(GCM_Ensemble)
     GCM = GCM_Ensemble{i_GCM}
     if strcmp(GCM_Ensemble{i_GCM} , 'HadGEM3-GC31-LL') %since HadGEM3-GC31-LL model does not have ssp370
         ssp = [1 , 2 , 4];
