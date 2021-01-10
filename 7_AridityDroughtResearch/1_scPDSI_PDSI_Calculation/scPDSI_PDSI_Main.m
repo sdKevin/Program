@@ -95,7 +95,7 @@ for i_GCM = 21 : length(GCM_Ensemble)
                 % Extract the AWC data corresponding to the grid
                 awc = AWC(ii,j);
                 
-                if nansum(isnan(data1(:,end)))==0 &&  nansum(isnan(data2_PM_RC(:,end)))==0 && isnan(awc)==0
+                if nansum(isnan(data1(:,end)))==0 && nansum(isnan(data2_PM_RC(:,end)))==0 && isnan(awc)==0
                     % Input data includes [year,month,monthly potential evapotranspiration,
                     % monthly precipitation,available water capacity]
                     DATA_PM_RC = [DateGens(Year) , data2_PM_RC , data1 , awc*ones(cal_mon,1)];
