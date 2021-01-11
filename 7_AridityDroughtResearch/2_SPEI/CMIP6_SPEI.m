@@ -86,7 +86,7 @@ for i_GCM = 1 : length(GCM_Ensemble)
                 
                 if nansum(isnan(data1(:,end)))==0 && nansum(isnan(data2_PM_RC(:,end)))==0
                     % Input data includes [year,month,monthly potential evapotranspiration,
-                    % monthly precipitation,available water capacity]
+                    % monthly precipitation]
                     DATA_PM_RC = [DateGens(Year) , data1 , data2_PM_RC];
                     DATA_PM_RC_CO2_Jarvis_H = [DateGens(Year) , data1 , data2_PM_RC_CO2_Jarvis_H];
                     DATA_PM_RC_CO2_Yang = [DateGens(Year) , data1 , data2_PM_RC_CO2_Yang];
