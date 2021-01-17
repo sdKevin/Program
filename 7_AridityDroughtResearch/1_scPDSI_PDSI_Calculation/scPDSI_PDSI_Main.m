@@ -1,6 +1,8 @@
 clc; clear all; close all;
 % Programmed by Wei Tian, Institute of Geographic Sciences and Natural
 % Resources Research, China. Email: tianw.17b@igsnrr.ac.cn
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CMIP6 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Setting the input/output paths
 % CMIP6 Historical Data
 InputETrcPath{1} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_ETrc\Historical\ETrc_Historical_';
@@ -35,7 +37,7 @@ GCM_Ensemble = {'ACCESS-CM2','ACCESS-ESM1-5','BCC-CSM2-MR','CanESM5','CanESM5-Ca
     'INM-CM5-0','IPSL-CM6A-LR','MIROC6','MIROC-ES2L','MPI-ESM1-2-HR','MPI-ESM1-2-LR',...
     'MRI-ESM2-0','NorESM2-MM','UKESM1-0-LL'};
 
-for i_GCM = 7 : length(GCM_Ensemble)
+for i_GCM = 1 : length(GCM_Ensemble)
     GCM = GCM_Ensemble{i_GCM}
     if strcmp(GCM_Ensemble{i_GCM} , 'HadGEM3-GC31-LL') %since HadGEM3-GC31-LL model does not have ssp370
         ssp = [1 , 2 , 4];
@@ -196,3 +198,112 @@ for i_GCM = 7 : length(GCM_Ensemble)
     end
     clear i_ssp ssp GCM Pr_hist PM_RC_hist PM_RC_CO2_Jarvis_H_hist PM_RC_CO2_Yang_hist
 end
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Princeton %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+clc; clear all; close all;
+%% Setting the input/output paths
+InputETrcPath_Princeton = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_ETrc\Princeton\ETrc_Princeton.mat';
+InputMetPath_Princeton = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Met\Princeton\Met_Var_Princeton.mat';
+OutputPDSIPath = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_PDSI\Princeton\PDSI_Princeton';
+OutputscPDSIPath = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_scPDSI\Princeton\scPDSI_Princeton';
+
+%% (1) load historical data (1850-2014)
+% (1.1) Load ETrc (mm/day)
+load(InputETrcPath_Princeton);
+PET_PM_RC = PM_RC .* 30; % from mm/day to mm/mon
+PET_PM_RC_CO2_Jarvis_H = PM_RC_CO2_Jarvis_H .* 30; % from mm/day to mm/mon
+PET_PM_RC_CO2_Yang = PM_RC_CO2_Yang .* 30; % from mm/day to mm/mon
+clear PM_RC PM_RC_CO2_Jarvis_H PM_RC_CO2_Jarvis_L PM_RC_CO2_Yang
+% (1.2) Load Precipitation (kg/(m2s))
+load(InputMetPath_Princeton);
+Pr = Met_Var.pr .* 1000 .* 2592000 ./ 997; % from kg/(m2s) to mm/mon
+clear Met_Var
+% (1.3) load available water capacity (AWC)
+% Global Gridded Surfaces of Selected Soil Characteristics
+% (https://webmap.ornl.gov/ogcdown/dataset.jsp?ds_id=569£©
+load('AWC.mat');
+
+[m , n , p] = size(Pr);
+cal_mon = p;
+Year = [1948 : 2014]; % Calculation period
+%% (4) Calculate PDSI
+for ii = 1 : m
+    ii
+    for j = 1 : n
+        % Extract the precipitation data corresponding to the grid
+        data1 = squeeze(Pr(ii,j,[1:cal_mon]));
+        % Extract the potential evapotranspiration data corresponding to the grid
+        data2_PM_RC = squeeze(PET_PM_RC(ii,j,[1:cal_mon]));
+        data2_PM_RC_CO2_Jarvis_H = squeeze(PET_PM_RC_CO2_Jarvis_H(ii,j,[1:cal_mon]));
+        data2_PM_RC_CO2_Yang = squeeze(PET_PM_RC_CO2_Yang(ii,j,[1:cal_mon]));
+        % Extract the AWC data corresponding to the grid
+        awc = AWC(ii,j);
+        
+        if nansum(isnan(data1(:,end)))==0 && nansum(isnan(data2_PM_RC(:,end)))==0 && isnan(awc)==0
+            % Input data includes [year,month,monthly potential evapotranspiration,
+            % monthly precipitation,available water capacity]
+            DATA_PM_RC = [DateGens(Year) , data2_PM_RC , data1 , awc*ones(cal_mon,1)];
+            DATA_PM_RC_CO2_Jarvis_H = [DateGens(Year) , data2_PM_RC_CO2_Jarvis_H , data1 , awc*ones(cal_mon,1)];
+            DATA_PM_RC_CO2_Yang = [DateGens(Year) , data2_PM_RC_CO2_Yang , data1 , awc*ones(cal_mon,1)];
+            % Calculate PDSI.
+            % In this case, the calibration period is from 1948 to 2014
+            PDSI_v_PM_RC = PDSI(DATA_PM_RC,1948,2014); PDSI_v_PM_RC = real(PDSI_v_PM_RC);
+            PDSI_v_PM_RC_CO2_Jarvis_H = PDSI(DATA_PM_RC_CO2_Jarvis_H,1948,2014); PDSI_v_PM_RC_CO2_Jarvis_H = real(PDSI_v_PM_RC_CO2_Jarvis_H);
+            PDSI_v_PM_RC_CO2_Yang = PDSI(DATA_PM_RC_CO2_Yang,1948,2014); PDSI_v_PM_RC_CO2_Yang = real(PDSI_v_PM_RC_CO2_Yang);
+            % Calculate scPDSI.
+            % In this case, the calibration period is from 1948 to 2014
+            scPDSI_v_PM_RC = sc_PDSI(DATA_PM_RC,1948,2014,1,1); scPDSI_v_PM_RC = real(scPDSI_v_PM_RC);
+            scPDSI_v_PM_RC_CO2_Jarvis_H = sc_PDSI(DATA_PM_RC_CO2_Jarvis_H,1948,2014,1,1); scPDSI_v_PM_RC_CO2_Jarvis_H = real(scPDSI_v_PM_RC_CO2_Jarvis_H);
+            scPDSI_v_PM_RC_CO2_Yang = sc_PDSI(DATA_PM_RC_CO2_Yang,1948,2014,1,1); scPDSI_v_PM_RC_CO2_Yang = real(scPDSI_v_PM_RC_CO2_Yang);
+            clear DATA_PM_RC DATA_PM_RC_CO2_Jarvis_H DATA_PM_RC_CO2_Yang
+            
+            if nansum(PDSI_v_PM_RC)==0
+                pdsi_q_PM_RC(ii,j,[1:cal_mon]) = NaN; clear PDSI_v_PM_RC;
+                pdsi_q_PM_RC_CO2_Jarvis_H(ii,j,[1:cal_mon]) = NaN; clear PDSI_v_PM_RC_CO2_Jarvis_H;
+                pdsi_q_PM_RC_CO2_Yang(ii,j,[1:cal_mon]) = NaN; clear PDSI_v_PM_RC_CO2_Yang;
+            else
+                pdsi_q_PM_RC(ii,j,[1:cal_mon]) = PDSI_v_PM_RC; clear PDSI_v_PM_RC;
+                pdsi_q_PM_RC_CO2_Jarvis_H(ii,j,[1:cal_mon]) = PDSI_v_PM_RC_CO2_Jarvis_H; clear PDSI_v_PM_RC_CO2_Jarvis_H;
+                pdsi_q_PM_RC_CO2_Yang(ii,j,[1:cal_mon]) = PDSI_v_PM_RC_CO2_Yang; clear PDSI_v_PM_RC_CO2_Yang;
+            end
+            
+            if nansum(scPDSI_v_PM_RC)==0
+                scpdsi_q_PM_RC(ii,j,[1:cal_mon]) = NaN; clear scPDSI_v_PM_RC;
+                scpdsi_q_PM_RC_CO2_Jarvis_H(ii,j,[1:cal_mon]) = NaN; clear scPDSI_v_PM_RC_CO2_Jarvis_H;
+                scpdsi_q_PM_RC_CO2_Yang(ii,j,[1:cal_mon]) = NaN; clear scPDSI_v_PM_RC_CO2_Yang;
+            else
+                scpdsi_q_PM_RC(ii,j,[1:cal_mon]) = scPDSI_v_PM_RC; clear scPDSI_v_PM_RC;
+                scpdsi_q_PM_RC_CO2_Jarvis_H(ii,j,[1:cal_mon]) = scPDSI_v_PM_RC_CO2_Jarvis_H; clear scPDSI_v_PM_RC_CO2_Jarvis_H;
+                scpdsi_q_PM_RC_CO2_Yang(ii,j,[1:cal_mon]) = scPDSI_v_PM_RC_CO2_Yang; clear scPDSI_v_PM_RC_CO2_Yang;
+            end
+            
+        else
+            pdsi_q_PM_RC(ii,j,[1:cal_mon]) = NaN; clear PDSI_v_PM_RC;
+            pdsi_q_PM_RC_CO2_Jarvis_H(ii,j,[1:cal_mon]) = NaN; clear PDSI_v_PM_RC_CO2_Jarvis_H;
+            pdsi_q_PM_RC_CO2_Yang(ii,j,[1:cal_mon]) = NaN; clear PDSI_v_PM_RC_CO2_Yang;
+            
+            scpdsi_q_PM_RC(ii,j,[1:cal_mon]) = NaN; clear scPDSI_v_PM_RC;
+            scpdsi_q_PM_RC_CO2_Jarvis_H(ii,j,[1:cal_mon]) = NaN; clear scPDSI_v_PM_RC_CO2_Jarvis_H;
+            scpdsi_q_PM_RC_CO2_Yang(ii,j,[1:cal_mon]) = NaN; clear scPDSI_v_PM_RC_CO2_Yang;
+        end
+        clear data1 data2_PM_RC data2_PM_RC_CO2_Jarvis_H data2_PM_RC_CO2_Yang awc
+    end
+end
+clear ii j m n p cal_mon Year
+%% (5) Output PDSI and scPDSI
+pdsi_PM_RC = pdsi_q_PM_RC;
+pdsi_PM_RC_CO2_Jarvis_H = pdsi_q_PM_RC_CO2_Jarvis_H;
+pdsi_PM_RC_CO2_Yang = pdsi_q_PM_RC_CO2_Yang;
+
+scpdsi_PM_RC = scpdsi_q_PM_RC;
+scpdsi_PM_RC_CO2_Jarvis_H = scpdsi_q_PM_RC_CO2_Jarvis_H;
+scpdsi_PM_RC_CO2_Yang = scpdsi_q_PM_RC_CO2_Yang;
+
+% save PDSI for future period
+save(OutputPDSIPath ,...
+    'pdsi_PM_RC' , 'pdsi_PM_RC_CO2_Jarvis_H' , 'pdsi_PM_RC_CO2_Yang');
+clear pdsi_PM_RC pdsi_PM_RC_CO2_Jarvis_H pdsi_PM_RC_CO2_Yang
+% save scPDSI for future period
+save(OutputscPDSIPath ,...
+    'scpdsi_PM_RC' , 'scpdsi_PM_RC_CO2_Jarvis_H' , 'scpdsi_PM_RC_CO2_Yang');
+clear scpdsi_PM_RC scpdsi_PM_RC_CO2_Jarvis_H scpdsi_PM_RC_CO2_Yang

@@ -16,13 +16,13 @@ OutputPath_ETrc = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_ETrc';
 % Load Global 0.5 Degree Coordinate Data from Princeton-GMFD
 load LandInfo_05deg
 % Load Princeton-GMFD
-load([InputPath_Princeton , '\huss.mat']); huss(:,:,805:828) = []; %1948-2016 to 1948-2014
-load([InputPath_Princeton , '\pr.mat']); pr(:,:,805:828) = []; %1948-2016 to 1948-2014
-load([InputPath_Princeton , '\ps.mat']); ps(:,:,805:828) = []; %1948-2016 to 1948-2014
-load([InputPath_Princeton , '\rlds.mat']); rlds(:,:,805:828) = []; %1948-2016 to 1948-2014
-load([InputPath_Princeton , '\rsds.mat']); rsds(:,:,805:828) = []; %1948-2016 to 1948-2014
-load([InputPath_Princeton , '\sfcWind.mat']); sfcWind(:,:,805:828) = []; %1948-2016 to 1948-2014
-load([InputPath_Princeton , '\tas.mat']); tas(:,:,805:828) = []; %1948-2016 to 1948-2014
+load([InputPath_Princeton , '\huss.mat']); huss = huss .* landmask_05deg; huss(:,:,805:828) = []; %1948-2016 to 1948-2014
+load([InputPath_Princeton , '\pr.mat']); pr = pr .* landmask_05deg; pr(:,:,805:828) = []; %1948-2016 to 1948-2014
+load([InputPath_Princeton , '\ps.mat']); ps = ps .* landmask_05deg; ps(:,:,805:828) = []; %1948-2016 to 1948-2014
+load([InputPath_Princeton , '\rlds.mat']); rlds = rlds .* landmask_05deg; rlds(:,:,805:828) = []; %1948-2016 to 1948-2014
+load([InputPath_Princeton , '\rsds.mat']); rsds = rsds .* landmask_05deg; rsds(:,:,805:828) = []; %1948-2016 to 1948-2014
+load([InputPath_Princeton , '\sfcWind.mat']); sfcWind = sfcWind .* landmask_05deg; sfcWind(:,:,805:828) = []; %1948-2016 to 1948-2014
+load([InputPath_Princeton , '\tas.mat']); tas = tas .* landmask_05deg; tas(:,:,805:828) = []; %1948-2016 to 1948-2014
 % load Historical global average CO2 Concentration Series
 load([InputPath_CO2 , '\historical_CO2.mat']); historical_CO2(1:98*12) = []; % 1850-2014 to 1948-2014
 % Transform global average CO2 Series into well-mixing distributed CO2 series

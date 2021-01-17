@@ -74,7 +74,7 @@ end
 
 %% (2) Integrate Monthly Princeton data to yearly data
 clc; clear all; close all;
-% CMIP6 Princeton Meteorological Data
+% Princeton Meteorological Data
 InputPath_Princeton = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_ETrc\Princeton\ETrc_Princeton.mat';
 OutputPath_Princeton = 'D:\CMIP6\VariableStorage\YearlyVar\Var_ETrc\Princeton\';
 
