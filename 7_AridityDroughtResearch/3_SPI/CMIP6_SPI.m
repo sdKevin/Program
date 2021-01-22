@@ -1,6 +1,8 @@
 clc; clear all; close all;
 % Programmed by Wei Tian, Institute of Geographic Sciences and Natural
 % Resources Research, China. Email: tianw.17b@igsnrr.ac.cn
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CMIP6 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Setting the input/output paths
 % CMIP6 Historical Data
 InputETrcPath{1} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_ETrc\Historical\ETrc_Historical_';
@@ -105,3 +107,53 @@ for i_GCM = 1 : length(GCM_Ensemble)
     end
     clear i_ssp ssp GCM Pr_hist
 end
+
+
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Princeton %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+clc; clear all; close all;
+%% Setting the input/output paths
+InputMetPath_Princeton = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Met\Princeton\Met_Var_Princeton.mat';
+OutputSPIPath = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_SPI\Princeton\SPI_Princeton';
+
+%% (1) load Princeton data (1948-2014)
+% Load Precipitation (kg/(m2s))
+load(InputMetPath_Princeton);
+Pr = Met_Var.pr .* 1000 .* 2592000 ./ 997; % from kg/(m2s) to mm/mon
+clear Met_Var
+
+[m , n , p] = size(Pr);
+cal_mon = p;
+Year = [1948 : 2014]; % Calculation period
+%% (2) Calculate SPI
+for ii = 1 : m
+    ii
+    for j = 1 : n
+        % Extract the precipitation data corresponding to the grid
+        data1 = squeeze(Pr(ii,j,[1:cal_mon]));
+        
+        if nansum(isnan(data1(:,end)))==0
+            % Input data includes [year,month,monthly precipitation]
+            DATA = [DateGens(Year) , data1];
+            % Calculate SPI.
+            % In this case, the calibration period is from 1850 to
+            % 2014; Scale is 3 months.
+            SPI_v = SPIc(DATA , 1948 , 2014 , 3 , 12);
+            
+            if nansum(SPI_v)==0
+                spi_q(ii,j,[1:cal_mon]) = NaN; clear SPI_v;
+            else
+                spi_q(ii,j,[1:cal_mon]) = SPI_v; clear SPI_v;
+            end
+            
+        else
+            spi_q(ii,j,[1:cal_mon]) = NaN; clear SPI_v;
+        end
+        clear data1 DATA
+    end
+end
+clear ii j m n p cal_mon Year
+%% (3) Output SPI
+SPI = spi_q;
+% save SPI
+save(OutputSPIPath , 'SPI'); clear SPI;

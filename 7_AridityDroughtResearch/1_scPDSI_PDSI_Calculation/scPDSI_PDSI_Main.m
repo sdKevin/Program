@@ -84,7 +84,7 @@ for i_GCM = 1 : length(GCM_Ensemble)
         [m , n , p] = size(Pr);
         cal_mon = p;
         Year = [1850 : 2100]; % Calculation period
-        %% (4) Calculate PDSI
+        %% (4) Calculate PDSI and scPDSI
         for ii = 1 : m
             ii
             for j = 1 : n
@@ -199,6 +199,8 @@ for i_GCM = 1 : length(GCM_Ensemble)
     clear i_ssp ssp GCM Pr_hist PM_RC_hist PM_RC_CO2_Jarvis_H_hist PM_RC_CO2_Yang_hist
 end
 
+
+
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Princeton %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clc; clear all; close all;
 %% Setting the input/output paths
@@ -207,7 +209,7 @@ InputMetPath_Princeton = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Met\Princeton\
 OutputPDSIPath = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_PDSI\Princeton\PDSI_Princeton';
 OutputscPDSIPath = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_scPDSI\Princeton\scPDSI_Princeton';
 
-%% (1) load historical data (1850-2014)
+%% (1) load Princeton data (1948-2014)
 % (1.1) Load ETrc (mm/day)
 load(InputETrcPath_Princeton);
 PET_PM_RC = PM_RC .* 30; % from mm/day to mm/mon
@@ -226,7 +228,7 @@ load('AWC.mat');
 [m , n , p] = size(Pr);
 cal_mon = p;
 Year = [1948 : 2014]; % Calculation period
-%% (4) Calculate PDSI
+%% (2) Calculate PDSI and scPDSI
 for ii = 1 : m
     ii
     for j = 1 : n
@@ -290,7 +292,7 @@ for ii = 1 : m
     end
 end
 clear ii j m n p cal_mon Year
-%% (5) Output PDSI and scPDSI
+%% (3) Output PDSI and scPDSI
 pdsi_PM_RC = pdsi_q_PM_RC;
 pdsi_PM_RC_CO2_Jarvis_H = pdsi_q_PM_RC_CO2_Jarvis_H;
 pdsi_PM_RC_CO2_Yang = pdsi_q_PM_RC_CO2_Yang;
@@ -299,11 +301,11 @@ scpdsi_PM_RC = scpdsi_q_PM_RC;
 scpdsi_PM_RC_CO2_Jarvis_H = scpdsi_q_PM_RC_CO2_Jarvis_H;
 scpdsi_PM_RC_CO2_Yang = scpdsi_q_PM_RC_CO2_Yang;
 
-% save PDSI for future period
+% save PDSI
 save(OutputPDSIPath ,...
     'pdsi_PM_RC' , 'pdsi_PM_RC_CO2_Jarvis_H' , 'pdsi_PM_RC_CO2_Yang');
 clear pdsi_PM_RC pdsi_PM_RC_CO2_Jarvis_H pdsi_PM_RC_CO2_Yang
-% save scPDSI for future period
+% save scPDSI
 save(OutputscPDSIPath ,...
     'scpdsi_PM_RC' , 'scpdsi_PM_RC_CO2_Jarvis_H' , 'scpdsi_PM_RC_CO2_Yang');
 clear scpdsi_PM_RC scpdsi_PM_RC_CO2_Jarvis_H scpdsi_PM_RC_CO2_Yang

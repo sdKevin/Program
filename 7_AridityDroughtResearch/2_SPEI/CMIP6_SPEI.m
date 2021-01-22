@@ -1,6 +1,8 @@
 clc; clear all; close all;
 % Programmed by Wei Tian, Institute of Geographic Sciences and Natural
 % Resources Research, China. Email: tianw.17b@igsnrr.ac.cn
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CMIP6 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Setting the input/output paths
 % CMIP6 Historical Data
 InputETrcPath{1} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_ETrc\Historical\ETrc_Historical_';
@@ -147,3 +149,80 @@ for i_GCM = 1 : length(GCM_Ensemble)
     end
     clear i_ssp ssp GCM Pr_hist PM_RC_hist PM_RC_CO2_Jarvis_H_hist PM_RC_CO2_Yang_hist
 end
+
+
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Princeton %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+clc; clear all; close all;
+%% Setting the input/output paths
+InputETrcPath_Princeton = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_ETrc\Princeton\ETrc_Princeton.mat';
+InputMetPath_Princeton = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Met\Princeton\Met_Var_Princeton.mat';
+OutputSPEIPath = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_SPEI\Princeton\SPEI_Princeton';
+
+%% (1) load Princeton data (1948-2014)
+% (1.1) Load ETrc (mm/day)
+load(InputETrcPath_Princeton);
+PET_PM_RC = PM_RC .* 30; % from mm/day to mm/mon
+PET_PM_RC_CO2_Jarvis_H = PM_RC_CO2_Jarvis_H .* 30; % from mm/day to mm/mon
+PET_PM_RC_CO2_Yang = PM_RC_CO2_Yang .* 30; % from mm/day to mm/mon
+clear PM_RC PM_RC_CO2_Jarvis_H PM_RC_CO2_Jarvis_L PM_RC_CO2_Yang
+% (1.2) Load Precipitation (kg/(m2s))
+load(InputMetPath_Princeton);
+Pr = Met_Var.pr .* 1000 .* 2592000 ./ 997; % from kg/(m2s) to mm/mon
+clear Met_Var
+
+[m , n , p] = size(Pr);
+cal_mon = p;
+Year = [1948 : 2014]; % Calculation period
+%% (2) Calculate SPEI
+for ii = 1 : m
+    ii
+    for j = 1 : n
+        % Extract the precipitation data corresponding to the grid
+        data1 = squeeze(Pr(ii,j,[1:cal_mon]));
+        % Extract the potential evapotranspiration data corresponding to the grid
+        data2_PM_RC = squeeze(PET_PM_RC(ii,j,[1:cal_mon]));
+        data2_PM_RC_CO2_Jarvis_H = squeeze(PET_PM_RC_CO2_Jarvis_H(ii,j,[1:cal_mon]));
+        data2_PM_RC_CO2_Yang = squeeze(PET_PM_RC_CO2_Yang(ii,j,[1:cal_mon]));
+        
+        if nansum(isnan(data1(:,end)))==0 && nansum(isnan(data2_PM_RC(:,end)))==0
+            % Input data includes [year,month,monthly potential evapotranspiration,
+            % monthly precipitation]
+            DATA_PM_RC = [DateGens(Year) , data1 , data2_PM_RC];
+            DATA_PM_RC_CO2_Jarvis_H = [DateGens(Year) , data1 , data2_PM_RC_CO2_Jarvis_H];
+            DATA_PM_RC_CO2_Yang = [DateGens(Year) , data1 , data2_PM_RC_CO2_Yang];
+            % Calculate SPEI.
+            % In this case, the calibration period is from 1948 to 2014
+            SPEI_v_PM_RC = SPEIcc(DATA_PM_RC,1948,2014,3,12);
+            SPEI_v_PM_RC_CO2_Jarvis_H = SPEIcc(DATA_PM_RC_CO2_Jarvis_H,1948,2014,3,12);
+            SPEI_v_PM_RC_CO2_Yang = SPEIcc(DATA_PM_RC_CO2_Yang,1948,2014,3,12);
+            
+            if nansum(SPEI_v_PM_RC)==0
+                spei_q_PM_RC(ii,j,[1:cal_mon]) = NaN; clear SPEI_v_PM_RC;
+                spei_q_PM_RC_CO2_Jarvis_H(ii,j,[1:cal_mon]) = NaN; clear SPEI_v_PM_RC_CO2_Jarvis_H;
+                spei_q_PM_RC_CO2_Yang(ii,j,[1:cal_mon]) = NaN; clear SPEI_v_PM_RC_CO2_Yang;
+            else
+                spei_q_PM_RC(ii,j,[1:cal_mon]) = SPEI_v_PM_RC; clear SPEI_v_PM_RC;
+                spei_q_PM_RC_CO2_Jarvis_H(ii,j,[1:cal_mon]) = SPEI_v_PM_RC_CO2_Jarvis_H; clear SPEI_v_PM_RC_CO2_Jarvis_H;
+                spei_q_PM_RC_CO2_Yang(ii,j,[1:cal_mon]) = SPEI_v_PM_RC_CO2_Yang; clear SPEI_v_PM_RC_CO2_Yang;
+            end
+            
+        else
+            spei_q_PM_RC(ii,j,[1:cal_mon]) = NaN; clear SPEI_v_PM_RC;
+            spei_q_PM_RC_CO2_Jarvis_H(ii,j,[1:cal_mon]) = NaN; clear SPEI_v_PM_RC_CO2_Jarvis_H;
+            spei_q_PM_RC_CO2_Yang(ii,j,[1:cal_mon]) = NaN; clear SPEI_v_PM_RC_CO2_Yang;
+        end
+        clear data1 data2_PM_RC data2_PM_RC_CO2_Jarvis_H data2_PM_RC_CO2_Yang
+        clear DATA_PM_RC DATA_PM_RC_CO2_Jarvis_H DATA_PM_RC_CO2_Yang
+    end
+end
+clear ii j m n p cal_mon Year
+%% (3) Output SPEI
+spei_PM_RC = spei_q_PM_RC;
+spei_PM_RC_CO2_Jarvis_H = spei_q_PM_RC_CO2_Jarvis_H;
+spei_PM_RC_CO2_Yang = spei_q_PM_RC_CO2_Yang;
+
+% save SPEI
+save(OutputSPEIPath ,...
+    'spei_PM_RC' , 'spei_PM_RC_CO2_Jarvis_H' , 'spei_PM_RC_CO2_Yang');
+clear spei_PM_RC spei_PM_RC_CO2_Jarvis_H spei_PM_RC_CO2_Yang
