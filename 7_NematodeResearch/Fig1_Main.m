@@ -16,10 +16,6 @@ CMIP_DryWetRegion = cat(2,load(Path_DryWetRegion_Historical_GCM),...
 Fig1a_ColdLands_Left_Plotting( CMIP_DryWetRegion , Path_DryWetRegion_Princeton );
 Fig1a_ColdLands_Right_Plotting( CMIP_DryWetRegion );
 
-% Plotting Global Cold Regions, Dry Lands, and Humid Lands
-Fig1a_GlobalLands_Left_Plotting( cat(2,CMIP_DryWetRegion(1),CMIP_DryWetRegion(5)) , Path_DryWetRegion_Princeton );
-Fig1a_GlobalLands_Right_Plotting( CMIP_DryWetRegion );
-
 %%% Figure 1b
 clc; clear all; close all;
 Path_Ensemble_Mean_Historical_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_AridityIndex\Historical\AI_Historical_Ensemble_Mean.mat';

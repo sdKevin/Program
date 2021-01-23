@@ -8,6 +8,7 @@ A = EarthLandArea_05deg(1:360 , :);
 B = EarthLandArea_05deg(361:end , :);
 EarthLandArea_05deg = [B;A]; clear B A
 
+%% (1) Fill in 6*6 matrix
 % Humid 1; Hyper_arid 5; Arid 4; Semi_arid 3; Dry_Sub_humid 2; Cold 6;
 AI_PM_RC_2070_2099(AI_PM_RC_2070_2099==-9999)=nan;
 AI_PM_RC_CO2_Yang_2070_2099(AI_PM_RC_CO2_Yang_2070_2099==-9999)=nan;
@@ -176,7 +177,7 @@ xlswrite([Path_Fig1b_Output 'TransferMatrix_EnsembleMean.xlsx'] , M_PM_RC , sspN
 xlswrite([Path_Fig1b_Output 'TransferMatrix_EnsembleMean.xlsx'] , M_PM_RC_Yang , sspName , 'C16:H21');
 xlswrite([Path_Fig1b_Output 'TransferMatrix_EnsembleMean.xlsx'] , M_PM_RC_Jarvis_H , sspName , 'C28:H33');
 clear M_PM_RC M_PM_RC_Yang M_PM_RC_Jarvis_H
-%% Overlaying on permafrost
+%% (2) Overlaying on permafrost
 load Permafrost
 % permafrost: 5-Continuous,4-sporadic,3-discontinuous,2-isolated.
 Permafrost = fliplr(Permafrost');
@@ -204,7 +205,7 @@ Cold_Dry = sum([nansum(EarthLandArea_05deg(AI_PM_RC_CO2_Jarvis_H_2070_2099==2&~i
     nansum(EarthLandArea_05deg(AI_PM_RC_CO2_Jarvis_H_2070_2099==4&~isnan(Permafrost)))./nansum(EarthLandArea_05deg(~isnan(Permafrost))).*100,...
     nansum(EarthLandArea_05deg(AI_PM_RC_CO2_Jarvis_H_2070_2099==5&~isnan(Permafrost)))./nansum(EarthLandArea_05deg(~isnan(Permafrost))).*100]);
 
-%% Fill in 3*3 matrix
+%% (3) Fill in 3*3 matrix
 AI_PM_RC_2070_2099(AI_PM_RC_2070_2099<6 & AI_PM_RC_2070_2099>1) = 2;
 AI_PM_RC_CO2_Yang_2070_2099(AI_PM_RC_CO2_Yang_2070_2099<6 & AI_PM_RC_CO2_Yang_2070_2099>1) = 2;
 AI_PM_RC_CO2_Jarvis_H_2070_2099(AI_PM_RC_CO2_Jarvis_H_2070_2099<6 & AI_PM_RC_CO2_Jarvis_H_2070_2099>1) = 2;
@@ -261,8 +262,6 @@ M_PM_RC(3,:) =...
     [nansum(EarthLandArea_05deg(AI_PM_RC_2070_2099==1&AI_PM_RC_Princeton==6)) ./ nansum(EarthLandArea_05deg(AI_PM_RC_Princeton==6)) .*100,...
     nansum(EarthLandArea_05deg(AI_PM_RC_2070_2099==2&AI_PM_RC_Princeton==6)) ./ nansum(EarthLandArea_05deg(AI_PM_RC_Princeton==6)) .*100,...
     nansum(EarthLandArea_05deg(AI_PM_RC_2070_2099==6&AI_PM_RC_Princeton==6)) ./ nansum(EarthLandArea_05deg(AI_PM_RC_Princeton==6)) .*100];
-
-
 
 xlswrite([Path_Fig1b_Output 'TransferMatrix_EnsembleMean.xlsx'] , M_PM_RC , sspName , 'M4:O6');
 xlswrite([Path_Fig1b_Output 'TransferMatrix_EnsembleMean.xlsx'] , M_PM_RC_Yang , sspName , 'M16:O18');
