@@ -1,5 +1,5 @@
 %% Figure 1
-%%% Figure 1a
+% Temporal change of Cold Regions, Dry Lands, and Humid Lands
 clc; clear all; close all;
 Path_DryWetRegion_Historical_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_AridityIndex\Historical\AI_Historical_DryWetRegion_Year.mat';
 Path_DryWetRegion_ScenarioMIP_ssp126_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_AridityIndex\ScenarioMIP_ssp126\AI_ssp126_DryWetRegion_Year.mat';
