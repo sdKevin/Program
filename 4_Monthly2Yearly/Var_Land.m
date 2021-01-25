@@ -44,12 +44,15 @@ for i_Path = 1 : length(InputPath)
         for ii = 1 : 12 : size(r1.evspsbl , 3)
             % evspsbl
             A = r1.evspsbl(:,:,ii:ii+11);
+            A(A==Inf|A==-Inf) = nan; %Set missing grids in original nc file as NAN
             GridYear.evspsbl(:,:,iii) = nanmean(A,3);
             % mrso
             B = r1.mrso(:,:,ii:ii+11);
+            B(B==Inf|B==-Inf) = nan; %Set missing grids in original nc file as NAN
             GridYear.mrso(:,:,iii) = nanmean(B,3);
             % mrro
             C = r1.mrro(:,:,ii:ii+11);
+            C(C==Inf|C==-Inf) = nan; %Set missing grids in original nc file as NAN
             GridYear.mrro(:,:,iii) = nanmean(C,3);
             clear A B C
             iii = iii+1;

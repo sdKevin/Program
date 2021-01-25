@@ -49,7 +49,7 @@ c95_Pr_Historical = (std(Pr_Historical)./sqrt(size(Pr_Historical,1))).*1.96; % 8
 c95_Pr_Historical = c95_Pr_Historical';
 h1 = fill([[1850:2014]';flipud([1850:2014]')],...
     [Ensemble_Mean_Pr_Historical - c95_Pr_Historical; flipud(Ensemble_Mean_Pr_Historical + c95_Pr_Historical)],...
-    RGB_Historical_Shade./255,'EdgeAlpha',0,'FaceAlpha',0.45); hold on;
+    RGB_Historical_Shade./255,'EdgeAlpha',0,'FaceAlpha',0.9); hold on;
 
 % Scenario Pr
 % pr kg/(m2s) to mm/year
@@ -69,7 +69,7 @@ for i_ssp = [5,4,3,2]
     if i_ssp == 5|| i_ssp == 2
         h_ssp = fill([[2014:2100]';flipud([2014:2100]')],...
             [Ensemble_Mean_Pr_ssp(:,i_ssp-1) - c95_Pr_ssp; flipud(Ensemble_Mean_Pr_ssp(:,i_ssp-1) + c95_Pr_ssp)],...
-            RGB_ssp_Shade(i_ssp-1,:)./255,'EdgeAlpha',0,'FaceAlpha',0.45); hold on;
+            RGB_ssp_Shade(i_ssp-1,:)./255,'EdgeAlpha',0,'FaceAlpha',0.9); hold on;
     end
 end
 %% Plotting Ensemble Mean
@@ -139,14 +139,14 @@ c95_Pr_ET_Historical = (std(Pr_ET_Historical)./sqrt(size(Pr_ET_Historical,1))).*
 c95_Pr_ET_Historical = c95_Pr_ET_Historical';
 h1 = fill([[1850:2014]';flipud([1850:2014]')],...
     [Ensemble_Mean_Pr_ET_Historical - c95_Pr_ET_Historical; flipud(Ensemble_Mean_Pr_ET_Historical + c95_Pr_ET_Historical)],...
-    RGB_Historical_Shade./255,'EdgeAlpha',0,'FaceAlpha',0.45); hold on;
+    RGB_Historical_Shade./255,'EdgeAlpha',0,'FaceAlpha',0.9); hold on;
 
 % Scenario Pr_ET
 % Pr_ET kg/(m2s) to mm/year
 for i_ssp = [5,4,3,2]
     if i_ssp == 4
         Pr_ET_Historical = (Met_Year(1).Met_Year.pr - Land_Year(1).Land_Year.evspsbl) .* 1000.*31536000./997;
-        Pr_ET_Historical(16,:) = []; % HadGEM3-GC31-LL
+        Pr_ET_Historical(13,:) = []; % HadGEM3-GC31-LL
     else
         Pr_ET_Historical = (Met_Year(1).Met_Year.pr - Land_Year(1).Land_Year.evspsbl) .* 1000.*31536000./997;
     end
@@ -159,7 +159,7 @@ for i_ssp = [5,4,3,2]
     if i_ssp == 5|| i_ssp == 2
         h_ssp = fill([[2014:2100]';flipud([2014:2100]')],...
             [Ensemble_Mean_Pr_ET_ssp(:,i_ssp-1) - c95_Pr_ET_ssp; flipud(Ensemble_Mean_Pr_ET_ssp(:,i_ssp-1) + c95_Pr_ET_ssp)],...
-            RGB_ssp_Shade(i_ssp-1,:)./255,'EdgeAlpha',0,'FaceAlpha',0.45); hold on;
+            RGB_ssp_Shade(i_ssp-1,:)./255,'EdgeAlpha',0,'FaceAlpha',0.9); hold on;
     end
 end
 %% Plotting Ensemble Mean
@@ -246,14 +246,14 @@ c95_Q_Historical = (std(Q_Historical)./sqrt(size(Q_Historical,1))).*1.96; % 80% 
 c95_Q_Historical = c95_Q_Historical';
 h1 = fill([[1850:2014]';flipud([1850:2014]')],...
     [Ensemble_Mean_Q_Historical - c95_Q_Historical; flipud(Ensemble_Mean_Q_Historical + c95_Q_Historical)],...
-    RGB_Historical_Shade./255,'EdgeAlpha',0,'FaceAlpha',0.45); hold on;
+    RGB_Historical_Shade./255,'EdgeAlpha',0,'FaceAlpha',0.9); hold on;
 
 % Scenario Q
 % Q kg/(m2s) to mm/year
 for i_ssp = [5,4,3,2]
     if i_ssp == 4
         Q_Historical = Land_Year(1).Land_Year.mrro .* 1000.*31536000./997;
-        Q_Historical(16,:) = []; % HadGEM3-GC31-LL
+        Q_Historical(13,:) = []; % HadGEM3-GC31-LL
     else
         Q_Historical = Land_Year(1).Land_Year.mrro .* 1000.*31536000./997;
     end
@@ -266,7 +266,7 @@ for i_ssp = [5,4,3,2]
     if i_ssp == 5|| i_ssp == 2
         h_ssp = fill([[2014:2100]';flipud([2014:2100]')],...
             [Ensemble_Mean_Q_ssp(:,i_ssp-1) - c95_Q_ssp; flipud(Ensemble_Mean_Q_ssp(:,i_ssp-1) + c95_Q_ssp)],...
-            RGB_ssp_Shade(i_ssp-1,:)./255,'EdgeAlpha',0,'FaceAlpha',0.45); hold on;
+            RGB_ssp_Shade(i_ssp-1,:)./255,'EdgeAlpha',0,'FaceAlpha',0.9); hold on;
     end
 end
 %% Plotting Ensemble Mean
@@ -303,4 +303,93 @@ legend('historical','ssp126','ssp245','ssp370','ssp585',...
     'Location','NorthWest','Color','None','EdgeColor','None','FontSize',24,'FontName','Arial')
 set(gca,'visible','off')
 clearvars -except Met_Year Land_Year
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+figure
+%% Setting Color and axis property
+RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
+% SM
+RGB_ssp_Shade = [222,235,247; 198,234,251; 161,196,218; 194,196,226];
+RGB_ssp_Line = [133,184,227; 0,173,238; 50,128,185; 57,83,164];
+YlimRange_SM = [-40,20]; YTickRange_SM = [-40:20:20]; YTickLabel_SM = {'';'-20';'';'20';'';'80'};
+%% Three time windows
+%  Contemporary: 1948-2014
+fill([1948;2014;2014;1948],...
+    [YlimRange_SM(1); YlimRange_SM(1); YlimRange_SM(2); YlimRange_SM(2)],...
+    [240,240,242]./255,'EdgeAlpha',0,'FaceAlpha',0.9); hold on;
+% Far Future: 2070-2099
+fill([2070;2099;2099;2070],...
+    [YlimRange_SM(1); YlimRange_SM(1); YlimRange_SM(2); YlimRange_SM(2)],...
+    [240,240,242]./255,'EdgeAlpha',0,'FaceAlpha',0.9);
+%% Plotting Shade Area
+% Plot y=0 and x=2014
+plot([2014 2014],[YlimRange_SM(1) YlimRange_SM(2)],'k','LineWidth',1.5); hold on;
+plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
+% Historical SM
+% SM kg/m2 to mm
+SM_Historical = Land_Year(1).Land_Year.mrso .*1000 ./ 997;
+SM_Historical = SM_Historical - repmat(mean(SM_Historical(:,99:165),2),1,165); % Change to Anomaly
+Ensemble_Mean_SM_Historical = nanmean(SM_Historical)';
+c95_SM_Historical = (std(SM_Historical)./sqrt(size(SM_Historical,1))).*1.96; % 80% confidence interval
+c95_SM_Historical = c95_SM_Historical';
+h1 = fill([[1850:2014]';flipud([1850:2014]')],...
+    [Ensemble_Mean_SM_Historical - c95_SM_Historical; flipud(Ensemble_Mean_SM_Historical + c95_SM_Historical)],...
+    RGB_Historical_Shade./255,'EdgeAlpha',0,'FaceAlpha',0.9); hold on;
+
+% Scenario SM
+% SM kg/m2 to mm
+for i_ssp = [5,4,3,2]
+    if i_ssp == 4
+        SM_Historical = Land_Year(1).Land_Year.mrso .*1000 ./ 997;
+        SM_Historical(13,:) = []; % HadGEM3-GC31-LL
+    else
+        SM_Historical = Land_Year(1).Land_Year.mrso .*1000 ./ 997;
+    end
+    SM_ssp = Land_Year(i_ssp).Land_Year.mrso .*1000 ./ 997;
+    SM_ssp = [SM_Historical(:,end) , SM_ssp];
+    SM_ssp = SM_ssp - repmat(mean(SM_Historical(:,99:165),2), 1 ,87); % Change to Anomaly
+    Ensemble_Mean_SM_ssp(:,i_ssp-1) = nanmean(SM_ssp)';
+    c95_SM_ssp = (std(SM_ssp)./sqrt(size(SM_ssp,1))).*1.96; % 80% confidence interval
+    c95_SM_ssp = c95_SM_ssp';
+    if i_ssp == 5|| i_ssp == 2
+        h_ssp = fill([[2014:2100]';flipud([2014:2100]')],...
+            [Ensemble_Mean_SM_ssp(:,i_ssp-1) - c95_SM_ssp; flipud(Ensemble_Mean_SM_ssp(:,i_ssp-1) + c95_SM_ssp)],...
+            RGB_ssp_Shade(i_ssp-1,:)./255,'EdgeAlpha',0,'FaceAlpha',0.9); hold on;
+    end
+end
+%% Plotting Ensemble Mean
+plot([1850:2014],Ensemble_Mean_SM_Historical,'-',...
+    'Color',RGB_Historical_Line./255,'Linewidth',3.5);hold on;
+for i_ssp = [1,2,3,4]
+    if i_ssp == 1|| i_ssp ==4
+        plot([2014:2100],Ensemble_Mean_SM_ssp(:,i_ssp),'-',...
+            'Color',RGB_ssp_Line(i_ssp,:)./255,'Linewidth',3.5);
+    else
+        plot([2014:2100],Ensemble_Mean_SM_ssp(:,i_ssp),':',...
+            'Color',RGB_ssp_Line(i_ssp,:)./255,'Linewidth',3.5);
+    end
+end
+% Plot y=0 and x=2014
+plot([2014 2014],[YlimRange_SM(1) YlimRange_SM(2)],'k','LineWidth',1.5);
+hold on;
+plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
+% setting axis
+ylabel('Soil Moisture Anomaly (mm)');
+set(gca,'xlim',[1948,2100],'ylim',YlimRange_SM,'yTick',YTickRange_SM,'yTickLabel',YTickLabel_SM,...
+    'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5);
+%% Plotting Legend
+axes('position',get(gca,'position'),'visible','off')
+plot(0,'Color',RGB_Historical_Line./255,'Linewidth',3.5);hold on;
+for i_ssp = [1,2,3,4]
+    if i_ssp == 1|| i_ssp ==4
+        plot(0,'Color',RGB_ssp_Line(i_ssp,:)./255,'Linewidth',3.5);
+    else
+        plot(0,':','Color',RGB_ssp_Line(i_ssp,:)./255,'Linewidth',3.5);
+    end
+end
+legend('historical','ssp126','ssp245','ssp370','ssp585',...
+    'Location','NorthWest','Color','None','EdgeColor','None','FontSize',24,'FontName','Arial')
+set(gca,'visible','off')
+clearvars -except Met_Year Land_Year
+
 end
