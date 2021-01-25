@@ -21,7 +21,7 @@ Path_Attribution_Year_ScenarioMIP_ssp245_GCM = 'D:\CMIP6\VariableStorage\YearlyV
 Path_Attribution_Year_ScenarioMIP_ssp370_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Attribution\ScenarioMIP_ssp370\Attribution_Var_ssp370_Attribution_Year.mat';
 Path_Attribution_Year_ScenarioMIP_ssp585_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Attribution\ScenarioMIP_ssp585\Attribution_Var_ssp585_Attribution_Year.mat';
 % Output Path
-Path_Fig2a_Output = 'Fig2a_Output\';
+Path_Fig2_Output = 'Fig2_Output\';
 % Load Yearly ETrc, Met, and Attribution variables
 ETrc_Year = cat(2,load(Path_ETrc_Year_Historical_GCM),...
     load(Path_ETrc_Year_ScenarioMIP_ssp126_GCM),load(Path_ETrc_Year_ScenarioMIP_ssp245_GCM),...
@@ -40,10 +40,10 @@ clear Path_Met_Year_Historical_GCM Path_Met_Year_ScenarioMIP_ssp126_GCM Path_Met
 clear Path_Attribution_Year_Historical_GCM Path_Attribution_Year_ScenarioMIP_ssp126_GCM Path_Attribution_Year_ScenarioMIP_ssp245_GCM Path_Attribution_Year_ScenarioMIP_ssp370_GCM Path_Attribution_Year_ScenarioMIP_ssp585_GCM
 %% Fig2a Drawing AI calculated by PM_RC_CO2_Jarvis_H
 Fig2a_Left_Plotting(ETrc_Year , Met_Year)
-Fig2a_Right_Plotting(ETrc_Year , Met_Year , Attribution_Year , Path_Fig2a_Output)
+Fig2a_Right_Plotting(ETrc_Year , Met_Year , Attribution_Year , Path_Fig2_Output)
 %% Fig2b Drawing AI calculated by PM_RC_CO2_Yang
 Fig2b_Left_Plotting(ETrc_Year , Met_Year)
-Fig2b_Right_Plotting(ETrc_Year , Met_Year , Attribution_Year , Path_Fig2a_Output)
+Fig2b_Right_Plotting(ETrc_Year , Met_Year , Attribution_Year , Path_Fig2_Output)
 %% Fig2c Drawing AI calculated by PM_RC
 Fig2c_Left_Plotting(ETrc_Year , Met_Year)
-Fig2c_Right_Plotting(ETrc_Year , Met_Year , Attribution_Year , Path_Fig2a_Output)
+Fig2c_Right_Plotting(ETrc_Year , Met_Year , Attribution_Year , Path_Fig2_Output)
