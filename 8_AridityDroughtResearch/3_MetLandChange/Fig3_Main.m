@@ -10,8 +10,8 @@ PerChange = cat(2,...
     load(Path_PerChange_ssp126_GCM),load(Path_PerChange_ssp245_GCM),...
     load(Path_PerChange_ssp370_GCM),load(Path_PerChange_ssp585_GCM));
 
-% Fig3a
+% Fig3a 2070-2099 minus 1948-2014
 Ensemble_Mean_PerChange = Fig3a_Plotting(PerChange , Path_Fig3_Output);
-% Fig3b
+% Fig3b Latitudinal Distribution
 Fig3b_Plotting(Ensemble_Mean_PerChange)
 close all

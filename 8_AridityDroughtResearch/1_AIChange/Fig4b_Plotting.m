@@ -24,9 +24,9 @@ for i_ssp = 1:4
         237,218,154;250,243,180;242,247,188;216,232,183;191,217,178;165,201,173;140,186,168;...
         116,173,163;90,158,157;65,143,150;36,131,145]./255;
     ColorRange = [-100,-70,-60,-50,-40,-30,-20,-10,0,10,20,30,40,50,60,70,80,101];
-    for ii = 1:length(Re_Change_AI_Max_Lat)
+    for ii = 1 : length(Re_Change_AI_Max_Lat)
         Y = Re_Change_AI(:,ii);Y(isnan(Y))=[];
-        for iii = 1:length(Y)
+        for iii = 1 : length(Y)
             ForColor = find([Y(iii)<ColorRange]==1);
             plot(Lat2(ii),Y(iii),'.','MarkerSize',5.5,'Color',ColorMatrix(ForColor(1),:));hold on;
             clear ForColor
