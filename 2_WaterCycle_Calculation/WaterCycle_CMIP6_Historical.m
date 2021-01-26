@@ -20,6 +20,8 @@ for i_GCM = 1 : length(GCM_Ensemble)
     %% (2.1) load Data
     GCM = GCM_Ensemble{i_GCM}
     load(strcat(InputPath_CMIP6_Ensemble , '\Historical\' , GCM , '.mat'));
+    % Set some abnormal orginal data (<0) to 0
+    r1.evspsbl(r1.evspsbl<0) = 0; r1.mrso(r1.mrso<0) = 0; r1.mrro(r1.mrro<0) = 0;
     %% (2.2) Interpolating Forcing Data to Uniform Resolution i.e., 0.5deg
     % Load Global 0.5 Degree Coordinate Data from Princeton-CDR
     load LandInfo_05deg;
@@ -38,9 +40,15 @@ for i_GCM = 1 : length(GCM_Ensemble)
     
     %% (2.3) Bias Correction : Using Princeton-CDR Data to correct CMIP6 Historical Data
     % CDR Unit: mm/month and [./  (1000 .* 2592000 ./ 997))] to convert to kg/(m2s)
+    % evspsbl
     load([InputPath_CDR , '\evspsbl.mat']); %1984-2010
+    % Set some abnormal orginal data (<0) to 0
+    evspsbl(evspsbl<0) = 0;
     C.evspsbl = (nanmean(evspsbl,3) ./  (1000 .* 2592000 ./ 997)) ./ nanmean(r1.evspsbl(:,:,1609:1932),3); C.evspsbl(C.evspsbl>10)=10; clear evspsbl;
+    % mrro
     load([InputPath_CDR , '\mrro.mat']); %1984-2010
+    % Set some abnormal orginal data (<0) to 0
+    mrro(mrro<0) = 0;
     C.mrro = (nanmean(mrro,3) ./  (1000 .* 2592000 ./ 997)) ./ nanmean(r1.mrro(:,:,1609:1932),3); C.mrro(C.mrro>10)=10; clear mrro;
     for ii = 1 : size(r1.evspsbl,3)
         r1.evspsbl(:,:,ii) = r1.evspsbl(:,:,ii) .* C.evspsbl;
