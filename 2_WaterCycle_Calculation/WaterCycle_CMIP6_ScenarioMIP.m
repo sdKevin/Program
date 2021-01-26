@@ -17,6 +17,9 @@ GCM_Ensemble = {'ACCESS-CM2','ACCESS-ESM1-5','BCC-CSM2-MR','CanESM5','CanESM5-Ca
     'MRI-ESM2-0','NorESM2-MM','UKESM1-0-LL'};
 ssp = input('Choose a Scenario (ssp126/ssp245/ssp370/ssp585) : ','s');
 for i_GCM = 1 : length(GCM_Ensemble)
+    if mean(ssp == 'ssp370') == 1 && i_GCM == 13
+        continue; % HadGEM3-GC31-LL does not have ssp370
+    end
     %% (2.1) Generate bias correction coefficient
     %% (2.1.1) load CMIP6 Historical Data
     GCM = GCM_Ensemble{i_GCM}
