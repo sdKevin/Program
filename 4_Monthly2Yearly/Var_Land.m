@@ -67,6 +67,8 @@ for i_Path = 1 : length(InputPath)
         clear ii r1
         Land_Var = GridYear; clear GridYear;
         All_Land_Var_Mrro(:,:,:,i_GCM) = Land_Var.mrro;
+        All_Land_Var_Evspsbl(:,:,:,i_GCM) = Land_Var.evspsbl;
+        All_Land_Var_Mrso(:,:,:,i_GCM) = Land_Var.mrso;
         %% (1.2) Output GridYear from 1850-2100
         save(strcat(OutputPath{i_Path} , GCM) , 'Land_Var');
         clear Land_Var GCM
@@ -75,5 +77,10 @@ for i_Path = 1 : length(InputPath)
     save(strcat(OutputPath{i_Path} , 'Land_Year') , 'Land_Year');
     Ensemble_Land_Var_Mrro = nanmean(All_Land_Var_Mrro,4);
     save(strcat(OutputPath{i_Path} , 'Ensemble_Land_Var_Mrro') , 'Ensemble_Land_Var_Mrro');
-    clear All_Land_Var_Mrro Ensemble_Land_Var_Mrro Land_Year
+    Ensemble_Land_Var_Evspsbl = nanmean(All_Land_Var_Evspsbl,4);
+    save(strcat(OutputPath{i_Path} , 'Ensemble_Land_Var_Evspsbl') , 'Ensemble_Land_Var_Evspsbl');
+    Ensemble_Land_Var_Mrso = nanmean(All_Land_Var_Mrso,4);
+    save(strcat(OutputPath{i_Path} , 'Ensemble_Land_Var_Mrso') , 'Ensemble_Land_Var_Mrso');
+    clear All_Land_Var_Mrro All_Land_Var_Evspsbl All_Land_Var_Mrso
+    clear Ensemble_Land_Var_Mrro Ensemble_Land_Var_Evspsbl Ensemble_Land_Var_Mrso Land_Year
 end

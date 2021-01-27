@@ -25,7 +25,7 @@ for i_GCM = 1 : length(GCM_Ensemble)
     %% (2.2) Interpolating Forcing Data to Uniform Resolution i.e., 0.5deg
     % Load Global 0.5 Degree Coordinate Data from Princeton-CDR
     load LandInfo_05deg;
-    % Bilinear Interpolation Unit kg/(m2s)
+    % Bilinear Interpolation Unit: evspsbl & mrro kg/(m2s),mrso kg/(m2)
     R1.lat = lat_05deg; R1.lon = lon_05deg;
     for ii = 1 : size(r1.evspsbl,3)
         R1.evspsbl(:,:,ii) = interp2(r1.lat , r1.lon , r1.evspsbl(:,:,ii) ,...
