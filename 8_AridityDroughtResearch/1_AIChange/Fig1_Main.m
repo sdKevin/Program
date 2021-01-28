@@ -27,14 +27,14 @@ Met_Year = cat(2,load(Path_Met_Year_Historical_GCM),...
 Fig1a_Plotting(ETrc_Year , Met_Year)
 
 %%% Figure 1b
-Path_Attribution_Year_Historical_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Attribution\Historical\Attribution_Var_Historical_Attribution_Year.mat';
-Path_Attribution_Year_ScenarioMIP_ssp126_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Attribution\ScenarioMIP_ssp126\Attribution_Var_ssp126_Attribution_Year.mat';
-Path_Attribution_Year_ScenarioMIP_ssp245_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Attribution\ScenarioMIP_ssp245\Attribution_Var_ssp245_Attribution_Year.mat';
-Path_Attribution_Year_ScenarioMIP_ssp370_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Attribution\ScenarioMIP_ssp370\Attribution_Var_ssp370_Attribution_Year.mat';
-Path_Attribution_Year_ScenarioMIP_ssp585_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Attribution\ScenarioMIP_ssp585\Attribution_Var_ssp585_Attribution_Year.mat';
-
-Path_Fig2a_Output = 'Fig2a_Output\';
-
-Attribution_Year = cat(2,load(Path_Attribution_Year_Historical_GCM),...
-    load(Path_Attribution_Year_ScenarioMIP_ssp126_GCM),load(Path_Attribution_Year_ScenarioMIP_ssp245_GCM),...
-    load(Path_Attribution_Year_ScenarioMIP_ssp370_GCM),load(Path_Attribution_Year_ScenarioMIP_ssp585_GCM));
+% Path_Attribution_Year_Historical_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Attribution\Historical\Attribution_Var_Historical_Attribution_Year.mat';
+% Path_Attribution_Year_ScenarioMIP_ssp126_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Attribution\ScenarioMIP_ssp126\Attribution_Var_ssp126_Attribution_Year.mat';
+% Path_Attribution_Year_ScenarioMIP_ssp245_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Attribution\ScenarioMIP_ssp245\Attribution_Var_ssp245_Attribution_Year.mat';
+% Path_Attribution_Year_ScenarioMIP_ssp370_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Attribution\ScenarioMIP_ssp370\Attribution_Var_ssp370_Attribution_Year.mat';
+% Path_Attribution_Year_ScenarioMIP_ssp585_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Attribution\ScenarioMIP_ssp585\Attribution_Var_ssp585_Attribution_Year.mat';
+% 
+% Path_Fig2a_Output = 'Fig2a_Output\';
+% 
+% Attribution_Year = cat(2,load(Path_Attribution_Year_Historical_GCM),...
+%     load(Path_Attribution_Year_ScenarioMIP_ssp126_GCM),load(Path_Attribution_Year_ScenarioMIP_ssp245_GCM),...
+%     load(Path_Attribution_Year_ScenarioMIP_ssp370_GCM),load(Path_Attribution_Year_ScenarioMIP_ssp585_GCM));
