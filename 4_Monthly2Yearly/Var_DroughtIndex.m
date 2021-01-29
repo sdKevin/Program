@@ -64,13 +64,21 @@ for i_Path = 1 : length(InputPDSIPath)
         end
         clear ii pdsi_PM_RC pdsi_PM_RC_CO2_Jarvis_H pdsi_PM_RC_CO2_Yang
         PDSI = GridYear; clear GridYear;
+        % Save PDSI to calculate Ensemble Mean
+        All_PDSI.pdsi_PM_RC(:,:,:,i_GCM) = PDSI.pdsi_PM_RC;
+        All_PDSI.pdsi_PM_RC_CO2_Jarvis_H(:,:,:,i_GCM) = PDSI.pdsi_PM_RC_CO2_Jarvis_H;
+        All_PDSI.pdsi_PM_RC_CO2_Yang(:,:,:,i_GCM) = PDSI.pdsi_PM_RC_CO2_Yang;
         %% (1.2) Output GridYear from 1850-2100
         save(strcat(OutputPDSIPath{i_Path} , GCM) , 'PDSI');
         clear PDSI GCM
     end
     clear i_GCM
     save(strcat(OutputPDSIPath{i_Path} , 'PDSI_Year') , 'PDSI_Year');
-    clear PDSI_Year
+    Ensemble_Mean_PDSI.pdsi_PM_RC = nanmean(All_PDSI.pdsi_PM_RC,4);
+    Ensemble_Mean_PDSI.pdsi_PM_RC_CO2_Jarvis_H = nanmean(All_PDSI.pdsi_PM_RC_CO2_Jarvis_H,4);
+    Ensemble_Mean_PDSI.pdsi_PM_RC_CO2_Yang = nanmean(All_PDSI.pdsi_PM_RC_CO2_Yang,4);
+    save(strcat(OutputPDSIPath{i_Path} , 'Ensemble_Mean') , 'Ensemble_Mean_PDSI');
+    clear PDSI_Year All_PDSI
 end
 
 %% (2) Integrate Monthly Princeton data to yearly data
@@ -106,9 +114,12 @@ for ii = 1 : size(GridYear.pdsi_PM_RC , 3)
 end
 clear ii pdsi_PM_RC pdsi_PM_RC_CO2_Jarvis_H pdsi_PM_RC_CO2_Yang
 PDSI = GridYear; clear GridYear;
+Ensemble_Mean_PDSI = PDSI;
 %% (1.2) Output GridYear from 1948-2014
 save(strcat(OutputPDSIPath_Princeton , 'PDSI_Princeton') , 'PDSI');
 clear PDSI
+save(strcat(OutputPDSIPath_Princeton , 'Ensemble_Mean') , 'Ensemble_Mean_PDSI');
+clear Ensemble_Mean_PDSI
 save(strcat(OutputPDSIPath_Princeton , 'PDSI_Year_Princeton') , 'PDSI_Year');
 clear PDSI_Year
 
@@ -178,13 +189,21 @@ for i_Path = 1 : length(InputscPDSIPath)
         end
         clear ii scpdsi_PM_RC scpdsi_PM_RC_CO2_Jarvis_H scpdsi_PM_RC_CO2_Yang
         scPDSI = GridYear; clear GridYear;
+        % Save scPDSI to calculate Ensemble Mean
+        All_scPDSI.scpdsi_PM_RC(:,:,:,i_GCM) = scPDSI.scpdsi_PM_RC;
+        All_scPDSI.scpdsi_PM_RC_CO2_Jarvis_H(:,:,:,i_GCM) = scPDSI.scpdsi_PM_RC_CO2_Jarvis_H;
+        All_scPDSI.scpdsi_PM_RC_CO2_Yang(:,:,:,i_GCM) = scPDSI.scpdsi_PM_RC_CO2_Yang;
         %% (1.2) Output GridYear from 1850-2100
         save(strcat(OutputscPDSIPath{i_Path} , GCM) , 'scPDSI');
         clear scPDSI GCM
     end
     clear i_GCM
     save(strcat(OutputscPDSIPath{i_Path} , 'scPDSI_Year') , 'scPDSI_Year');
-    clear scPDSI_Year
+    Ensemble_Mean_scPDSI.scpdsi_PM_RC = nanmean(All_scPDSI.scpdsi_PM_RC,4);
+    Ensemble_Mean_scPDSI.scpdsi_PM_RC_CO2_Jarvis_H = nanmean(All_scPDSI.scpdsi_PM_RC_CO2_Jarvis_H,4);
+    Ensemble_Mean_scPDSI.scpdsi_PM_RC_CO2_Yang = nanmean(All_scPDSI.scpdsi_PM_RC_CO2_Yang,4);
+    save(strcat(OutputscPDSIPath{i_Path} , 'Ensemble_Mean') , 'Ensemble_Mean_scPDSI');
+    clear scPDSI_Year All_scPDSI
 end
 
 %% (2) Integrate Monthly Princeton data to yearly data
@@ -220,8 +239,11 @@ for ii = 1 : size(GridYear.scpdsi_PM_RC , 3)
 end
 clear ii scpdsi_PM_RC scpdsi_PM_RC_CO2_Jarvis_H scpdsi_PM_RC_CO2_Yang
 scPDSI = GridYear; clear GridYear;
+Ensemble_Mean_scPDSI = scPDSI;
 %% (1.2) Output GridYear from 1948-2014
 save(strcat(OutputscPDSIPath_Princeton , 'scPDSI_Princeton') , 'scPDSI');
 clear scPDSI
+save(strcat(OutputscPDSIPath_Princeton , 'Ensemble_Mean') , 'Ensemble_Mean_scPDSI');
+clear Ensemble_Mean_scPDSI
 save(strcat(OutputscPDSIPath_Princeton , 'scPDSI_Year_Princeton') , 'scPDSI_Year');
 clear scPDSI_Year

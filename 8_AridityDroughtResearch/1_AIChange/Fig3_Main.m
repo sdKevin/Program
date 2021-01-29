@@ -1,5 +1,5 @@
 %% Figure 3
-% Spatial change of AI trend
+% Spatial change of AI linear trend
 clc; clear all; close all;
 Path_Ensemble_Mean_Historical_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_AridityIndex\Historical\AI_Historical_Ensemble_Mean.mat';
 Path_Ensemble_Mean_ScenarioMIP_ssp126_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_AridityIndex\ScenarioMIP_ssp126\AI_ssp126_Ensemble_Mean.mat';
