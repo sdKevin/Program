@@ -92,41 +92,41 @@ for i_Path = 1 : length(InputPDSIPath)
         % Monthly Drought Extent to Yearly
         iii = 1;
         for ii = 1 : 12 : size(DroughtExtent_Month.SevereDrought_pdsi_PM_RC,2)
-            A = DroughtExtent_Month.SevereDrought_pdsi_PM_RC(ii:ii+11);
+            A = DroughtExtent_Month.SevereDrought_pdsi_PM_RC(i_GCM,ii:ii+11);
             DroughtExtent_Year.SevereDrought_pdsi_PM_RC(i_GCM,iii) = nanmean(A);
-            B = DroughtExtent_Month.ModerateDrought_pdsi_PM_RC(ii:ii+11);
+            B = DroughtExtent_Month.ModerateDrought_pdsi_PM_RC(i_GCM,ii:ii+11);
             DroughtExtent_Year.ModerateDrought_pdsi_PM_RC(i_GCM,iii) = nanmean(B);
-            C = DroughtExtent_Month.MildDrought_pdsi_PM_RC(ii:ii+11);
+            C = DroughtExtent_Month.MildDrought_pdsi_PM_RC(i_GCM,ii:ii+11);
             DroughtExtent_Year.MildDrought_pdsi_PM_RC(i_GCM,iii) = nanmean(C);
-            AA = DroughtExtent_Month.SevereMoist_pdsi_PM_RC(ii:ii+11);
+            AA = DroughtExtent_Month.SevereMoist_pdsi_PM_RC(i_GCM,ii:ii+11);
             DroughtExtent_Year.SevereMoist_pdsi_PM_RC(i_GCM,iii) = nanmean(AA);
-            BB = DroughtExtent_Month.ModerateMoist_pdsi_PM_RC(ii:ii+11);
+            BB = DroughtExtent_Month.ModerateMoist_pdsi_PM_RC(i_GCM,ii:ii+11);
             DroughtExtent_Year.ModerateMoist_pdsi_PM_RC(i_GCM,iii) = nanmean(BB);
-            CC = DroughtExtent_Month.MildMoist_pdsi_PM_RC(ii:ii+11);
+            CC = DroughtExtent_Month.MildMoist_pdsi_PM_RC(i_GCM,ii:ii+11);
             DroughtExtent_Year.MildMoist_pdsi_PM_RC(i_GCM,iii) = nanmean(CC);
-            AAA = DroughtExtent_Month.SevereDrought_pdsi_PM_RC_CO2_Jarvis_H(ii:ii+11);
+            AAA = DroughtExtent_Month.SevereDrought_pdsi_PM_RC_CO2_Jarvis_H(i_GCM,ii:ii+11);
             DroughtExtent_Year.SevereDrought_pdsi_PM_RC_CO2_Jarvis_H(i_GCM,iii) = nanmean(AAA);
-            BBB = DroughtExtent_Month.ModerateDrought_pdsi_PM_RC_CO2_Jarvis_H(ii:ii+11);
+            BBB = DroughtExtent_Month.ModerateDrought_pdsi_PM_RC_CO2_Jarvis_H(i_GCM,ii:ii+11);
             DroughtExtent_Year.ModerateDrought_pdsi_PM_RC_CO2_Jarvis_H(i_GCM,iii) = nanmean(BBB);
-            CCC = DroughtExtent_Month.MildDrought_pdsi_PM_RC_CO2_Jarvis_H(ii:ii+11);
+            CCC = DroughtExtent_Month.MildDrought_pdsi_PM_RC_CO2_Jarvis_H(i_GCM,ii:ii+11);
             DroughtExtent_Year.MildDrought_pdsi_PM_RC_CO2_Jarvis_H(i_GCM,iii) = nanmean(CCC);
-            AAAA = DroughtExtent_Month.SevereMoist_pdsi_PM_RC_CO2_Jarvis_H(ii:ii+11);
+            AAAA = DroughtExtent_Month.SevereMoist_pdsi_PM_RC_CO2_Jarvis_H(i_GCM,ii:ii+11);
             DroughtExtent_Year.SevereMoist_pdsi_PM_RC_CO2_Jarvis_H(i_GCM,iii) = nanmean(AAAA);
-            BBBB = DroughtExtent_Month.ModerateMoist_pdsi_PM_RC_CO2_Jarvis_H(ii:ii+11);
+            BBBB = DroughtExtent_Month.ModerateMoist_pdsi_PM_RC_CO2_Jarvis_H(i_GCM,ii:ii+11);
             DroughtExtent_Year.ModerateMoist_pdsi_PM_RC_CO2_Jarvis_H(i_GCM,iii) = nanmean(BBBB);
-            CCCC = DroughtExtent_Month.MildMoist_pdsi_PM_RC_CO2_Jarvis_H(ii:ii+11);
+            CCCC = DroughtExtent_Month.MildMoist_pdsi_PM_RC_CO2_Jarvis_H(i_GCM,ii:ii+11);
             DroughtExtent_Year.MildMoist_pdsi_PM_RC_CO2_Jarvis_H(i_GCM,iii) = nanmean(CCCC);
-            AAAAA = DroughtExtent_Month.SevereDrought_pdsi_PM_RC_CO2_Yang(ii:ii+11);
+            AAAAA = DroughtExtent_Month.SevereDrought_pdsi_PM_RC_CO2_Yang(i_GCM,ii:ii+11);
             DroughtExtent_Year.SevereDrought_pdsi_PM_RC_CO2_Yang(i_GCM,iii) = nanmean(AAAAA);
-            BBBBB = DroughtExtent_Month.ModerateDrought_pdsi_PM_RC_CO2_Yang(ii:ii+11);
+            BBBBB = DroughtExtent_Month.ModerateDrought_pdsi_PM_RC_CO2_Yang(i_GCM,ii:ii+11);
             DroughtExtent_Year.ModerateDrought_pdsi_PM_RC_CO2_Yang(i_GCM,iii) = nanmean(BBBBB);
-            CCCCC = DroughtExtent_Month.MildDrought_pdsi_PM_RC_CO2_Yang(ii:ii+11);
+            CCCCC = DroughtExtent_Month.MildDrought_pdsi_PM_RC_CO2_Yang(i_GCM,ii:ii+11);
             DroughtExtent_Year.MildDrought_pdsi_PM_RC_CO2_Yang(i_GCM,iii) = nanmean(CCCCC);
-            AAAAAA = DroughtExtent_Month.SevereMoist_pdsi_PM_RC_CO2_Yang(ii:ii+11);
+            AAAAAA = DroughtExtent_Month.SevereMoist_pdsi_PM_RC_CO2_Yang(i_GCM,ii:ii+11);
             DroughtExtent_Year.SevereMoist_pdsi_PM_RC_CO2_Yang(i_GCM,iii) = nanmean(AAAAAA);
-            BBBBBB = DroughtExtent_Month.ModerateMoist_pdsi_PM_RC_CO2_Yang(ii:ii+11);
+            BBBBBB = DroughtExtent_Month.ModerateMoist_pdsi_PM_RC_CO2_Yang(i_GCM,ii:ii+11);
             DroughtExtent_Year.ModerateMoist_pdsi_PM_RC_CO2_Yang(i_GCM,iii) = nanmean(BBBBBB);
-            CCCCCC = DroughtExtent_Month.MildMoist_pdsi_PM_RC_CO2_Yang(ii:ii+11);
+            CCCCCC = DroughtExtent_Month.MildMoist_pdsi_PM_RC_CO2_Yang(i_GCM,ii:ii+11);
             DroughtExtent_Year.MildMoist_pdsi_PM_RC_CO2_Yang(i_GCM,iii) = nanmean(CCCCCC);
             clear A B C AA BB CC AAA BBB CCC AAAA BBBB CCCC AAAAA BBBBB CCCCC AAAAAA BBBBBB CCCCCC
             iii = iii+1;
@@ -254,7 +254,7 @@ for i_Path = 1 : length(InputPDSIPath)
     clear DroughtExtent_Month
     % save yearly drought extent
     save(strcat(OutputDroughtPath{i_Path} , 'DroughtExtent_Year') , 'DroughtExtent_Year');
-    clear DroughtExtent
+    clear DroughtExtent_Year
     % save global mean yearly drought frequency
     save(strcat(OutputDroughtPath{i_Path} , 'DroughtFrequency_GMYear') , 'DroughtFrequency_GMYear');
     clear DroughtFrequency_GMYear
@@ -487,7 +487,7 @@ save(strcat(OutputDroughtPath_Princeton , 'DroughtExtent_Month') , 'DroughtExten
 clear DroughtExtent_Month
 % save yearly drought extent
 save(strcat(OutputDroughtPath_Princeton , 'DroughtExtent_Year') , 'DroughtExtent_Year');
-clear DroughtExtent
+clear DroughtExtent_Year
 % save global mean yearly drought frequency
 save(strcat(OutputDroughtPath_Princeton , 'DroughtFrequency_GMYear') , 'DroughtFrequency_GMYear');
 clear DroughtFrequency_GMYear

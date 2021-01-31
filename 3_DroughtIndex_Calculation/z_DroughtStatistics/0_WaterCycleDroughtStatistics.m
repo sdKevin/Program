@@ -102,13 +102,13 @@ for i_Path = 1 : length(InputMetPath)
         % Monthly Drought Extent to Yearly
         iii = 1;
         for ii = 1 : 12 : size(DroughtExtent_Month.Pr,2)
-            A = DroughtExtent_Month.Pr(ii:ii+11);
+            A = DroughtExtent_Month.Pr(i_GCM,ii:ii+11);
             DroughtExtent_Year.Pr(i_GCM,iii) = nanmean(A);
-            B = DroughtExtent_Month.Q(ii:ii+11);
+            B = DroughtExtent_Month.Q(i_GCM,ii:ii+11);
             DroughtExtent_Year.Q(i_GCM,iii) = nanmean(B);
-            C = DroughtExtent_Month.SM(ii:ii+11);
+            C = DroughtExtent_Month.SM(i_GCM,ii:ii+11);
             DroughtExtent_Year.SM(i_GCM,iii) = nanmean(C);
-            AA = DroughtExtent_Month.Pr_ET(ii:ii+11);
+            AA = DroughtExtent_Month.Pr_ET(i_GCM,ii:ii+11);
             DroughtExtent_Year.Pr_ET(i_GCM,iii) = nanmean(AA);
             
             clear A B C AA
@@ -165,7 +165,7 @@ for i_Path = 1 : length(InputMetPath)
     clear DroughtExtent_Month
     % save yearly drought extent
     save(strcat(OutputDroughtPath{i_Path} , 'DroughtExtent_Year') , 'DroughtExtent_Year');
-    clear DroughtExtent
+    clear DroughtExtent_Year
     % save global mean yearly drought frequency
     save(strcat(OutputDroughtPath{i_Path} , 'DroughtFrequency_GMYear') , 'DroughtFrequency_GMYear');
     clear DroughtFrequency_GMYear
