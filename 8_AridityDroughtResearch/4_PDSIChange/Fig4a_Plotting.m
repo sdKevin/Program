@@ -5,6 +5,9 @@ RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 RGB_ssp_Shade = [211,178,150;229,206,175;197,220,211;160,199,202];
 RGB_ssp_Line = [156,85,31;194,139,79;116,173,163;36,131,145];
 HatchAngle_ssp = [65,115,65,115];
+figure
+disp('Adjust figure, then press Enter to continue.')
+pause()
 %% (1) SevereDrought %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 subplot(2,3,1)
 
@@ -67,7 +70,7 @@ hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
 ylabel('Area in drought (%)');
-title('SevereDrought');
+title('SevereDrought (PDSI<-3)');
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_PDSI,'yTick',YTickRange_PDSI,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
 
@@ -81,6 +84,7 @@ legend('historical','ssp126','ssp245','ssp370','ssp585',...
     'Location','NorthWest','Color','None','EdgeColor','None','FontSize',24,'FontName','Arial')
 
 set(gca,'visible','off')
+clearvars -except PDSI_Year RGB_Historical_Shade RGB_Historical_Line RGB_ssp_Shade RGB_ssp_Line HatchAngle_ssp
 
 %% (2) ModerateDrought %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 subplot(2,3,2)
@@ -144,7 +148,7 @@ hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
 ylabel('Area in drought (%)');
-title('ModerateDrought');
+title('ModerateDrought (PDSI<-2)');
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_PDSI,'yTick',YTickRange_PDSI,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
 %% Add Legend
@@ -156,11 +160,12 @@ end
 legend('historical','ssp126','ssp245','ssp370','ssp585',...
     'Location','NorthWest','Color','None','EdgeColor','None','FontSize',24,'FontName','Arial')
 set(gca,'visible','off')
+clearvars -except PDSI_Year RGB_Historical_Shade RGB_Historical_Line RGB_ssp_Shade RGB_ssp_Line HatchAngle_ssp
 
 %% (3) MildDrought %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 subplot(2,3,3)
 
-YlimRange_PDSI = [25,55]; YTickRange_PDSI = [25 : 5 : 55];
+YlimRange_PDSI = [30,45]; YTickRange_PDSI = [30 : 5 : 45];
 %% Three time windows
 %  Contemporary: 1948-2014
 fill([1948;2014;2014;1948],...
@@ -219,7 +224,7 @@ hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
 ylabel('Area in drought (%)');
-title('MildDrought');
+title('MildDrought (PDSI<-1)');
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_PDSI,'yTick',YTickRange_PDSI,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
 %% Add Legend
@@ -231,12 +236,12 @@ end
 legend('historical','ssp126','ssp245','ssp370','ssp585',...
     'Location','NorthWest','Color','None','EdgeColor','None','FontSize',24,'FontName','Arial')
 set(gca,'visible','off')
-
+clearvars -except PDSI_Year RGB_Historical_Shade RGB_Historical_Line RGB_ssp_Shade RGB_ssp_Line HatchAngle_ssp
 
 %% (4) SevereMoist %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 subplot(2,3,4)
 
-YlimRange_PDSI = [5,25]; YTickRange_PDSI = [5 : 5 : 25];
+YlimRange_PDSI = [5,35]; YTickRange_PDSI = [5 : 5 : 35];
 %% Three time windows
 %  Contemporary: 1948-2014
 fill([1948;2014;2014;1948],...
@@ -295,7 +300,7 @@ hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
 ylabel('Area in drought (%)');
-title('SevereMoist');
+title('SevereMoist (PDSI>3)');
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_PDSI,'yTick',YTickRange_PDSI,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
 %% Add Legend
@@ -307,12 +312,12 @@ end
 legend('historical','ssp126','ssp245','ssp370','ssp585',...
     'Location','NorthWest','Color','None','EdgeColor','None','FontSize',24,'FontName','Arial')
 set(gca,'visible','off')
-
+clearvars -except PDSI_Year RGB_Historical_Shade RGB_Historical_Line RGB_ssp_Shade RGB_ssp_Line HatchAngle_ssp
 
 %% (5) ModerateMoist %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 subplot(2,3,5)
 
-YlimRange_PDSI = [15,35]; YTickRange_PDSI = [15 : 5 : 35];
+YlimRange_PDSI = [15,40]; YTickRange_PDSI = [15 : 5 : 40];
 %% Three time windows
 %  Contemporary: 1948-2014
 fill([1948;2014;2014;1948],...
@@ -371,7 +376,7 @@ hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
 ylabel('Area in drought (%)');
-title('ModerateMoist');
+title('ModerateMoist (PDSI>2)');
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_PDSI,'yTick',YTickRange_PDSI,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
 %% Add Legend
@@ -383,12 +388,12 @@ end
 legend('historical','ssp126','ssp245','ssp370','ssp585',...
     'Location','NorthWest','Color','None','EdgeColor','None','FontSize',24,'FontName','Arial')
 set(gca,'visible','off')
-
+clearvars -except PDSI_Year RGB_Historical_Shade RGB_Historical_Line RGB_ssp_Shade RGB_ssp_Line HatchAngle_ssp
 
 %% (6) MildMoist %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 subplot(2,3,6)
 
-YlimRange_PDSI = [25,55]; YTickRange_PDSI = [25 : 5 : 55];
+YlimRange_PDSI = [25,45]; YTickRange_PDSI = [25 : 5 : 45];
 %% Three time windows
 %  Contemporary: 1948-2014
 fill([1948;2014;2014;1948],...
@@ -447,7 +452,7 @@ hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
 ylabel('Area in drought (%)');
-title('MildMoist');
+title('MildMoist (PDSI>1)');
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_PDSI,'yTick',YTickRange_PDSI,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
 %% Add Legend
@@ -459,6 +464,6 @@ end
 legend('historical','ssp126','ssp245','ssp370','ssp585',...
     'Location','NorthWest','Color','None','EdgeColor','None','FontSize',24,'FontName','Arial')
 set(gca,'visible','off')
-
+clearvars -except PDSI_Year RGB_Historical_Shade RGB_Historical_Line RGB_ssp_Shade RGB_ssp_Line HatchAngle_ssp
 
 end
