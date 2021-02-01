@@ -317,7 +317,7 @@ clearvars -except PDSI_Year RGB_Historical_Shade RGB_Historical_Line RGB_ssp_Sha
 %% (5) ModerateMoist %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 subplot(2,3,5)
 
-YlimRange_PDSI = [15,30]; YTickRange_PDSI = [15 : 5 : 30];
+YlimRange_PDSI = [10,30]; YTickRange_PDSI = [10 : 5 : 30];
 %% Three time windows
 %  Contemporary: 1948-2014
 fill([1948;2014;2014;1948],...

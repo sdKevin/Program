@@ -89,7 +89,7 @@ clearvars -except PDSI_Year RGB_Historical_Shade RGB_Historical_Line RGB_ssp_Sha
 %% (2) ModerateDrought %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 subplot(2,3,2)
 
-YlimRange_PDSI = [1.5,3.5]; YTickRange_PDSI = [1.5 : 0.5 : 3.5];
+YlimRange_PDSI = [1.3,3]; YTickRange_PDSI = [1.5 : 0.5 : 3.5];
 %% Three time windows
 %  Contemporary: 1948-2014
 fill([1948;2014;2014;1948],...
@@ -393,7 +393,7 @@ clearvars -except PDSI_Year RGB_Historical_Shade RGB_Historical_Line RGB_ssp_Sha
 %% (6) MildMoist %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 subplot(2,3,6)
 
-YlimRange_PDSI = [3,5.5]; YTickRange_PDSI = [3 : 0.5 : 5.5];
+YlimRange_PDSI = [2.7,5.5]; YTickRange_PDSI = [3 : 0.5 : 5.5];
 %% Three time windows
 %  Contemporary: 1948-2014
 fill([1948;2014;2014;1948],...
