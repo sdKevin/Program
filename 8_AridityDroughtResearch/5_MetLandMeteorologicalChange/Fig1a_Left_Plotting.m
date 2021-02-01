@@ -1,7 +1,9 @@
 function Fig1a_Left_Plotting(Met_Land_Year)
-
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pr %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 figure
+disp('Adjust figure, then press Enter.');
+pause();
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pr %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+subplot(2,2,1)
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % Pr
@@ -66,7 +68,8 @@ plot([2014 2014],[YlimRange_Pr(1) YlimRange_Pr(2)],'k','LineWidth',1.5);
 hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
-ylabel('Area in Drought (Pr<10th Percentile)');
+ylabel('Area in Drought (%)');
+title('Pr<10th Percentile')
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_Pr,'yTick',YTickRange_Pr,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
 %% Plotting Legend
@@ -83,9 +86,9 @@ legend('historical','ssp126','ssp245','ssp370','ssp585',...
     'Location','NorthWest','Color','None','EdgeColor','None','FontSize',24,'FontName','Arial')
 set(gca,'visible','off')
 clearvars -except Met_Land_Year
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pr-ET %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-figure
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pr-ET %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+subplot(2,2,2)
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % Pr-ET
@@ -150,7 +153,8 @@ plot([2014 2014],[YlimRange_Pr_ET(1) YlimRange_Pr_ET(2)],'k','LineWidth',1.5);
 hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
-ylabel('Area in Drought (Pr-ET<10th Percentile)');
+ylabel('Area in Drought (%)');
+title('Pr-ET<10th Percentile')
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_Pr_ET,'yTick',YTickRange_Pr_ET,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
 %% Plotting Legend
@@ -169,7 +173,7 @@ set(gca,'visible','off')
 clearvars -except Met_Land_Year
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Q %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-figure
+subplot(2,2,3)
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % Q
@@ -234,7 +238,8 @@ plot([2014 2014],[YlimRange_Q(1) YlimRange_Q(2)],'k','LineWidth',1.5);
 hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
-ylabel('Area in Drought (Q<10th Percentile)');
+ylabel('Area in Drought (%)');
+title('Q<10th Percentile');
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_Q,'yTick',YTickRange_Q,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
 %% Plotting Legend
@@ -253,7 +258,7 @@ set(gca,'visible','off')
 clearvars -except Met_Land_Year
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-figure
+subplot(2,2,4)
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % SM
@@ -318,7 +323,8 @@ plot([2014 2014],[YlimRange_SM(1) YlimRange_SM(2)],'k','LineWidth',1.5);
 hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
-ylabel('Area in Drought (SoilMoisture<10th Percentile)');
+ylabel('Area in Drought (%)');
+title('SoilMoisture<10th Percentile')
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_SM,'yTick',YTickRange_SM,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
 %% Plotting Legend
