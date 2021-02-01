@@ -18,9 +18,11 @@ function Fig1a_Left_Plotting(Met_Year , Land_Year)
 %     end
 % end
 % clear ii iii
-
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pr %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 figure
+disp('Adjust figure, then press Enter.');
+pause();
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pr %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+subplot(2,2,1)
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % Pr
@@ -110,7 +112,7 @@ clearvars -except Met_Year Land_Year
 for ii = 1 : length(Met_Year)
     Met_Year(ii).Met_Year.pr(12:14,:) = [];
 end
-figure
+subplot(2,2,2)
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % Pr-ET
@@ -198,7 +200,7 @@ set(gca,'visible','off')
 clearvars -except Met_Year Land_Year
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Q %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-figure
+subplot(2,2,3)
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % Q
@@ -286,7 +288,7 @@ set(gca,'visible','off')
 clearvars -except Met_Year Land_Year
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-figure
+subplot(2,2,4)
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % SM
@@ -369,7 +371,7 @@ for i_ssp = [1,2,3,4]
     end
 end
 legend('historical','ssp126','ssp245','ssp370','ssp585',...
-    'Location','NorthWest','Color','None','EdgeColor','None','FontSize',24,'FontName','Arial')
+    'Location','SouthWest','Color','None','EdgeColor','None','FontSize',24,'FontName','Arial')
 set(gca,'visible','off')
 clearvars -except Met_Year Land_Year
 
