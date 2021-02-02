@@ -25,4 +25,5 @@ clear Path_Met_Year_ScenarioMIP_ssp370_GCM Path_Met_Year_ScenarioMIP_ssp585_GCM 
 clear Path_Land_Year_Historical_GCM Path_Land_Year_ScenarioMIP_ssp126_GCM Path_Land_Year_ScenarioMIP_ssp245_GCM
 clear Path_Land_Year_ScenarioMIP_ssp370_GCM Path_Land_Year_ScenarioMIP_ssp585_GCM
 
-Fig1a_Left_Plotting(Met_Year , Land_Year)
+Fig1_Left_Plotting(Met_Year , Land_Year)
+Fig1_Right_Plotting(Met_Year , Land_Year)

@@ -18,11 +18,8 @@ function Fig1a_Left_Plotting(Met_Year , Land_Year)
 %     end
 % end
 % clear ii iii
-figure
-disp('Adjust figure, then press Enter.');
-pause();
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pr %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-subplot(2,2,1)
+figure
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % Pr
@@ -47,7 +44,7 @@ plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 Pr_Historical = Met_Year(1).Met_Year.pr .* 1000.*31536000./997;
 Pr_Historical = Pr_Historical - repmat(mean(Pr_Historical(:,99:165),2),1,165); % Change to Anomaly
 Ensemble_Mean_Pr_Historical = nanmean(Pr_Historical)';
-c95_Pr_Historical = (std(Pr_Historical)./sqrt(size(Pr_Historical,1))).*1.96; % 80% confidence interval
+c95_Pr_Historical = (std(Pr_Historical)./sqrt(size(Pr_Historical,1))).*1.96; % 95% confidence interval
 c95_Pr_Historical = c95_Pr_Historical';
 h1 = fill([[1850:2014]';flipud([1850:2014]')],...
     [Ensemble_Mean_Pr_Historical - c95_Pr_Historical; flipud(Ensemble_Mean_Pr_Historical + c95_Pr_Historical)],...
@@ -66,7 +63,7 @@ for i_ssp = [5,4,3,2]
     Pr_ssp = [Pr_Historical(:,end) , Pr_ssp];
     Pr_ssp = Pr_ssp - repmat(mean(Pr_Historical(:,99:165),2), 1 ,87); % Change to Anomaly
     Ensemble_Mean_Pr_ssp(:,i_ssp-1) = nanmean(Pr_ssp)';
-    c95_Pr_ssp = (std(Pr_ssp)./sqrt(size(Pr_ssp,1))).*1.96; % 80% confidence interval
+    c95_Pr_ssp = (std(Pr_ssp)./sqrt(size(Pr_ssp,1))).*1.96; % 95% confidence interval
     c95_Pr_ssp = c95_Pr_ssp';
     if i_ssp == 5|| i_ssp == 2
         h_ssp = fill([[2014:2100]';flipud([2014:2100]')],...
@@ -112,7 +109,7 @@ clearvars -except Met_Year Land_Year
 for ii = 1 : length(Met_Year)
     Met_Year(ii).Met_Year.pr(12:14,:) = [];
 end
-subplot(2,2,2)
+figure
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % Pr-ET
@@ -137,7 +134,7 @@ plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 Pr_ET_Historical = (Met_Year(1).Met_Year.pr - Land_Year(1).Land_Year.evspsbl) .* 1000.*31536000./997;
 Pr_ET_Historical = Pr_ET_Historical - repmat(mean(Pr_ET_Historical(:,99:165),2),1,165); % Change to Anomaly
 Ensemble_Mean_Pr_ET_Historical = nanmean(Pr_ET_Historical)';
-c95_Pr_ET_Historical = (std(Pr_ET_Historical)./sqrt(size(Pr_ET_Historical,1))).*1.96; % 80% confidence interval
+c95_Pr_ET_Historical = (std(Pr_ET_Historical)./sqrt(size(Pr_ET_Historical,1))).*1.96; % 95% confidence interval
 c95_Pr_ET_Historical = c95_Pr_ET_Historical';
 h1 = fill([[1850:2014]';flipud([1850:2014]')],...
     [Ensemble_Mean_Pr_ET_Historical - c95_Pr_ET_Historical; flipud(Ensemble_Mean_Pr_ET_Historical + c95_Pr_ET_Historical)],...
@@ -156,7 +153,7 @@ for i_ssp = [5,4,3,2]
     Pr_ET_ssp = [Pr_ET_Historical(:,end) , Pr_ET_ssp];
     Pr_ET_ssp = Pr_ET_ssp - repmat(mean(Pr_ET_Historical(:,99:165),2), 1 ,87); % Change to Anomaly
     Ensemble_Mean_Pr_ET_ssp(:,i_ssp-1) = nanmean(Pr_ET_ssp)';
-    c95_Pr_ET_ssp = (std(Pr_ET_ssp)./sqrt(size(Pr_ET_ssp,1))).*1.96; % 80% confidence interval
+    c95_Pr_ET_ssp = (std(Pr_ET_ssp)./sqrt(size(Pr_ET_ssp,1))).*1.96; % 95% confidence interval
     c95_Pr_ET_ssp = c95_Pr_ET_ssp';
     if i_ssp == 5|| i_ssp == 2
         h_ssp = fill([[2014:2100]';flipud([2014:2100]')],...
@@ -200,7 +197,7 @@ set(gca,'visible','off')
 clearvars -except Met_Year Land_Year
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Q %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-subplot(2,2,3)
+figure
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % Q
@@ -225,7 +222,7 @@ plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 Q_Historical = Land_Year(1).Land_Year.mrro .* 1000.*31536000./997;
 Q_Historical = Q_Historical - repmat(mean(Q_Historical(:,99:165),2),1,165); % Change to Anomaly
 Ensemble_Mean_Q_Historical = nanmean(Q_Historical)';
-c95_Q_Historical = (std(Q_Historical)./sqrt(size(Q_Historical,1))).*1.96; % 80% confidence interval
+c95_Q_Historical = (std(Q_Historical)./sqrt(size(Q_Historical,1))).*1.96; % 95% confidence interval
 c95_Q_Historical = c95_Q_Historical';
 h1 = fill([[1850:2014]';flipud([1850:2014]')],...
     [Ensemble_Mean_Q_Historical - c95_Q_Historical; flipud(Ensemble_Mean_Q_Historical + c95_Q_Historical)],...
@@ -244,7 +241,7 @@ for i_ssp = [5,4,3,2]
     Q_ssp = [Q_Historical(:,end) , Q_ssp];
     Q_ssp = Q_ssp - repmat(mean(Q_Historical(:,99:165),2), 1 ,87); % Change to Anomaly
     Ensemble_Mean_Q_ssp(:,i_ssp-1) = nanmean(Q_ssp)';
-    c95_Q_ssp = (std(Q_ssp)./sqrt(size(Q_ssp,1))).*1.96; % 80% confidence interval
+    c95_Q_ssp = (std(Q_ssp)./sqrt(size(Q_ssp,1))).*1.96; % 95% confidence interval
     c95_Q_ssp = c95_Q_ssp';
     if i_ssp == 5|| i_ssp == 2
         h_ssp = fill([[2014:2100]';flipud([2014:2100]')],...
@@ -288,7 +285,7 @@ set(gca,'visible','off')
 clearvars -except Met_Year Land_Year
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-subplot(2,2,4)
+figure
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % SM
@@ -313,7 +310,7 @@ plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 SM_Historical = Land_Year(1).Land_Year.mrso .*1000 ./ 997;
 SM_Historical = SM_Historical - repmat(mean(SM_Historical(:,99:165),2),1,165); % Change to Anomaly
 Ensemble_Mean_SM_Historical = nanmean(SM_Historical)';
-c95_SM_Historical = (std(SM_Historical)./sqrt(size(SM_Historical,1))).*1.96; % 80% confidence interval
+c95_SM_Historical = (std(SM_Historical)./sqrt(size(SM_Historical,1))).*1.96; % 95% confidence interval
 c95_SM_Historical = c95_SM_Historical';
 h1 = fill([[1850:2014]';flipud([1850:2014]')],...
     [Ensemble_Mean_SM_Historical - c95_SM_Historical; flipud(Ensemble_Mean_SM_Historical + c95_SM_Historical)],...
@@ -332,9 +329,9 @@ for i_ssp = [5,4,3,2]
     SM_ssp = [SM_Historical(:,end) , SM_ssp];
     SM_ssp = SM_ssp - repmat(mean(SM_Historical(:,99:165),2), 1 ,87); % Change to Anomaly
     Ensemble_Mean_SM_ssp(:,i_ssp-1) = nanmean(SM_ssp)';
-    c95_SM_ssp = (std(SM_ssp)./sqrt(size(SM_ssp,1))).*1.96; % 80% confidence interval
+    c95_SM_ssp = (std(SM_ssp)./sqrt(size(SM_ssp,1))).*1.96; % 95% confidence interval
     c95_SM_ssp = c95_SM_ssp';
-    if i_ssp == 5|| i_ssp == 2
+    if i_ssp == 5 || i_ssp == 2
         h_ssp = fill([[2014:2100]';flipud([2014:2100]')],...
             [Ensemble_Mean_SM_ssp(:,i_ssp-1) - c95_SM_ssp; flipud(Ensemble_Mean_SM_ssp(:,i_ssp-1) + c95_SM_ssp)],...
             RGB_ssp_Shade(i_ssp-1,:)./255,'EdgeAlpha',0,'FaceAlpha',0.9); hold on;
@@ -401,7 +398,7 @@ clearvars -except Met_Year Land_Year
 % ET_Historical = Land_Year(1).Land_Year.evspsbl .*1000 .*31536000 ./ 997;
 % ET_Historical = ET_Historical - repmat(mean(ET_Historical(:,99:165),2),1,165); % Change to Anomaly
 % Ensemble_Mean_ET_Historical = nanmean(ET_Historical)';
-% c95_ET_Historical = (std(ET_Historical)./sqrt(size(ET_Historical,1))).*1.96; % 80% confidence interval
+% c95_ET_Historical = (std(ET_Historical)./sqrt(size(ET_Historical,1))).*1.96; % 95% confidence interval
 % c95_ET_Historical = c95_ET_Historical';
 % h1 = fill([[1850:2014]';flipud([1850:2014]')],...
 %     [Ensemble_Mean_ET_Historical - c95_ET_Historical; flipud(Ensemble_Mean_ET_Historical + c95_ET_Historical)],...
@@ -420,7 +417,7 @@ clearvars -except Met_Year Land_Year
 %     ET_ssp = [ET_Historical(:,end) , ET_ssp];
 %     ET_ssp = ET_ssp - repmat(mean(ET_Historical(:,99:165),2), 1 ,87); % Change to Anomaly
 %     Ensemble_Mean_ET_ssp(:,i_ssp-1) = nanmean(ET_ssp)';
-%     c95_ET_ssp = (std(ET_ssp)./sqrt(size(ET_ssp,1))).*1.96; % 80% confidence interval
+%     c95_ET_ssp = (std(ET_ssp)./sqrt(size(ET_ssp,1))).*1.96; % 95% confidence interval
 %     c95_ET_ssp = c95_ET_ssp';
 %     if i_ssp == 5|| i_ssp == 2
 %         h_ssp = fill([[2014:2100]';flipud([2014:2100]')],...
