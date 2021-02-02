@@ -88,6 +88,7 @@ hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
 ylabel('PDSI');
+title('ETrc-Jarvis');
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_PDSI,'yTick',YTickRange_PDSI,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
 %% Add Legend
@@ -142,7 +143,7 @@ fill([2070;2099;2099;2070],...
 % Plot y=0 and x=2014
 plot([2014 2014],[YlimRange_PDSI(1) YlimRange_PDSI(2)],'k','LineWidth',1.5); hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
-% Historical PDSI calculated by PM-RC-Jarvis-H
+% Historical PDSI calculated by PM-RC-Yang
 PDSI_Historical = PDSI_Year(1).PDSI_Year.pdsi_PM_RC_CO2_Yang;
 Ensemble_Mean_PDSI_Historical = nanmean(PDSI_Historical)';
 c95_PDSI_Historical = (std(PDSI_Historical)./sqrt(size(PDSI_Historical,1))).*1.28;% 80% confidence interval
@@ -153,7 +154,7 @@ h1 = fill([[1850:2014]';flipud([1850:2014]')],...
 hatchfill2(h1,'cross','LineWidth',2,'FaceColor','none',...
     'HatchStyle','single','HatchAngle',45,'HatchDensity',250,...
     'HatchLineWidth',2.5, 'HatchColor',RGB_Historical_Shade./255)
-% ScenarioMIP PDSI calculated by PM-RC-Jarvis-H
+% ScenarioMIP PDSI calculated by PM-RC-Yang
 for i_ssp = [5,4,3,2]
     if i_ssp == 4
         PDSI_Historical = PDSI_Year(1).PDSI_Year.pdsi_PM_RC_CO2_Yang;
@@ -187,6 +188,7 @@ hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
 ylabel('PDSI');
+title('ETrc-Yang');
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_PDSI,'yTick',YTickRange_PDSI,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
 %% Add Legend
@@ -241,7 +243,7 @@ fill([2070;2099;2099;2070],...
 % Plot y=0 and x=2014
 plot([2014 2014],[YlimRange_PDSI(1) YlimRange_PDSI(2)],'k','LineWidth',1.5); hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
-% Historical PDSI calculated by PM-RC-Jarvis-H
+% Historical PDSI calculated by PM-RC
 PDSI_Historical = PDSI_Year(1).PDSI_Year.pdsi_PM_RC;
 Ensemble_Mean_PDSI_Historical = nanmean(PDSI_Historical)';
 c95_PDSI_Historical = (std(PDSI_Historical)./sqrt(size(PDSI_Historical,1))).*1.28;% 80% confidence interval
@@ -252,7 +254,7 @@ h1 = fill([[1850:2014]';flipud([1850:2014]')],...
 hatchfill2(h1,'cross','LineWidth',2,'FaceColor','none',...
     'HatchStyle','single','HatchAngle',45,'HatchDensity',250,...
     'HatchLineWidth',2.5, 'HatchColor',RGB_Historical_Shade./255)
-% ScenarioMIP PDSI calculated by PM-RC-Jarvis-H
+% ScenarioMIP PDSI calculated by PM-RC
 for i_ssp = [5,4,3,2]
     if i_ssp == 4
         PDSI_Historical = PDSI_Year(1).PDSI_Year.pdsi_PM_RC;
@@ -286,6 +288,7 @@ hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
 ylabel('PDSI');
+title('ETrc');
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_PDSI,'yTick',YTickRange_PDSI,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
 %% Add Legend
@@ -384,6 +387,7 @@ hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
 ylabel('scPDSI');
+title('ETrc-Jarvis');
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_scPDSI,'yTick',YTickRange_scPDSI,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
 %% Add Legend
@@ -437,7 +441,7 @@ fill([2070;2099;2099;2070],...
 % Plot y=0 and x=2014
 plot([2014 2014],[YlimRange_scPDSI(1) YlimRange_scPDSI(2)],'k','LineWidth',1.5); hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
-% Historical scPDSI calculated by PM-RC-Jarvis-H
+% Historical scPDSI calculated by PM-RC-Yang
 scPDSI_Historical = scPDSI_Year(1).scPDSI_Year.scpdsi_PM_RC_CO2_Yang;
 Ensemble_Mean_scPDSI_Historical = nanmean(scPDSI_Historical)';
 c95_scPDSI_Historical = (std(scPDSI_Historical)./sqrt(size(scPDSI_Historical,1))).*1.28;% 80% confidence interval
@@ -448,7 +452,7 @@ h1 = fill([[1850:2014]';flipud([1850:2014]')],...
 hatchfill2(h1,'cross','LineWidth',2,'FaceColor','none',...
     'HatchStyle','single','HatchAngle',45,'HatchDensity',250,...
     'HatchLineWidth',2.5, 'HatchColor',RGB_Historical_Shade./255)
-% ScenarioMIP scPDSI calculated by PM-RC-Jarvis-H
+% ScenarioMIP scPDSI calculated by PM-RC-Yang
 for i_ssp = [5,4,3,2]
     if i_ssp == 4
         scPDSI_Historical = scPDSI_Year(1).scPDSI_Year.scpdsi_PM_RC_CO2_Yang;
@@ -482,6 +486,7 @@ hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
 ylabel('scPDSI');
+title('ETrc-Yang');
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_scPDSI,'yTick',YTickRange_scPDSI,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
 %% Add Legend
@@ -535,7 +540,7 @@ fill([2070;2099;2099;2070],...
 % Plot y=0 and x=2014
 plot([2014 2014],[YlimRange_scPDSI(1) YlimRange_scPDSI(2)],'k','LineWidth',1.5); hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
-% Historical scPDSI calculated by PM-RC-Jarvis-H
+% Historical scPDSI calculated by PM-RC
 scPDSI_Historical = scPDSI_Year(1).scPDSI_Year.scpdsi_PM_RC;
 Ensemble_Mean_scPDSI_Historical = nanmean(scPDSI_Historical)';
 c95_scPDSI_Historical = (std(scPDSI_Historical)./sqrt(size(scPDSI_Historical,1))).*1.28;% 80% confidence interval
@@ -546,7 +551,7 @@ h1 = fill([[1850:2014]';flipud([1850:2014]')],...
 hatchfill2(h1,'cross','LineWidth',2,'FaceColor','none',...
     'HatchStyle','single','HatchAngle',45,'HatchDensity',250,...
     'HatchLineWidth',2.5, 'HatchColor',RGB_Historical_Shade./255)
-% ScenarioMIP scPDSI calculated by PM-RC-Jarvis-H
+% ScenarioMIP scPDSI calculated by PM-RC
 for i_ssp = [5,4,3,2]
     if i_ssp == 4
         scPDSI_Historical = scPDSI_Year(1).scPDSI_Year.scpdsi_PM_RC;
@@ -580,6 +585,7 @@ hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
 ylabel('scPDSI');
+title('ETrc');
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_scPDSI,'yTick',YTickRange_scPDSI,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
 %% Add Legend
