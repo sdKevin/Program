@@ -1,4 +1,4 @@
-function Fig1a_Right_Plotting(Met_Year , Land_Year)
+function Fig1_Right_Plotting(Met_Year , Land_Year)
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pr %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 figure
 subplot(1,6,[1:3])

@@ -14,4 +14,5 @@ Met_Land_Year = cat(2,load(Path_Met_Land_Year_Historical_GCM),...
 clear Path_Met_Land_Year_Historical_GCM Path_Met_Land_Year_ScenarioMIP_ssp126_GCM Path_Met_Land_Year_ScenarioMIP_ssp245_GCM
 clear Path_Met_Land_Year_ScenarioMIP_ssp370_GCM Path_Met_Land_Year_ScenarioMIP_ssp585_GCM
 
-Fig1a_Left_Plotting(Met_Land_Year)
+Fig1_Left_Plotting(Met_Land_Year)
+Fig1_Right_Plotting(Met_Land_Year)

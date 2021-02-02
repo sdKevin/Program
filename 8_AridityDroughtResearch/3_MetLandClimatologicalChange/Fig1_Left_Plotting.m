@@ -1,4 +1,4 @@
-function Fig1a_Left_Plotting(Met_Year , Land_Year)
+function Fig1_Left_Plotting(Met_Year , Land_Year)
 %% Data Smooth
 % for ii = 1 : length(Met_Year)
 %     for iii = 1 : size(Met_Year(ii).Met_Year.pr,1)

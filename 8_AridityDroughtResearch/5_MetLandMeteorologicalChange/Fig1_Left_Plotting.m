@@ -1,15 +1,12 @@
-function Fig2a_Left_Plotting(Met_Land_Year)
-figure
-disp('Adjust figure, then press Enter.');
-pause();
+function Fig1_Left_Plotting(Met_Land_Year)
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pr %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-subplot(2,2,1)
+figure
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % Pr
 RGB_ssp_Shade = [222,235,247; 198,234,251; 161,196,218; 194,196,226];
 RGB_ssp_Line = [133,184,227; 0,173,238; 50,128,185; 57,83,164];
-YlimRange_Pr = [0.9,1.2]; YTickRange_Pr = [0.9:0.1:1.2];
+YlimRange_Pr = [9,12]; YTickRange_Pr = [9:1:12];
 %% Three time windows
 %  Contemporary: 1948-2014
 fill([1948;2014;2014;1948],...
@@ -24,7 +21,7 @@ fill([2070;2099;2099;2070],...
 plot([2014 2014],[YlimRange_Pr(1) YlimRange_Pr(2)],'k','LineWidth',1.5); hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % Historical Pr
-Pr_Historical = Met_Land_Year(1).DroughtFrequency_GMYear.Pr;
+Pr_Historical = Met_Land_Year(1).DroughtExtent_Year.Pr;
 Ensemble_Mean_Pr_Historical = nanmean(Pr_Historical)';
 c95_Pr_Historical = (std(Pr_Historical)./sqrt(size(Pr_Historical,1))).*1.96; % 80% confidence interval
 c95_Pr_Historical = c95_Pr_Historical';
@@ -35,12 +32,12 @@ h1 = fill([[1850:2014]';flipud([1850:2014]')],...
 % Scenario Pr
 for i_ssp = [5,4,3,2]
     if i_ssp == 4
-        Pr_Historical = Met_Land_Year(1).DroughtFrequency_GMYear.Pr;
-        Pr_Historical(16,:) = []; % HadGEM3-GC31-LL
+        Pr_Historical = Met_Land_Year(1).DroughtExtent_Year.Pr;
+        Pr_Historical(13,:) = []; % HadGEM3-GC31-LL
     else
-        Pr_Historical = Met_Land_Year(1).DroughtFrequency_GMYear.Pr;
+        Pr_Historical = Met_Land_Year(1).DroughtExtent_Year.Pr;
     end
-    Pr_ssp = Met_Land_Year(i_ssp).DroughtFrequency_GMYear.Pr;
+    Pr_ssp = Met_Land_Year(i_ssp).DroughtExtent_Year.Pr;
     Pr_ssp = [Pr_Historical(:,end) , Pr_ssp];
     Ensemble_Mean_Pr_ssp(:,i_ssp-1) = nanmean(Pr_ssp)';
     c95_Pr_ssp = (std(Pr_ssp)./sqrt(size(Pr_ssp,1))).*1.96; % 80% confidence interval
@@ -68,7 +65,7 @@ plot([2014 2014],[YlimRange_Pr(1) YlimRange_Pr(2)],'k','LineWidth',1.5);
 hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
-ylabel('Month under drought');
+ylabel('Area in Drought (%)');
 title('Pr<10th Percentile')
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_Pr,'yTick',YTickRange_Pr,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
@@ -83,18 +80,18 @@ for i_ssp = [1,2,3,4]
     end
 end
 legend('historical','ssp126','ssp245','ssp370','ssp585',...
-    'Location','SouthWest','Color','None','EdgeColor','None','FontSize',24,'FontName','Arial')
+    'Location','NorthWest','Color','None','EdgeColor','None','FontSize',24,'FontName','Arial')
 set(gca,'visible','off')
 clearvars -except Met_Land_Year
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pr-ET %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-subplot(2,2,2)
+figure
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % Pr-ET
 RGB_ssp_Shade = [222,235,247; 198,234,251; 161,196,218; 194,196,226];
 RGB_ssp_Line = [133,184,227; 0,173,238; 50,128,185; 57,83,164];
-YlimRange_Pr_ET = [0.9,1.4]; YTickRange_Pr_ET = [0.9:0.1:1.4];
+YlimRange_Pr_ET = [8,12.5]; YTickRange_Pr_ET = [8:1:12];
 %% Three time windows
 %  Contemporary: 1948-2014
 fill([1948;2014;2014;1948],...
@@ -109,7 +106,7 @@ fill([2070;2099;2099;2070],...
 plot([2014 2014],[YlimRange_Pr_ET(1) YlimRange_Pr_ET(2)],'k','LineWidth',1.5); hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % Historical Pr_ET
-Pr_ET_Historical = Met_Land_Year(1).DroughtFrequency_GMYear.Pr_ET;
+Pr_ET_Historical = Met_Land_Year(1).DroughtExtent_Year.Pr_ET;
 Ensemble_Mean_Pr_ET_Historical = nanmean(Pr_ET_Historical)';
 c95_Pr_ET_Historical = (std(Pr_ET_Historical)./sqrt(size(Pr_ET_Historical,1))).*1.96; % 80% confidence interval
 c95_Pr_ET_Historical = c95_Pr_ET_Historical';
@@ -120,12 +117,12 @@ h1 = fill([[1850:2014]';flipud([1850:2014]')],...
 % Scenario Pr_ET
 for i_ssp = [5,4,3,2]
     if i_ssp == 4
-        Pr_ET_Historical = Met_Land_Year(1).DroughtFrequency_GMYear.Pr_ET;
+        Pr_ET_Historical = Met_Land_Year(1).DroughtExtent_Year.Pr_ET;
         Pr_ET_Historical(13,:) = []; % HadGEM3-GC31-LL
     else
-        Pr_ET_Historical = Met_Land_Year(1).DroughtFrequency_GMYear.Pr_ET;
+        Pr_ET_Historical = Met_Land_Year(1).DroughtExtent_Year.Pr_ET;
     end
-    Pr_ET_ssp = Met_Land_Year(i_ssp).DroughtFrequency_GMYear.Pr_ET;
+    Pr_ET_ssp = Met_Land_Year(i_ssp).DroughtExtent_Year.Pr_ET;
     Pr_ET_ssp = [Pr_ET_Historical(:,end) , Pr_ET_ssp];
     Ensemble_Mean_Pr_ET_ssp(:,i_ssp-1) = nanmean(Pr_ET_ssp)';
     c95_Pr_ET_ssp = (std(Pr_ET_ssp)./sqrt(size(Pr_ET_ssp,1))).*1.96; % 80% confidence interval
@@ -153,7 +150,7 @@ plot([2014 2014],[YlimRange_Pr_ET(1) YlimRange_Pr_ET(2)],'k','LineWidth',1.5);
 hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
-ylabel('Month under drought');
+ylabel('Area in Drought (%)');
 title('Pr-ET<10th Percentile')
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_Pr_ET,'yTick',YTickRange_Pr_ET,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
@@ -173,13 +170,13 @@ set(gca,'visible','off')
 clearvars -except Met_Land_Year
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Q %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-subplot(2,2,3)
+figure
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % Q
 RGB_ssp_Shade = [222,235,247; 198,234,251; 161,196,218; 194,196,226];
 RGB_ssp_Line = [133,184,227; 0,173,238; 50,128,185; 57,83,164];
-YlimRange_Q = [0.6,1.1]; YTickRange_Q = [0.6:0.1:1.1];
+YlimRange_Q = [6,12]; YTickRange_Q = [6:2:12];
 %% Three time windows
 %  Contemporary: 1948-2014
 fill([1948;2014;2014;1948],...
@@ -194,7 +191,7 @@ fill([2070;2099;2099;2070],...
 plot([2014 2014],[YlimRange_Q(1) YlimRange_Q(2)],'k','LineWidth',1.5); hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % Historical Q
-Q_Historical = Met_Land_Year(1).DroughtFrequency_GMYear.Q;
+Q_Historical = Met_Land_Year(1).DroughtExtent_Year.Q;
 Ensemble_Mean_Q_Historical = nanmean(Q_Historical)';
 c95_Q_Historical = (std(Q_Historical)./sqrt(size(Q_Historical,1))).*1.96; % 80% confidence interval
 c95_Q_Historical = c95_Q_Historical';
@@ -205,12 +202,12 @@ h1 = fill([[1850:2014]';flipud([1850:2014]')],...
 % Scenario Q
 for i_ssp = [5,4,3,2]
     if i_ssp == 4
-        Q_Historical = Met_Land_Year(1).DroughtFrequency_GMYear.Q;
+        Q_Historical = Met_Land_Year(1).DroughtExtent_Year.Q;
         Q_Historical(13,:) = []; % HadGEM3-GC31-LL
     else
-        Q_Historical = Met_Land_Year(1).DroughtFrequency_GMYear.Q;
+        Q_Historical = Met_Land_Year(1).DroughtExtent_Year.Q;
     end
-    Q_ssp = Met_Land_Year(i_ssp).DroughtFrequency_GMYear.Q;
+    Q_ssp = Met_Land_Year(i_ssp).DroughtExtent_Year.Q;
     Q_ssp = [Q_Historical(:,end) , Q_ssp];
     Ensemble_Mean_Q_ssp(:,i_ssp-1) = nanmean(Q_ssp)';
     c95_Q_ssp = (std(Q_ssp)./sqrt(size(Q_ssp,1))).*1.96; % 80% confidence interval
@@ -238,7 +235,7 @@ plot([2014 2014],[YlimRange_Q(1) YlimRange_Q(2)],'k','LineWidth',1.5);
 hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
-ylabel('Month under drought');
+ylabel('Area in Drought (%)');
 title('Q<10th Percentile');
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_Q,'yTick',YTickRange_Q,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
@@ -258,13 +255,13 @@ set(gca,'visible','off')
 clearvars -except Met_Land_Year
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-subplot(2,2,4)
+figure
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % SM
 RGB_ssp_Shade = [222,235,247; 198,234,251; 161,196,218; 194,196,226];
 RGB_ssp_Line = [133,184,227; 0,173,238; 50,128,185; 57,83,164];
-YlimRange_SM = [0.7,3.1]; YTickRange_SM = [0.5:0.5:3.5];
+YlimRange_SM = [7,27]; YTickRange_SM = [5:5:25];
 %% Three time windows
 %  Contemporary: 1948-2014
 fill([1948;2014;2014;1948],...
@@ -279,7 +276,7 @@ fill([2070;2099;2099;2070],...
 plot([2014 2014],[YlimRange_SM(1) YlimRange_SM(2)],'k','LineWidth',1.5); hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % Historical SM
-SM_Historical = Met_Land_Year(1).DroughtFrequency_GMYear.SM;
+SM_Historical = Met_Land_Year(1).DroughtExtent_Year.SM;
 Ensemble_Mean_SM_Historical = nanmean(SM_Historical)';
 c95_SM_Historical = (std(SM_Historical)./sqrt(size(SM_Historical,1))).*1.96; % 80% confidence interval
 c95_SM_Historical = c95_SM_Historical';
@@ -290,12 +287,12 @@ h1 = fill([[1850:2014]';flipud([1850:2014]')],...
 % Scenario SM
 for i_ssp = [5,4,3,2]
     if i_ssp == 4
-        SM_Historical = Met_Land_Year(1).DroughtFrequency_GMYear.SM;
+        SM_Historical = Met_Land_Year(1).DroughtExtent_Year.SM;
         SM_Historical(13,:) = []; % HadGEM3-GC31-LL
     else
-        SM_Historical = Met_Land_Year(1).DroughtFrequency_GMYear.SM;
+        SM_Historical = Met_Land_Year(1).DroughtExtent_Year.SM;
     end
-    SM_ssp = Met_Land_Year(i_ssp).DroughtFrequency_GMYear.SM;
+    SM_ssp = Met_Land_Year(i_ssp).DroughtExtent_Year.SM;
     SM_ssp = [SM_Historical(:,end) , SM_ssp];
     Ensemble_Mean_SM_ssp(:,i_ssp-1) = nanmean(SM_ssp)';
     c95_SM_ssp = (std(SM_ssp)./sqrt(size(SM_ssp,1))).*1.96; % 80% confidence interval
@@ -323,7 +320,7 @@ plot([2014 2014],[YlimRange_SM(1) YlimRange_SM(2)],'k','LineWidth',1.5);
 hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
-ylabel('Month under drought');
+ylabel('Area in Drought (%)');
 title('SoilMoisture<10th Percentile')
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_SM,'yTick',YTickRange_SM,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
