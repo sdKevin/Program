@@ -1,9 +1,9 @@
 function [PM_RC_CO2_Yang , PM_RC_CO2_Jarvis_H , PM_RC_CO2_Jarvis_L] =...
     Penman_Mothith_CO2(Sn , Ln , U10 , Ta , Sh , Pa , CO2 , pr ,...
     OutputPath_Attribution , OutputPath_InterVar , Name)
-% from W/m2 to MJ/(m2day)
 Sg = Sn; % change Sg to represent Surface incident shortwave radiation (W/m2)
-Sn = Sn.*0.0864;Sn=(1-0.23).*Sn; %0.23 is the albedo
+% from W/m2 to MJ/(m2day)
+Sn = Sn.*0.0864;Sn=(1-0.23).*Sn; % 0.23 is the albedo
 Ln = Ln.*0.0864;Ln = Ln - 4.903./1000000000.*Ta.^4;%black body
 Rn = Sn + Ln; % Ln is downward, thus Sn +Ln
 % from U10 to U2 (m/s)
