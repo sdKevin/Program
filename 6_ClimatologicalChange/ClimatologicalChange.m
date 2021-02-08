@@ -50,7 +50,9 @@ for i_Path = 2 : length(InputLandPath)
         % Load GCM Historical yearly AI data
         load([InputAIPath{1} , GCM_Ensemble{i_GCM} , '.mat'])
         % Mean AI,pr,evspsbl,mrso£¬mrro for contemporary [1948-2014]
-        AI_Con = mean(Grid_AI.PM_RC_CO2_Jarvis_H(:,:,99:end),3);
+        AI_Con_Jarvis = mean(Grid_AI.PM_RC_CO2_Jarvis_H(:,:,99:end),3);
+        AI_Con_Yang = mean(Grid_AI.PM_RC_CO2_Yang(:,:,99:end),3);
+        AI_Con_FAO = mean(Grid_AI.PM_RC(:,:,99:end),3);
         pr_Con = mean(Met_Var.pr(:,:,99:end),3);
         evspsbl_Con = mean(Land_Var.evspsbl(:,:,99:end),3);
         mrso_Con = mean(Land_Var.mrso(:,:,99:end),3);
@@ -65,13 +67,29 @@ for i_Path = 2 : length(InputLandPath)
         load([InputAIPath{i_Path} , GCM_Ensemble{i_GCM} , '.mat'])
         % AI, pr, evspsbl, mrso£¬mrro percentage change from contemporary to
         % far future [2070-2099]
-        PerChange_AI = ...
-            (mean(Grid_AI.PM_RC_CO2_Jarvis_H(:,:,56:end-1),3) - AI_Con) ./ AI_Con .* 100;
-        PerChange_AI(PerChange_AI>100) = 100; % Percentage from -100 to 100%
-        PerChange_AI(PerChange_AI<-100) = -100; % Percentage from -100 to 100%
+        PerChange_AI_Jarvis = ...
+            (mean(Grid_AI.PM_RC_CO2_Jarvis_H(:,:,56:end-1),3) - AI_Con_Jarvis) ./ AI_Con_Jarvis .* 100;
+        PerChange_AI_Jarvis(PerChange_AI_Jarvis>100) = 100; % Percentage from -100 to 100%
+        PerChange_AI_Jarvis(PerChange_AI_Jarvis<-100) = -100; % Percentage from -100 to 100%
         % Deal with where mrro_Con is zero
-        PerChange_AI(AI_Con==0) = 0;
-        PerChange_AI((mean(Grid_AI.PM_RC_CO2_Jarvis_H(:,:,56:end-1),3) - AI_Con)~=0 & AI_Con==0) = 100;
+        PerChange_AI_Jarvis(AI_Con_Jarvis==0) = 0;
+        PerChange_AI_Jarvis((mean(Grid_AI.PM_RC_CO2_Jarvis_H(:,:,56:end-1),3) - AI_Con_Jarvis)~=0 & AI_Con_Jarvis==0) = 100;
+        
+        PerChange_AI_Yang = ...
+            (mean(Grid_AI.PM_RC_CO2_Yang(:,:,56:end-1),3) - AI_Con_Yang) ./ AI_Con_Yang .* 100;
+        PerChange_AI_Yang(PerChange_AI_Yang>100) = 100; % Percentage from -100 to 100%
+        PerChange_AI_Yang(PerChange_AI_Yang<-100) = -100; % Percentage from -100 to 100%
+        % Deal with where mrro_Con is zero
+        PerChange_AI_Yang(AI_Con_Yang==0) = 0;
+        PerChange_AI_Yang((mean(Grid_AI.PM_RC_CO2_Yang(:,:,56:end-1),3) - AI_Con_Yang)~=0 & AI_Con_Yang==0) = 100;
+        
+        PerChange_AI_FAO = ...
+            (mean(Grid_AI.PM_RC(:,:,56:end-1),3) - AI_Con_FAO) ./ AI_Con_FAO .* 100;
+        PerChange_AI_FAO(PerChange_AI_FAO>100) = 100; % Percentage from -100 to 100%
+        PerChange_AI_FAO(PerChange_AI_FAO<-100) = -100; % Percentage from -100 to 100%
+        % Deal with where mrro_Con is zero
+        PerChange_AI_FAO(AI_Con_FAO==0) = 0;
+        PerChange_AI_FAO((mean(Grid_AI.PM_RC(:,:,56:end-1),3) - AI_Con_FAO)~=0 & AI_Con_FAO==0) = 100;
         
         PerChange_pr = ...
             (mean(Met_Var.pr(:,:,56:end-1),3) - pr_Con) ./ pr_Con .* 100;
@@ -116,11 +134,15 @@ for i_Path = 2 : length(InputLandPath)
         PerChange_mrro((mean(Land_Var.mrro(:,:,56:end-1),3) - mrro_Con)~=0 & mrro_Con==0) = 100;
         
         clear Grid_AI Met_Var Land_Var
-        clear AI_Con pr_Con evspsbl_Con mrso_Con mrro_Con
+        clear AI_Con_Jarvis AI_Con_Yang AI_Con_FAO pr_Con evspsbl_Con mrso_Con mrro_Con
         
         % Adjust map range from 0~360 to -180~180
-        A = PerChange_AI(1:360 , :); B = PerChange_AI(361:end , :);
-        PerChange.PerChange_AI(:,:,i_GCM) = [B;A]; clear B A
+        A = PerChange_AI_Jarvis(1:360 , :); B = PerChange_AI_Jarvis(361:end , :);
+        PerChange.PerChange_AI_Jarvis(:,:,i_GCM) = [B;A]; clear B A
+        A = PerChange_AI_Yang(1:360 , :); B = PerChange_AI_Yang(361:end , :);
+        PerChange.PerChange_AI_Yang(:,:,i_GCM) = [B;A]; clear B A
+        A = PerChange_AI_FAO(1:360 , :); B = PerChange_AI_FAO(361:end , :);
+        PerChange.PerChange_AI_FAO(:,:,i_GCM) = [B;A]; clear B A
         A = PerChange_evspsbl(1:360 , :); B = PerChange_evspsbl(361:end , :);
         PerChange.PerChange_evspsbl(:,:,i_GCM) = [B;A]; clear B A
         A = PerChange_mrro(1:360 , :); B = PerChange_mrro(361:end , :);
@@ -132,7 +154,7 @@ for i_Path = 2 : length(InputLandPath)
         A = PerChange_pr_evspsbl(1:360 , :); B = PerChange_pr_evspsbl(361:end , :);
         PerChange.PerChange_pr_evspsbl(:,:,i_GCM) = [B;A]; clear B A
         
-        clear PerChange_AI PerChange_evspsbl PerChange_mrro
+        clear PerChange_AI_Jarvis PerChange_AI_Yang PerChange_AI_FAO PerChange_evspsbl PerChange_mrro
         clear PerChange_mrso PerChange_pr PerChange_pr_evspsbl
     end
     save([OutputPath , 'PerChange_' , ScenarioMIP{i_Path-1}] , 'PerChange');

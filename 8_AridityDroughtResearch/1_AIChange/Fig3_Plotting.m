@@ -89,6 +89,24 @@ for ii = 1 : size(GridAI_Princeton_CMIP(2).Ensemble_AI.ETrc_PM_RC , 3)
     B = GridAI_Princeton_CMIP(5).Ensemble_AI.pr(361:end , : , ii);
     GridAI_Princeton_CMIP(5).Ensemble_AI.pr(: , : , ii) = [B;A];
 end
+for ii = 1 : size(GridAI_Princeton_CMIP(6).Ensemble_AI.ETrc_PM_RC , 3)
+    % ETrc_PM_RC
+    A = GridAI_Princeton_CMIP(6).Ensemble_AI.ETrc_PM_RC(1:360 , : , ii);
+    B = GridAI_Princeton_CMIP(6).Ensemble_AI.ETrc_PM_RC(361:end , : , ii);
+    GridAI_Princeton_CMIP(6).Ensemble_AI.ETrc_PM_RC(: , : , ii) = [B;A];
+    % ETrc_PM_RC_CO2_Jarvis_H
+    A = GridAI_Princeton_CMIP(6).Ensemble_AI.ETrc_PM_RC_CO2_Jarvis_H(1:360 , : , ii);
+    B = GridAI_Princeton_CMIP(6).Ensemble_AI.ETrc_PM_RC_CO2_Jarvis_H(361:end , : , ii);
+    GridAI_Princeton_CMIP(6).Ensemble_AI.ETrc_PM_RC_CO2_Jarvis_H(: , : , ii) = [B;A];
+    % ETrc_PM_RC_CO2_Yang
+    A = GridAI_Princeton_CMIP(6).Ensemble_AI.ETrc_PM_RC_CO2_Yang(1:360 , : , ii);
+    B = GridAI_Princeton_CMIP(6).Ensemble_AI.ETrc_PM_RC_CO2_Yang(361:end , : , ii);
+    GridAI_Princeton_CMIP(6).Ensemble_AI.ETrc_PM_RC_CO2_Yang(: , : , ii) = [B;A];
+    % pr
+    A = GridAI_Princeton_CMIP(6).Ensemble_AI.pr(1:360 , : , ii);
+    B = GridAI_Princeton_CMIP(6).Ensemble_AI.pr(361:end , : , ii);
+    GridAI_Princeton_CMIP(6).Ensemble_AI.pr(: , : , ii) = [B;A];
+end
 clear ii A B
 
 %% (2) linear regression of AI calculated by [Princeton 1948-2014]

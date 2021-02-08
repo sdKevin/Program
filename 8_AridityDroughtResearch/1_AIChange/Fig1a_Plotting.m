@@ -64,7 +64,7 @@ axes('position', [0.1300    0.1100    0.7750    0.8150]);
 % plot([1850:2100],smooth(Ensemble_Mean_AI_PM_RC,7),'Color',[1 1 1],'Linewidth',2.5);% 1为透明度
 plot([1850:2100],smooth(Ensemble_Mean_AI_PM_RC,7),...
     'Color',1.0-1*(1.0-RGB_PM_Line./255),'EraseMode','xor','Linewidth',2.5);% 1为透明度
-h = legend('PM-RC');
+h = legend('ETrc');
 set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_PM_Line./255)
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_AI,'xlim',[1948,2100]);
 
@@ -72,7 +72,7 @@ axes('position', [0.1300    0.1100    0.7750    0.8150]);
 % plot([1850:2100],smooth(Ensemble_Mean_AI_PM_RC_CO2_Yang,7),'Color',[1 1 1],'Linewidth',2.5);% 1为透明度
 plot([1850:2100],smooth(Ensemble_Mean_AI_PM_RC_CO2_Yang,7),...
     'Color',1.0-1*(1.0-RGB_Yang_Line./255),'EraseMode','xor','Linewidth',2.5);% 1为透明度
-h = legend('PM-RC-Yang');
+h = legend('ETrc-Yang');
 set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Yang_Line./255)
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_AI,'xlim',[1948,2100]);
 
@@ -83,7 +83,7 @@ plot([1850:2100],smooth(Ensemble_Mean_AI_PM_RC_CO2_Jarvis_H,7),...
 hold on;
 plot([1850 2100],[0 0],'k','LineWidth',1.5) % x axis
 
-h = legend('PM-RC-Jarvis');
+h = legend('ETrc-Jarvis');
 set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Jarvis_Line./255)
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_AI,'xlim',[1948,2100]);
 %% Princeton
