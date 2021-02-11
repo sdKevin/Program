@@ -1,5 +1,5 @@
-function Fig4b_Plotting(Ensemble_Mean_PerChange)
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Drawing ssp126, ssp245, ssp370, ssp585 pr_evspsbl
+function Fig4b_Plotting(Ensemble_Mean_PerChange,FigName)
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Drawing ssp126, ssp245, ssp370, ssp585 AI
 figure
 disp('Adjust Figure Size, and Press Enter to Continue');
 pause()
@@ -79,5 +79,5 @@ for i_ssp = 1:4
         'XMinorTick','on','YMinorTick','on','visible','off',...
         'TickDir','out','FontSize',24,'FontName','Arial','LineWidth',2.5)
 end
-print(gcf,'-r900','-dpng','Fig4b(AI).png');
+print(gcf,'-r900','-dpng',FigName);
 end
