@@ -1,4 +1,5 @@
 function Fig3_Plotting(GridAI_Princeton_CMIP , Path_Fig3_Output)
+load LandInfo_05deg
 %% (1) Adjust map range from 0~360 to -180~180
 extent = [-179.75 , 179.75 , -59.75+0.195 , 89.75+0.195];
 for ii = 1 : size(GridAI_Princeton_CMIP(1).Ensemble_AI.ETrc_PM_RC , 3)
@@ -130,6 +131,15 @@ for i_lon = 1 : size(AI_PM_RC_Princeton,1)
     end
 end
 clear i_lat i_lon
+
+% interpolate the seam
+k_AI_PM_RC_Princeton_Year = interp2(lat_05deg([1:358,362:end],:),...
+    lon_05deg([1:358,362:end],:),k_AI_PM_RC_Princeton_Year([1:358,362:end],:),...
+    lat_05deg,lon_05deg).*landmask_05deg;
+p_AI_PM_RC_Princeton_Year = interp2(lat_05deg([1:358,362:end],:),...
+    lon_05deg([1:358,362:end],:),p_AI_PM_RC_Princeton_Year([1:358,362:end],:),...
+    lat_05deg,lon_05deg).*landmask_05deg;
+
 k_AI_PM_RC_Princeton_Year(isnan(k_AI_PM_RC_Princeton_Year)) = -9999;
 SaveData2GeoTIFF([Path_Fig3_Output 'k_AI_PM_RC_Princeton'],extent,k_AI_PM_RC_Princeton_Year');
 p_AI_PM_RC_Princeton_Year(isnan(p_AI_PM_RC_Princeton_Year)) = -9999;
@@ -155,6 +165,15 @@ for i_lon = 1 : size(AI_PM_RC_CO2_Yang_Princeton,1)
     end
 end
 clear i_lat i_lon
+
+% interpolate the seam
+k_AI_PM_RC_CO2_Yang_Princeton_Year = interp2(lat_05deg([1:358,362:end],:),...
+    lon_05deg([1:358,362:end],:),k_AI_PM_RC_CO2_Yang_Princeton_Year([1:358,362:end],:),...
+    lat_05deg,lon_05deg).*landmask_05deg;
+p_AI_PM_RC_CO2_Yang_Princeton_Year = interp2(lat_05deg([1:358,362:end],:),...
+    lon_05deg([1:358,362:end],:),p_AI_PM_RC_CO2_Yang_Princeton_Year([1:358,362:end],:),...
+    lat_05deg,lon_05deg).*landmask_05deg;
+
 k_AI_PM_RC_CO2_Yang_Princeton_Year(isnan(k_AI_PM_RC_CO2_Yang_Princeton_Year)) = -9999;
 SaveData2GeoTIFF([Path_Fig3_Output 'k_AI_PM_RC_CO2_Yang_Princeton'],extent,k_AI_PM_RC_CO2_Yang_Princeton_Year');
 p_AI_PM_RC_CO2_Yang_Princeton_Year(isnan(p_AI_PM_RC_CO2_Yang_Princeton_Year)) = -9999;
@@ -180,6 +199,15 @@ for i_lon = 1 : size(AI_PM_RC_CO2_Jarvis_H_Princeton,1)
     end
 end
 clear i_lat i_lon
+
+% interpolate the seam
+k_AI_PM_RC_CO2_Jarvis_H_Princeton_Year = interp2(lat_05deg([1:358,362:end],:),...
+    lon_05deg([1:358,362:end],:),k_AI_PM_RC_CO2_Jarvis_H_Princeton_Year([1:358,362:end],:),...
+    lat_05deg,lon_05deg).*landmask_05deg;
+p_AI_PM_RC_CO2_Jarvis_H_Princeton_Year = interp2(lat_05deg([1:358,362:end],:),...
+    lon_05deg([1:358,362:end],:),p_AI_PM_RC_CO2_Jarvis_H_Princeton_Year([1:358,362:end],:),...
+    lat_05deg,lon_05deg).*landmask_05deg;
+
 k_AI_PM_RC_CO2_Jarvis_H_Princeton_Year(isnan(k_AI_PM_RC_CO2_Jarvis_H_Princeton_Year)) = -9999;
 SaveData2GeoTIFF([Path_Fig3_Output 'k_AI_PM_RC_CO2_Jarvis_H_Princeton'],extent,k_AI_PM_RC_CO2_Jarvis_H_Princeton_Year');
 p_AI_PM_RC_CO2_Jarvis_H_Princeton_Year(isnan(p_AI_PM_RC_CO2_Jarvis_H_Princeton_Year)) = -9999;
@@ -209,6 +237,15 @@ for i_ssp = 1 : length(ssp)
         end
     end
     clear i_lat i_lon
+    
+    % interpolate the seam
+    k_AI_PM_RC_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+        lon_05deg([1:358,362:end],:),k_AI_PM_RC_CMIP_Year([1:358,362:end],:),...
+        lat_05deg,lon_05deg).*landmask_05deg;
+    p_AI_PM_RC_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+        lon_05deg([1:358,362:end],:),p_AI_PM_RC_CMIP_Year([1:358,362:end],:),...
+        lat_05deg,lon_05deg).*landmask_05deg;
+    
     k_AI_PM_RC_CMIP_Year(isnan(k_AI_PM_RC_CMIP_Year)) = -9999;
     SaveData2GeoTIFF([Path_Fig3_Output 'k_AI_PM_RC_' ssp{i_ssp}],extent,k_AI_PM_RC_CMIP_Year');
     p_AI_PM_RC_CMIP_Year(isnan(p_AI_PM_RC_CMIP_Year)) = -9999;
@@ -234,6 +271,15 @@ for i_ssp = 1 : length(ssp)
         end
     end
     clear i_lat i_lon
+    
+    % interpolate the seam
+    k_AI_PM_RC_CO2_Yang_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+        lon_05deg([1:358,362:end],:),k_AI_PM_RC_CO2_Yang_CMIP_Year([1:358,362:end],:),...
+        lat_05deg,lon_05deg).*landmask_05deg;
+    p_AI_PM_RC_CO2_Yang_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+        lon_05deg([1:358,362:end],:),p_AI_PM_RC_CO2_Yang_CMIP_Year([1:358,362:end],:),...
+        lat_05deg,lon_05deg).*landmask_05deg;
+    
     k_AI_PM_RC_CO2_Yang_CMIP_Year(isnan(k_AI_PM_RC_CO2_Yang_CMIP_Year)) = -9999;
     SaveData2GeoTIFF([Path_Fig3_Output 'k_AI_PM_RC_CO2_Yang_' ssp{i_ssp}],extent,k_AI_PM_RC_CO2_Yang_CMIP_Year');
     p_AI_PM_RC_CO2_Yang_CMIP_Year(isnan(p_AI_PM_RC_CO2_Yang_CMIP_Year)) = -9999;
@@ -259,6 +305,15 @@ for i_ssp = 1 : length(ssp)
         end
     end
     clear i_lat i_lon
+    
+    % interpolate the seam
+    k_AI_PM_RC_CO2_Jarvis_H_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+        lon_05deg([1:358,362:end],:),k_AI_PM_RC_CO2_Jarvis_H_CMIP_Year([1:358,362:end],:),...
+        lat_05deg,lon_05deg).*landmask_05deg;
+    p_AI_PM_RC_CO2_Jarvis_H_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+        lon_05deg([1:358,362:end],:),p_AI_PM_RC_CO2_Jarvis_H_CMIP_Year([1:358,362:end],:),...
+        lat_05deg,lon_05deg).*landmask_05deg;
+    
     k_AI_PM_RC_CO2_Jarvis_H_CMIP_Year(isnan(k_AI_PM_RC_CO2_Jarvis_H_CMIP_Year)) = -9999;
     SaveData2GeoTIFF([Path_Fig3_Output 'k_AI_PM_RC_CO2_Jarvis_H_' ssp{i_ssp}],extent,k_AI_PM_RC_CO2_Jarvis_H_CMIP_Year');
     p_AI_PM_RC_CO2_Jarvis_H_CMIP_Year(isnan(p_AI_PM_RC_CO2_Jarvis_H_CMIP_Year)) = -9999;
@@ -287,6 +342,15 @@ for i_lon = 1 : size(AI_PM_RC_CMIP,1)
     end
 end
 clear i_lat i_lon
+
+% interpolate the seam
+k_AI_PM_RC_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+    lon_05deg([1:358,362:end],:),k_AI_PM_RC_CMIP_Year([1:358,362:end],:),...
+    lat_05deg,lon_05deg).*landmask_05deg;
+p_AI_PM_RC_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+    lon_05deg([1:358,362:end],:),p_AI_PM_RC_CMIP_Year([1:358,362:end],:),...
+    lat_05deg,lon_05deg).*landmask_05deg;
+
 k_AI_PM_RC_CMIP_Year(isnan(k_AI_PM_RC_CMIP_Year)) = -9999;
 SaveData2GeoTIFF([Path_Fig3_Output 'k_AI_PM_RC_Historical'],extent,k_AI_PM_RC_CMIP_Year');
 p_AI_PM_RC_CMIP_Year(isnan(p_AI_PM_RC_CMIP_Year)) = -9999;
@@ -312,6 +376,15 @@ for i_lon = 1 : size(AI_PM_RC_CO2_Yang_CMIP,1)
     end
 end
 clear i_lat i_lon
+
+% interpolate the seam
+k_AI_PM_RC_CO2_Yang_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+    lon_05deg([1:358,362:end],:),k_AI_PM_RC_CO2_Yang_CMIP_Year([1:358,362:end],:),...
+    lat_05deg,lon_05deg).*landmask_05deg;
+p_AI_PM_RC_CO2_Yang_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+    lon_05deg([1:358,362:end],:),p_AI_PM_RC_CO2_Yang_CMIP_Year([1:358,362:end],:),...
+    lat_05deg,lon_05deg).*landmask_05deg;
+
 k_AI_PM_RC_CO2_Yang_CMIP_Year(isnan(k_AI_PM_RC_CO2_Yang_CMIP_Year)) = -9999;
 SaveData2GeoTIFF([Path_Fig3_Output 'k_AI_PM_RC_CO2_Yang_Historical'],extent,k_AI_PM_RC_CO2_Yang_CMIP_Year');
 p_AI_PM_RC_CO2_Yang_CMIP_Year(isnan(p_AI_PM_RC_CO2_Yang_CMIP_Year)) = -9999;
@@ -337,6 +410,15 @@ for i_lon = 1 : size(AI_PM_RC_CO2_Jarvis_H_CMIP,1)
     end
 end
 clear i_lat i_lon
+
+% interpolate the seam
+k_AI_PM_RC_CO2_Jarvis_H_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+    lon_05deg([1:358,362:end],:),k_AI_PM_RC_CO2_Jarvis_H_CMIP_Year([1:358,362:end],:),...
+    lat_05deg,lon_05deg).*landmask_05deg;
+p_AI_PM_RC_CO2_Jarvis_H_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+    lon_05deg([1:358,362:end],:),p_AI_PM_RC_CO2_Jarvis_H_CMIP_Year([1:358,362:end],:),...
+    lat_05deg,lon_05deg).*landmask_05deg;
+
 k_AI_PM_RC_CO2_Jarvis_H_CMIP_Year(isnan(k_AI_PM_RC_CO2_Jarvis_H_CMIP_Year)) = -9999;
 SaveData2GeoTIFF([Path_Fig3_Output 'k_AI_PM_RC_CO2_Jarvis_H_Historical'],extent,k_AI_PM_RC_CO2_Jarvis_H_CMIP_Year');
 p_AI_PM_RC_CO2_Jarvis_H_CMIP_Year(isnan(p_AI_PM_RC_CO2_Jarvis_H_CMIP_Year)) = -9999;
