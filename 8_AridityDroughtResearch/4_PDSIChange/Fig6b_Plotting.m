@@ -582,7 +582,7 @@ for i_ssp = 1 : length(ssp)
     p_ModerateDrought_scPDSI_PM_RC_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
         lon_05deg([1:358,362:end],:),p_ModerateDrought_scPDSI_PM_RC_CMIP_Year([1:358,362:end],:),...
         lat_05deg,lon_05deg).*landmask_05deg;
-
+    
     k_ModerateDrought_scPDSI_PM_RC_CMIP_Year(isnan(k_ModerateDrought_scPDSI_PM_RC_CMIP_Year)) = -9999;
     SaveData2GeoTIFF([Path_Fig6b_Output 'k_ModerateDrought_scPDSI_PM_RC_' ssp{i_ssp}],extent,k_ModerateDrought_scPDSI_PM_RC_CMIP_Year');
     p_ModerateDrought_scPDSI_PM_RC_CMIP_Year(isnan(p_ModerateDrought_scPDSI_PM_RC_CMIP_Year)) = -9999;
@@ -959,7 +959,7 @@ for i_ssp = 1 : length(ssp)
     p_MildDrought_scPDSI_PM_RC_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
         lon_05deg([1:358,362:end],:),p_MildDrought_scPDSI_PM_RC_CMIP_Year([1:358,362:end],:),...
         lat_05deg,lon_05deg).*landmask_05deg;
-
+    
     k_MildDrought_scPDSI_PM_RC_CMIP_Year(isnan(k_MildDrought_scPDSI_PM_RC_CMIP_Year)) = -9999;
     SaveData2GeoTIFF([Path_Fig6b_Output 'k_MildDrought_scPDSI_PM_RC_' ssp{i_ssp}],extent,k_MildDrought_scPDSI_PM_RC_CMIP_Year');
     p_MildDrought_scPDSI_PM_RC_CMIP_Year(isnan(p_MildDrought_scPDSI_PM_RC_CMIP_Year)) = -9999;

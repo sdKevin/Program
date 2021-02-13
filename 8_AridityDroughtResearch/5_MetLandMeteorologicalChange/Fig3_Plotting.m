@@ -1,7 +1,16 @@
 function Fig3_Plotting(GridMet_Land_CMIP , Path_Fig3_Output)
+load LandInfo_05deg
 %% Pr %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% (1) Adjust map range from 0~360 to -180~180
 extent = [-179.75 , 179.75 , -59.75+0.195 , 89.75+0.195];
+
+A = landmask_05deg(1:360 , :); B = landmask_05deg(361:end , :);
+landmask_05deg = [B;A]; clear B A
+A = lat_05deg(1:360 , :); B = lat_05deg(361:end , :);
+lat_05deg = [B;A]; clear B A
+A = lon_05deg(1:360 , :); B = lon_05deg(361:end , :) - 360;
+lon_05deg = [B;A]; clear B A
+
 for ii = 1 : size(GridMet_Land_CMIP(1).Ensemble_Mean_DroughtFrequency_Year.Pr , 3)
     % ssp126 Pr
     A = GridMet_Land_CMIP(1).Ensemble_Mean_DroughtFrequency_Year.Pr(1:360 , : , ii);
@@ -50,6 +59,15 @@ for i_ssp = 1 : length(ssp)
         end
     end
     clear i_lat i_lon
+    
+    % interpolate the seam
+    k_Pr_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+        lon_05deg([1:358,362:end],:),k_Pr_CMIP_Year([1:358,362:end],:),...
+        lat_05deg,lon_05deg).*landmask_05deg;
+    p_Pr_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+        lon_05deg([1:358,362:end],:),p_Pr_CMIP_Year([1:358,362:end],:),...
+        lat_05deg,lon_05deg).*landmask_05deg;
+    
     k_Pr_CMIP_Year(isnan(k_Pr_CMIP_Year)) = -9999;
     SaveData2GeoTIFF([Path_Fig3_Output 'k_Pr_' ssp{i_ssp}],extent,k_Pr_CMIP_Year');
     p_Pr_CMIP_Year(isnan(p_Pr_CMIP_Year)) = -9999;
@@ -78,12 +96,21 @@ for i_lon = 1 : size(Pr_CMIP,1)
     end
 end
 clear i_lat i_lon
+
+% interpolate the seam
+k_Pr_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+    lon_05deg([1:358,362:end],:),k_Pr_CMIP_Year([1:358,362:end],:),...
+    lat_05deg,lon_05deg).*landmask_05deg;
+p_Pr_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+    lon_05deg([1:358,362:end],:),p_Pr_CMIP_Year([1:358,362:end],:),...
+    lat_05deg,lon_05deg).*landmask_05deg;
+
 k_Pr_CMIP_Year(isnan(k_Pr_CMIP_Year)) = -9999;
 SaveData2GeoTIFF([Path_Fig3_Output 'k_Pr_Historical'],extent,k_Pr_CMIP_Year');
 p_Pr_CMIP_Year(isnan(p_Pr_CMIP_Year)) = -9999;
 SaveData2GeoTIFF([Path_Fig3_Output 'p_Pr_Historical'],extent,p_Pr_CMIP_Year');
 clear k_Pr_CMIP_Year p_Pr_CMIP_Year Pr_CMIP
-clearvars -except GridMet_Land_CMIP Path_Fig3_Output
+clearvars -except GridMet_Land_CMIP Path_Fig3_Output lat_05deg lon_05deg landmask_05deg
 
 %% Q %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% (1) Adjust map range from 0~360 to -180~180
@@ -136,6 +163,15 @@ for i_ssp = 1 : length(ssp)
         end
     end
     clear i_lat i_lon
+    
+    % interpolate the seam
+    k_Q_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+        lon_05deg([1:358,362:end],:),k_Q_CMIP_Year([1:358,362:end],:),...
+        lat_05deg,lon_05deg).*landmask_05deg;
+    p_Q_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+        lon_05deg([1:358,362:end],:),p_Q_CMIP_Year([1:358,362:end],:),...
+        lat_05deg,lon_05deg).*landmask_05deg;
+    
     k_Q_CMIP_Year(isnan(k_Q_CMIP_Year)) = -9999;
     SaveData2GeoTIFF([Path_Fig3_Output 'k_Q_' ssp{i_ssp}],extent,k_Q_CMIP_Year');
     p_Q_CMIP_Year(isnan(p_Q_CMIP_Year)) = -9999;
@@ -164,12 +200,21 @@ for i_lon = 1 : size(Q_CMIP,1)
     end
 end
 clear i_lat i_lon
+
+% interpolate the seam
+k_Q_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+    lon_05deg([1:358,362:end],:),k_Q_CMIP_Year([1:358,362:end],:),...
+    lat_05deg,lon_05deg).*landmask_05deg;
+p_Q_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+    lon_05deg([1:358,362:end],:),p_Q_CMIP_Year([1:358,362:end],:),...
+    lat_05deg,lon_05deg).*landmask_05deg;
+
 k_Q_CMIP_Year(isnan(k_Q_CMIP_Year)) = -9999;
 SaveData2GeoTIFF([Path_Fig3_Output 'k_Q_Historical'],extent,k_Q_CMIP_Year');
 p_Q_CMIP_Year(isnan(p_Q_CMIP_Year)) = -9999;
 SaveData2GeoTIFF([Path_Fig3_Output 'p_Q_Historical'],extent,p_Q_CMIP_Year');
 clear k_Q_CMIP_Year p_Q_CMIP_Year Q_CMIP
-clearvars -except GridMet_Land_CMIP Path_Fig3_Output
+clearvars -except GridMet_Land_CMIP Path_Fig3_Output lat_05deg lon_05deg landmask_05deg
 
 %% SM %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% (1) Adjust map range from 0~360 to -180~180
@@ -222,6 +267,15 @@ for i_ssp = 1 : length(ssp)
         end
     end
     clear i_lat i_lon
+    
+    % interpolate the seam
+    k_SM_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+        lon_05deg([1:358,362:end],:),k_SM_CMIP_Year([1:358,362:end],:),...
+        lat_05deg,lon_05deg).*landmask_05deg;
+    p_SM_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+        lon_05deg([1:358,362:end],:),p_SM_CMIP_Year([1:358,362:end],:),...
+        lat_05deg,lon_05deg).*landmask_05deg;
+    
     k_SM_CMIP_Year(isnan(k_SM_CMIP_Year)) = -9999;
     SaveData2GeoTIFF([Path_Fig3_Output 'k_SM_' ssp{i_ssp}],extent,k_SM_CMIP_Year');
     p_SM_CMIP_Year(isnan(p_SM_CMIP_Year)) = -9999;
@@ -250,12 +304,21 @@ for i_lon = 1 : size(SM_CMIP,1)
     end
 end
 clear i_lat i_lon
+
+% interpolate the seam
+k_SM_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+    lon_05deg([1:358,362:end],:),k_SM_CMIP_Year([1:358,362:end],:),...
+    lat_05deg,lon_05deg).*landmask_05deg;
+p_SM_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+    lon_05deg([1:358,362:end],:),p_SM_CMIP_Year([1:358,362:end],:),...
+    lat_05deg,lon_05deg).*landmask_05deg;
+
 k_SM_CMIP_Year(isnan(k_SM_CMIP_Year)) = -9999;
 SaveData2GeoTIFF([Path_Fig3_Output 'k_SM_Historical'],extent,k_SM_CMIP_Year');
 p_SM_CMIP_Year(isnan(p_SM_CMIP_Year)) = -9999;
 SaveData2GeoTIFF([Path_Fig3_Output 'p_SM_Historical'],extent,p_SM_CMIP_Year');
 clear k_SM_CMIP_Year p_SM_CMIP_Year SM_CMIP
-clearvars -except GridMet_Land_CMIP Path_Fig3_Output
+clearvars -except GridMet_Land_CMIP Path_Fig3_Output lat_05deg lon_05deg landmask_05deg
 
 %% Pr_ET %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% (1) Adjust map range from 0~360 to -180~180
@@ -308,6 +371,15 @@ for i_ssp = 1 : length(ssp)
         end
     end
     clear i_lat i_lon
+    
+    % interpolate the seam
+    k_Pr_ET_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+        lon_05deg([1:358,362:end],:),k_Pr_ET_CMIP_Year([1:358,362:end],:),...
+        lat_05deg,lon_05deg).*landmask_05deg;
+    p_Pr_ET_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+        lon_05deg([1:358,362:end],:),p_Pr_ET_CMIP_Year([1:358,362:end],:),...
+        lat_05deg,lon_05deg).*landmask_05deg;
+    
     k_Pr_ET_CMIP_Year(isnan(k_Pr_ET_CMIP_Year)) = -9999;
     SaveData2GeoTIFF([Path_Fig3_Output 'k_Pr_ET_' ssp{i_ssp}],extent,k_Pr_ET_CMIP_Year');
     p_Pr_ET_CMIP_Year(isnan(p_Pr_ET_CMIP_Year)) = -9999;
@@ -336,10 +408,19 @@ for i_lon = 1 : size(Pr_ET_CMIP,1)
     end
 end
 clear i_lat i_lon
+
+% interpolate the seam
+k_Pr_ET_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+    lon_05deg([1:358,362:end],:),k_Pr_ET_CMIP_Year([1:358,362:end],:),...
+    lat_05deg,lon_05deg).*landmask_05deg;
+p_Pr_ET_CMIP_Year = interp2(lat_05deg([1:358,362:end],:),...
+    lon_05deg([1:358,362:end],:),p_Pr_ET_CMIP_Year([1:358,362:end],:),...
+    lat_05deg,lon_05deg).*landmask_05deg;
+
 k_Pr_ET_CMIP_Year(isnan(k_Pr_ET_CMIP_Year)) = -9999;
 SaveData2GeoTIFF([Path_Fig3_Output 'k_Pr_ET_Historical'],extent,k_Pr_ET_CMIP_Year');
 p_Pr_ET_CMIP_Year(isnan(p_Pr_ET_CMIP_Year)) = -9999;
 SaveData2GeoTIFF([Path_Fig3_Output 'p_Pr_ET_Historical'],extent,p_Pr_ET_CMIP_Year');
 clear k_Pr_ET_CMIP_Year p_Pr_ET_CMIP_Year Pr_ET_CMIP
-clearvars -except GridMet_Land_CMIP Path_Fig3_Output
+clearvars -except GridMet_Land_CMIP Path_Fig3_Output lat_05deg lon_05deg landmask_05deg
 end

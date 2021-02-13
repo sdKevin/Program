@@ -1,4 +1,4 @@
-%% Figure 6 
+%% Figure 6
 %% Spatial change of PDSI calculated drought frequency linear trend
 clc; clear all; close all;
 Path_Ensemble_Mean_Historical_GCM = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\Historical\PDSI_Historical_Ensemble_Mean_DroughtFrequency_Year.mat';
