@@ -299,7 +299,7 @@ plot([2014 2014],[YlimRange_scPDSI(1) YlimRange_scPDSI(2)],'k','LineWidth',1.5);
 hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
-ylabel('Month under drought');
+ylabel('Month under pluvial');
 title('SevereMoist (scPDSI>3)');
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_scPDSI,'yTick',YTickRange_scPDSI,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
@@ -375,7 +375,7 @@ plot([2014 2014],[YlimRange_scPDSI(1) YlimRange_scPDSI(2)],'k','LineWidth',1.5);
 hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
-ylabel('Month under drought');
+ylabel('Month under pluvial');
 title('ModerateMoist (scPDSI>2)');
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_scPDSI,'yTick',YTickRange_scPDSI,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
@@ -451,7 +451,7 @@ plot([2014 2014],[YlimRange_scPDSI(1) YlimRange_scPDSI(2)],'k','LineWidth',1.5);
 hold on;
 plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
-ylabel('Month under drought');
+ylabel('Month under pluvial');
 title('MildMoist (scPDSI>1)');
 set(gca,'xlim',[1948,2100],'ylim',YlimRange_scPDSI,'yTick',YTickRange_scPDSI,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
