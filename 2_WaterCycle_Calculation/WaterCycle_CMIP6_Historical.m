@@ -1,11 +1,11 @@
 clc; clear all; close all;
 
 %% (1) Setting the input/output paths
-% CMIP6 Ensemble Meteorological Data
+% CMIP6 Ensemble Terrestrial Data
 InputPath_CMIP6_Ensemble = 'D:\CMIP6\ProcessData\Ensemble_Land';
 % Princeton Climate Data Record (Princeton-CDR)
 InputPath_CDR= 'D:\CMIP6\ProcessData\Climate Data Record (CDR)';
-% Save Meteorological variables
+% Save Terrestrial variables
 OutputPath_LandVar = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Land';
 
 %% (2) Historical Experiment
