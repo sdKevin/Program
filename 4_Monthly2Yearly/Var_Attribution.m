@@ -1,34 +1,34 @@
 clc; clear all; close all;
 
 %% Setting the input/output paths
-% CMIP6 Historical Meteorological Data
+% CMIP6 Historical Attribution Data
 InputPath{1} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Attribution\Historical\Attribution_Var_Historical_';
 OutputPath{1} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Attribution\Historical\Attribution_Var_Historical_';
-% CMIP6 ScenarioMIP ssp126 Meteorological Data
+% CMIP6 ScenarioMIP ssp126 Attribution Data
 InputPath{2} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Attribution\ScenarioMIP_ssp126\Attribution_Var_ssp126_';
 OutputPath{2} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Attribution\ScenarioMIP_ssp126\Attribution_Var_ssp126_';
-% CMIP6 ScenarioMIP ssp245 Meteorological Data
+% CMIP6 ScenarioMIP ssp245 Attribution Data
 InputPath{3} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Attribution\ScenarioMIP_ssp245\Attribution_Var_ssp245_';
 OutputPath{3} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Attribution\ScenarioMIP_ssp245\Attribution_Var_ssp245_';
-% CMIP6 ScenarioMIP ssp370 Meteorological Data
+% CMIP6 ScenarioMIP ssp370 Attribution Data
 InputPath{4} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Attribution\ScenarioMIP_ssp370\Attribution_Var_ssp370_';
 OutputPath{4} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Attribution\ScenarioMIP_ssp370\Attribution_Var_ssp370_';
-% CMIP6 ScenarioMIP ssp585 Meteorological Data
+% CMIP6 ScenarioMIP ssp585 Attribution Data
 InputPath{5} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Attribution\ScenarioMIP_ssp585\Attribution_Var_ssp585_';
 OutputPath{5} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Attribution\ScenarioMIP_ssp585\Attribution_Var_ssp585_';
 
 %% (1) Integrate Monthly CMIP6 data to yearly data
 for i_Path = 1 : length(InputPath)
     if i_Path == 4
-        % Name of Global Climate Model
+        % Name of Global Climate Model, since HadGEM3-GC31-LL model does
+        % not have ssp370
         GCM_Ensemble = {'ACCESS-CM2','ACCESS-ESM1-5','BCC-CSM2-MR','CanESM5','CanESM5-CanOE',...
             'CESM2','CESM2-WACCM','CNRM-CM6-1','CNRM-ESM2-1','EC-Earth3','EC-Earth3-Veg',...
             'FGOALS-f3-L','FGOALS-g3','GFDL-ESM4','GISS-E2-1-G','INM-CM4-8',...
             'INM-CM5-0','IPSL-CM6A-LR','MIROC6','MIROC-ES2L','MPI-ESM1-2-HR','MPI-ESM1-2-LR',...
             'MRI-ESM2-0','NorESM2-MM','UKESM1-0-LL'};
     else
-        % Name of Global Climate Model, since HadGEM3-GC31-LL model does
-        % not have ssp370
+        % Name of Global Climate Model
         GCM_Ensemble = {'ACCESS-CM2','ACCESS-ESM1-5','BCC-CSM2-MR','CanESM5','CanESM5-CanOE',...
             'CESM2','CESM2-WACCM','CNRM-CM6-1','CNRM-ESM2-1','EC-Earth3','EC-Earth3-Veg',...
             'FGOALS-f3-L','FGOALS-g3','GFDL-ESM4','GISS-E2-1-G','HadGEM3-GC31-LL','INM-CM4-8',...
