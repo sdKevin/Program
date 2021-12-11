@@ -6,11 +6,16 @@ clc; clear all; close all;
 Nematodes_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\SoilMicrobial\Nematodes_HR.mat';
 load(Nematodes_Path_Data);
 lat_HR = lat; lon_HR = lon; clear lat lon Nematodes_Path_Data;
+%% Ecosystem Sensitivity
+EcosystemSensitivity_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\SoilMicrobial\Ecosystem_Sensitivity.mat';
+load(EcosystemSensitivity_Path_Data);
+EcosystemSensitivity_HR = interp2(lat,lon,Ecosystem_Sensitivity,lat_HR,lon_HR);
+clear lat lon Ecosystem_Sensitivity EcosystemSensitivity_Path_Data
 %% SoilMicroBiomass Data
-SoilMicroBiomass_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\SoilMicrobial\SoilMicroBiomass.mat';
-load(SoilMicroBiomass_Path_Data);
-SoilMicroBiomass_HR = interp2(lat,lon,SoilMicroBiomass,lat_HR,lon_HR);
-clear lat lon SoilMicroBiomass SoilMicroBiomass_Path_Data
+% SoilMicroBiomass_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\SoilMicrobial\SoilMicroBiomass.mat';
+% load(SoilMicroBiomass_Path_Data);
+% SoilMicroBiomass_HR = interp2(lat,lon,SoilMicroBiomass,lat_HR,lon_HR);
+% clear lat lon SoilMicroBiomass SoilMicroBiomass_Path_Data
 %% DEM Data
 DEM_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\DEM\DEM_HR.mat';
 load(DEM_Path_Data);
@@ -39,6 +44,14 @@ Mrro = nanmean(Ensemble_Land_Var_Mrro(:,:,56:85),3); Mrro(Mrro<0)=nan; %mean mrr
 clear Ensemble_Land_Var_Mrro elevation_05deg landmask_05deg Runoff_Path_Data
 Mrro_HR = interp2(lat_05deg,lon_05deg,Mrro,lat_HR,lon_HR);
 clear lat_05deg lon_05deg Mrro
+%% LAI ssp585 Data
+load LandInfo_05deg
+LAI_Path_Data = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Veg\ScenarioMIP_ssp585\Veg_Var_ssp585_Ensemble_Veg_Var_LAI.mat';
+load(LAI_Path_Data);
+LAI = nanmean(Ensemble_Veg_Var_LAI(:,:,56:85),3); LAI(LAI<0)=nan; %mean mrro over 2070-2099
+clear Ensemble_Veg_Var_LAI elevation_05deg landmask_05deg LAI_Path_Data
+LAI_HR = interp2(lat_05deg,lon_05deg,LAI,lat_HR,lon_HR);
+clear lat_05deg lon_05deg LAI
 %% Total Population ssp585 Data
 Population_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP5\Total\Mat\ssp5_2100.mat';
 load(Population_Path_Data);clear Population_Path_Data
@@ -121,9 +134,10 @@ DEM_HR(1:3360,:) = [];
 CroplandRatio_HR(1:3360,:) = [];
 LiveStock_HR(1:3360,:) = [];
 Mrro_HR(1:3360,:) = [];
+LAI_HR(1:3360,:) = [];
 PerChange_Mrro_HR(1:3360,:) = [];
 Nematodes_HR(1:3360,:) = [];
-SoilMicroBiomass_HR(1:3360,:) = [];
+% SoilMicroBiomass_HR(1:3360,:) = [];
 Total_Population_HR(1:3360,:) = [];
 Ratio_Rural_Population_HR(1:3360,:) = [];
 % Interpolate the High Resoluition Image to Low Resolution
@@ -135,15 +149,16 @@ CroplandRatio = interp2(lat_HR',lon_HR',CroplandRatio_HR',lat,lon);
 LiveStock = interp2(lat_HR',lon_HR',LiveStock_HR',lat,lon);
 Mrro = interp2(lat_HR',lon_HR',Mrro_HR',lat,lon);
 PerChange_Mrro = interp2(lat_HR',lon_HR',PerChange_Mrro_HR',lat,lon);
+LAI = interp2(lat_HR',lon_HR',LAI_HR',lat,lon);
 Nematodes = interp2(lat_HR',lon_HR',Nematodes_HR',lat,lon);
-SoilMicroBiomass = interp2(lat_HR',lon_HR',SoilMicroBiomass_HR',lat,lon);
+% SoilMicroBiomass = interp2(lat_HR',lon_HR',SoilMicroBiomass_HR',lat,lon);
 Total_Population = interp2(lat_HR',lon_HR',Total_Population_HR',lat,lon);
 Ratio_Rural_Population = interp2(lat_HR',lon_HR',Ratio_Rural_Population_HR',lat,lon);
-clear lat_HR lon_HR DEM_HR CroplandRatio_HR LiveStock_HR Mrro_HR PerChange_Mrro_HR
+clear lat_HR lon_HR DEM_HR CroplandRatio_HR LiveStock_HR Mrro_HR PerChange_Mrro_HR LAI_HR
 clear Nematodes_HR SoilMicroBiomass_HR Total_Population_HR Ratio_Rural_Population_HR
 %% (6.2) Deriving the Hazard index (Range: [0,1])
 % Fill the empty value to Mean Value
-SoilMicroBiomass(isnan(SoilMicroBiomass)) = nanmean(nanmean(SoilMicroBiomass)); %SoilMicroBiomass was not used in this study 
+% SoilMicroBiomass(isnan(SoilMicroBiomass)) = nanmean(nanmean(SoilMicroBiomass)); %SoilMicroBiomass was not used in this study 
 PerChange_Mrro(isnan(PerChange_Mrro)) = nanmean(nanmean(PerChange_Mrro));
 % Calculate stressor: F_Hazard
 F_Hazard = Nematodes .* PerChange_Mrro;
@@ -173,10 +188,9 @@ end
 clear i_row i_col A Route_F_Hazard NF
 save('D:\CMIP6\VariableStorage\ImplicationResearch\Hazard_ssp585.mat','Hazard','lat','lon');
 clear Nematodes Mrro PerChange_Mrro SoilMicroBiomass DEM
-%% (6.3) Deriving the Exposure and Vulnerability index (Range: [0,1])
+%% (6.3) Deriving the Exposure index (Range: [0,1])
 % Calculate exposure indicator (EIn)
-EIn = Total_Population./nanmax(nanmax(Total_Population)) .*...
-    LiveStock./nanmax(nanmax(LiveStock)) .* CroplandRatio./nanmax(nanmax(CroplandRatio));
+EIn = Total_Population./nanmax(nanmax(Total_Population)) .* LAI./nanmax(nanmax(LAI));
 % Standardize EIn to [0,1] based on a cumulative distribution function (CDF)
 A = sort(EIn(:)); A(isnan(A)) = [];
 for i_row = 1 : size(EIn , 1)
@@ -194,7 +208,8 @@ for i_row = 1 : size(EIn , 1)
 end
 clear i_row i_col A EIn
 save('D:\CMIP6\VariableStorage\ImplicationResearch\Exposure_ssp585.mat','Exposure','lat','lon')
-% Deriving Vulnerability Index
+
+%% (6.3) Deriving the Vulnerability Index (Range: [0,1])
 Vulnerability = Ratio_Rural_Population;
 save('D:\CMIP6\VariableStorage\ImplicationResearch\Vulnerability_ssp585.mat','Vulnerability','lat','lon')
 clear Total_Population LiveStock CroplandRatio Ratio_Rural_Population
