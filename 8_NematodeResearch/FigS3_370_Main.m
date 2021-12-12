@@ -5,7 +5,8 @@ clc; clear all; close all;
 %% Nematodes Data, Extent: -88~88 0~360
 Nematodes_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\SoilMicrobial\Nematodes_HR.mat';
 load(Nematodes_Path_Data);
-lat_HR = lat; lon_HR = lon; clear lat lon Nematodes_Path_Data;
+lat_HR = lat; lon_HR = lon;
+clear lat lon Nematodes_Path_Data;
 %% Ecosystem Sensitivity
 EcosystemSensitivity_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\SoilMicrobial\Ecosystem_Sensitivity.mat';
 load(EcosystemSensitivity_Path_Data);
@@ -127,6 +128,8 @@ clear lat lon Population Rural_Population_HR
 % % SoilMicroBiomass_HR(isnan(SoilMicroBiomass_HR)) = 1; %Fill the empty value to 1
 % SoilMicroBiomass_HR(~GridIndex_TibetPlateau) = nan;
 %% (6.2) Interpolate to Low Resolution
+% Since quantity data are used in normalization in the Risk framework,
+% interpolate is reasonable here
 % From -88~88 to -60~88
 lat_HR(1:3360,:) = [];
 lon_HR(1:3360,:) = [];
@@ -160,7 +163,7 @@ clear lat_HR lon_HR DEM_HR CroplandRatio_HR LiveStock_HR Mrro_HR PerChange_Mrro_
 clear Nematodes_HR EcosystemSensitivity_HR Total_Population_HR Ratio_Rural_Population_HR
 %% (6.2) Deriving the Hazard index (Range: [0,1])
 % Fill the empty value to Mean Value
-% SoilMicroBiomass(isnan(SoilMicroBiomass)) = nanmean(nanmean(SoilMicroBiomass)); %SoilMicroBiomass was not used in this study 
+% SoilMicroBiomass(isnan(SoilMicroBiomass)) = nanmean(nanmean(SoilMicroBiomass)); %SoilMicroBiomass was not used in this study
 PerChange_Mrro(isnan(PerChange_Mrro)) = nanmean(nanmean(PerChange_Mrro));
 % Calculate stressor: F_Hazard
 F_Hazard = Nematodes .* PerChange_Mrro;

@@ -5,7 +5,8 @@ clc; clear all; close all;
 %% Nematodes Data, Extent: -88~88 0~360
 Nematodes_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\SoilMicrobial\Nematodes_HR.mat';
 load(Nematodes_Path_Data);
-lat_HR = lat; lon_HR = lon; clear lat lon Nematodes_Path_Data;
+lat_HR = lat; lon_HR = lon;
+clear lat lon Nematodes_Path_Data;
 %% Ecosystem Sensitivity
 EcosystemSensitivity_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\SoilMicrobial\Ecosystem_Sensitivity.mat';
 load(EcosystemSensitivity_Path_Data);
@@ -39,7 +40,7 @@ Mrro = nanmean(Ensemble_Land_Var_Mrro(:,:,56:85),3); Mrro(Mrro<0)=nan; %mean mrr
 clear Ensemble_Land_Var_Mrro elevation_05deg landmask_05deg Runoff_Path_Data
 Mrro_HR = interp2(lat_05deg,lon_05deg,Mrro,lat_HR,lon_HR);
 clear lat_05deg lon_05deg Mrro
-%% LAI
+%% LAI ssp585 Data
 load LandInfo_05deg
 LAI_Path_Data = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Veg\ScenarioMIP_ssp585\Veg_Var_ssp585_Ensemble_Veg_Var_LAI.mat';
 load(LAI_Path_Data);
@@ -127,6 +128,8 @@ clear lat lon Population Rural_Population_HR
 % % SoilMicroBiomass_HR(isnan(SoilMicroBiomass_HR)) = 1; %Fill the empty value to 1
 % SoilMicroBiomass_HR(~GridIndex_TibetPlateau) = nan;
 %% (6.2) Interpolate to Low Resolution
+% Since quantity data are used in normalization in the Risk framework,
+% interpolate is reasonable here
 % From -88~88 to -60~88
 lat_HR(1:3360,:) = [];
 lon_HR(1:3360,:) = [];
