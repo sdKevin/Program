@@ -20,11 +20,6 @@ clear lat lon Ecosystem_Sensitivity EcosystemSensitivity_Path_Data
 DEM_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\DEM\DEM_HR.mat';
 load(DEM_Path_Data);
 clear lat lon DEM_Path_Data
-%% CroplandRatio Data
-CroplandRatio_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Crop\CroplandRatio.mat';
-load(CroplandRatio_Path_Data);
-CroplandRatio_HR = interp2(lat',lon',CroplandRatio',lat_HR,lon_HR);
-clear lat lon CroplandRatio CroplandRatio_Path_Data
 %% Percentage Change of Runoff ssp585 Data
 load LandInfo_05deg
 Runoff_Path_Data = 'D:\CMIP6\VariableStorage\ClimatologicalChange\PerChange_ssp585.mat';
@@ -44,7 +39,7 @@ Mrro = nanmean(Ensemble_Land_Var_Mrro(:,:,56:85),3); Mrro(Mrro<0)=nan; %mean mrr
 clear Ensemble_Land_Var_Mrro elevation_05deg landmask_05deg Runoff_Path_Data
 Mrro_HR = interp2(lat_05deg,lon_05deg,Mrro,lat_HR,lon_HR);
 clear lat_05deg lon_05deg Mrro
-%% LAI ssp585 Data
+%% LAI
 load LandInfo_05deg
 LAI_Path_Data = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Veg\ScenarioMIP_ssp585\Veg_Var_ssp585_Ensemble_Veg_Var_LAI.mat';
 load(LAI_Path_Data);
@@ -84,38 +79,43 @@ A = lon(1:1440,:); B = lon(1441:end,:);
 lon = [B;A]; lon(lon<0) = lon(lon<0)+360;clear A B
 Rural_Population_HR = interp2(lat,lon,Population,lat_HR,lon_HR);
 Ratio_Rural_Population_HR = Rural_Population_HR./Total_Population_HR;
-Ratio_Rural_Population_HR(Total_Population_HR<1) = nan; % For No People Grid
+Ratio_Rural_Population_HR(Total_Population_HR<1) = 0.01; % For No People Grid
 clear lat lon Population Rural_Population_HR
+%% CroplandRatio Data
+% CroplandRatio_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Crop\CroplandRatio.mat';
+% load(CroplandRatio_Path_Data);
+% CroplandRatio_HR = interp2(lat',lon',CroplandRatio',lat_HR,lon_HR);
+% clear lat lon CroplandRatio CroplandRatio_Path_Data
 %% Livestock
-% Cattle
-Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Cattle_HR.mat';
-load(Path_Data);Cattle_HR = double(Cattle_HR);
-clear lat lon Path_Data
-% Chickens
-Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Chickens_HR.mat';
-load(Path_Data);Chickens_HR = double(Chickens_HR);
-clear lat lon Path_Data
-% Ducks
-Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Ducks_HR.mat';
-load(Path_Data);Ducks_HR = double(Ducks_HR);
-clear lat lon Path_Data
-% Goats
-Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Goats_HR.mat';
-load(Path_Data);Goats_HR = double(Goats_HR);
-clear lat lon Path_Data
-% Pigs
-Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Pigs_HR.mat';
-load(Path_Data);Pigs_HR = double(Pigs_HR);
-clear lat lon Path_Data
-% Sheep
-Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Sheep_HR.mat';
-load(Path_Data);Sheep_HR = double(Sheep_HR);
-clear lat lon Path_Data
-% Sum all different types of livestock
-LiveStock_HR = Cattle_HR + Chickens_HR + Ducks_HR + Goats_HR + Pigs_HR + Sheep_HR;
-clear Cattle_HR Chickens_HR Ducks_HR Goats_HR Pigs_HR Sheep_HR
+% % Cattle
+% Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Cattle_HR.mat';
+% load(Path_Data);Cattle_HR = double(Cattle_HR);
+% clear lat lon Path_Data
+% % Chickens
+% Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Chickens_HR.mat';
+% load(Path_Data);Chickens_HR = double(Chickens_HR);
+% clear lat lon Path_Data
+% % Ducks
+% Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Ducks_HR.mat';
+% load(Path_Data);Ducks_HR = double(Ducks_HR);
+% clear lat lon Path_Data
+% % Goats
+% Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Goats_HR.mat';
+% load(Path_Data);Goats_HR = double(Goats_HR);
+% clear lat lon Path_Data
+% % Pigs
+% Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Pigs_HR.mat';
+% load(Path_Data);Pigs_HR = double(Pigs_HR);
+% clear lat lon Path_Data
+% % Sheep
+% Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Livestock\Sheep_HR.mat';
+% load(Path_Data);Sheep_HR = double(Sheep_HR);
+% clear lat lon Path_Data
+% % Sum all different types of livestock
+% LiveStock_HR = Cattle_HR + Chickens_HR + Ducks_HR + Goats_HR + Pigs_HR + Sheep_HR;
+% clear Cattle_HR Chickens_HR Ducks_HR Goats_HR Pigs_HR Sheep_HR
 
-% %% (6.2) Extract The Tibet Plateau outflow area
+%% (6.2) Extract The Tibet Plateau outflow area
 % % Path of Tibet Plateau outflow area Shapefile
 % Path_Shapefile = 'D:\CMIP6\ProcessData\ImplicationResearch\BasinAsWhole_Topo_MergeOriginalData_inTibet.shp';
 % Map_TibetPlateau = shaperead(Path_Shapefile);
@@ -131,12 +131,13 @@ clear Cattle_HR Chickens_HR Ducks_HR Goats_HR Pigs_HR Sheep_HR
 lat_HR(1:3360,:) = [];
 lon_HR(1:3360,:) = [];
 DEM_HR(1:3360,:) = [];
-CroplandRatio_HR(1:3360,:) = [];
-LiveStock_HR(1:3360,:) = [];
+% CroplandRatio_HR(1:3360,:) = [];
+% LiveStock_HR(1:3360,:) = [];
 Mrro_HR(1:3360,:) = [];
 LAI_HR(1:3360,:) = [];
 PerChange_Mrro_HR(1:3360,:) = [];
 Nematodes_HR(1:3360,:) = [];
+EcosystemSensitivity_HR(1:3360,:) = [];
 % SoilMicroBiomass_HR(1:3360,:) = [];
 Total_Population_HR(1:3360,:) = [];
 Ratio_Rural_Population_HR(1:3360,:) = [];
@@ -145,20 +146,21 @@ Ratio_Rural_Population_HR(1:3360,:) = [];
 lat_con = -60 : 0.05 : 88; lon_con = 0:0.05:360;
 [lon,lat] = meshgrid(lon_con,lat_con);clear lat_con lon_con;
 DEM = interp2(lat_HR',lon_HR',DEM_HR',lat,lon);
-CroplandRatio = interp2(lat_HR',lon_HR',CroplandRatio_HR',lat,lon);
-LiveStock = interp2(lat_HR',lon_HR',LiveStock_HR',lat,lon);
+% CroplandRatio = interp2(lat_HR',lon_HR',CroplandRatio_HR',lat,lon);
+% LiveStock = interp2(lat_HR',lon_HR',LiveStock_HR',lat,lon);
 Mrro = interp2(lat_HR',lon_HR',Mrro_HR',lat,lon);
 PerChange_Mrro = interp2(lat_HR',lon_HR',PerChange_Mrro_HR',lat,lon);
 LAI = interp2(lat_HR',lon_HR',LAI_HR',lat,lon);
 Nematodes = interp2(lat_HR',lon_HR',Nematodes_HR',lat,lon);
+EcosystemSensitivity = interp2(lat_HR',lon_HR',EcosystemSensitivity_HR',lat,lon);
 % SoilMicroBiomass = interp2(lat_HR',lon_HR',SoilMicroBiomass_HR',lat,lon);
 Total_Population = interp2(lat_HR',lon_HR',Total_Population_HR',lat,lon);
 Ratio_Rural_Population = interp2(lat_HR',lon_HR',Ratio_Rural_Population_HR',lat,lon);
 clear lat_HR lon_HR DEM_HR CroplandRatio_HR LiveStock_HR Mrro_HR PerChange_Mrro_HR LAI_HR
-clear Nematodes_HR SoilMicroBiomass_HR Total_Population_HR Ratio_Rural_Population_HR
+clear Nematodes_HR EcosystemSensitivity_HR Total_Population_HR Ratio_Rural_Population_HR
 %% (6.2) Deriving the Hazard index (Range: [0,1])
 % Fill the empty value to Mean Value
-% SoilMicroBiomass(isnan(SoilMicroBiomass)) = nanmean(nanmean(SoilMicroBiomass)); %SoilMicroBiomass was not used in this study 
+% SoilMicroBiomass(isnan(SoilMicroBiomass)) = nanmean(nanmean(SoilMicroBiomass)); %SoilMicroBiomass was not used in this study
 PerChange_Mrro(isnan(PerChange_Mrro)) = nanmean(nanmean(PerChange_Mrro));
 % Calculate stressor: F_Hazard
 F_Hazard = Nematodes .* PerChange_Mrro;
@@ -208,11 +210,28 @@ for i_row = 1 : size(EIn , 1)
 end
 clear i_row i_col A EIn
 save('D:\CMIP6\VariableStorage\ImplicationResearch\Exposure_ssp585.mat','Exposure','lat','lon')
-
+clear Total_Population LAI
 %% (6.3) Deriving the Vulnerability Index (Range: [0,1])
-Vulnerability = Ratio_Rural_Population;
+% Calculate vulnerability indicator (VIn)
+VIn = Ratio_Rural_Population .* EcosystemSensitivity;
+% Standardize VIn to [0,1] based on a cumulative distribution function (CDF)
+A = sort(VIn(:)); A(isnan(A)) = [];
+for i_row = 1 : size(VIn , 1)
+    disp(strcat('Calculating to row NO.' , num2str(i_row)))
+    for i_col = 1 : size(VIn , 2)
+        if isnan(VIn(i_row,i_col))
+            Vulnerability(i_row,i_col) = nan;
+            continue;
+        else
+            Index = find(A==VIn(i_row,i_col));
+            Vulnerability(i_row,i_col) = min(Index)./length(A);
+            clear Index
+        end
+    end
+end
+clear i_row i_col A VIn
 save('D:\CMIP6\VariableStorage\ImplicationResearch\Vulnerability_ssp585.mat','Vulnerability','lat','lon')
-clear Total_Population LiveStock CroplandRatio Ratio_Rural_Population
+clear Ratio_Rural_Population EcosystemSensitivity
 %% (6.3) Deriving the Risk Index (Range: [0,1])
 % The risk indicator: RIn
 RIn = Hazard .* Exposure .* Vulnerability;
