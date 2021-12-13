@@ -80,7 +80,7 @@ A = lon(1:1440,:); B = lon(1441:end,:);
 lon = [B;A]; lon(lon<0) = lon(lon<0)+360;clear A B
 Rural_Population_HR = interp2(lat,lon,Population,lat_HR,lon_HR);
 Ratio_Rural_Population_HR = Rural_Population_HR./Total_Population_HR;
-Ratio_Rural_Population_HR(Total_Population_HR<1) = nan; % For No People Grid
+Ratio_Rural_Population_HR(Total_Population_HR<1) = 0.01; % For No People Grid
 clear lat lon Population Rural_Population_HR
 %% CroplandRatio Data
 % CroplandRatio_Path_Data = 'D:\CMIP6\ProcessData\ImplicationResearch\Crop\CroplandRatio.mat';
