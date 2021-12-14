@@ -266,14 +266,10 @@ Vulnerability = [B,A]; clear A B
 A = Risk(:,1:3601); B = Risk(:,3602:end);
 Risk = [B,A]; clear A B
 % Interpolate the seam
-Hazard(:,3585:3616) = ones(2961,32) .* ...
-    Hazard(:,3583);
-Exposure(:,3599:3602) = ones(2961,4) .* ...
-    Exposure(:,3603);
-Vulnerability(:,3599:3602) = ones(2961,4) .* ...
-    nanmean(Vulnerability(:,[3598,3603]),2);
-Risk(:,3585:3616) = ones(2961,32) .* ...
-    Risk(:,3583);
+Hazard(:,3585:3616) = ones(2961,32) .* Hazard(:,3583);
+Exposure(:,3599:3602) = ones(2961,4) .* Exposure(:,3603);
+Vulnerability(:,3599:3602) = ones(2961,4) .* nanmean(Vulnerability(:,[3598,3603]),2);
+Risk(:,3585:3616) = ones(2961,32) .* Risk(:,3583);
 % output tiff extent -180~180
 extent = [-180 , 180 , -60 , 88];
 % Risk Layer
