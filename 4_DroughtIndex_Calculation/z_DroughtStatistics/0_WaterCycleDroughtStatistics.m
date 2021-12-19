@@ -5,19 +5,19 @@ clc; clear all; close all;
 InputMetPath{1} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Met\Historical\Met_Var_Historical_';
 InputLandPath{1} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Land\Historical\Land_Var_Historical_';
 OutputDroughtPath{1} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\Historical\Met_Land_Historical_';
-% CMIP6 ScenarioMIP ssp126 Met Data
+% CMIP6 ScenarioMIP ssp126 Data
 InputMetPath{2} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Met\ScenarioMIP_ssp126\Met_Var_ssp126_';
 InputLandPath{2} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Land\ScenarioMIP_ssp126\Land_Var_ssp126_';
 OutputDroughtPath{2} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ScenarioMIP_ssp126\Met_Land_ssp126_';
-% CMIP6 ScenarioMIP ssp245 Met Data
+% CMIP6 ScenarioMIP ssp245 Data
 InputMetPath{3} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Met\ScenarioMIP_ssp245\Met_Var_ssp245_';
 InputLandPath{3} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Land\ScenarioMIP_ssp245\Land_Var_ssp245_';
 OutputDroughtPath{3} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ScenarioMIP_ssp245\Met_Land_ssp245_';
-% CMIP6 ScenarioMIP ssp370 Met Data
+% CMIP6 ScenarioMIP ssp370 Data
 InputMetPath{4} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Met\ScenarioMIP_ssp370\Met_Var_ssp370_';
 InputLandPath{4} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Land\ScenarioMIP_ssp370\Land_Var_ssp370_';
 OutputDroughtPath{4} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ScenarioMIP_ssp370\Met_Land_ssp370_';
-% CMIP6 ScenarioMIP ssp585 Met Data
+% CMIP6 ScenarioMIP ssp585 Data
 InputMetPath{5} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Met\ScenarioMIP_ssp585\Met_Var_ssp585_';
 InputLandPath{5} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Land\ScenarioMIP_ssp585\Land_Var_ssp585_';
 OutputDroughtPath{5} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ScenarioMIP_ssp585\Met_Land_ssp585_';
@@ -50,31 +50,38 @@ for i_Path = 1 : length(InputMetPath)
         %% (1.1.1) Calculate Threshold During reference period 1948-2014
         load(strcat(InputMetPath{1} , GCM , '.mat'));
         load(strcat(InputLandPath{1} , GCM , '.mat'));
-        Pr_ref = Met_Var.pr(:,:,1177:end); %kg/(m2s)
-        Q_ref = r1.mrro(:,:,1177:end); %kg/(m2s)
-        SM_ref = r1.mrso(:,:,1177:end); %kg/(m2)
-        Pr_ET_ref = Pr_ref - r1.evspsbl(:,:,1177:end); %kg/(m2s) !!! Warning Negative Pr-ET caused by bias correction using different reference data
+        %Pr_ref = Met_Var.pr(:,:,1177:end); %kg/(m2s), from 1850-2014 to 1948-2014
+        %Q_ref = r1.mrro(:,:,1177:end); %kg/(m2s), from 1850-2014 to 1948-2014
+        %SM_ref = r1.mrso(:,:,1177:end); %kg/(m2), from 1850-2014 to 1948-2014
+        %Pr_ET_ref = Pr_ref - r1.evspsbl(:,:,1177:end); %kg/(m2s), from 1850-2014 to 1948-2014 !!! Warning Negative Pr-ET caused by bias correction using different reference data
+        Pr_ref = Met_Var.pr(:,:,:); %kg/(m2s)
+        Q_ref = r1.mrro(:,:,:); %kg/(m2s)
+        SM_ref = r1.mrso(:,:,:); %kg/(m2)
+        Pr_ET_ref = Pr_ref - r1.evspsbl(:,:,:); %kg/(m2s)
         clear r1 Met_Var
         for ii = 1 : size(Pr_ref,1)
             for iii = 1 : size(Pr_ref,2)
-                if nansum(isnan(Pr_ref(ii,iii,:)))==0
-                    A = Pr_ref(ii,iii,:); B = sort(A(:)); clear A;
-                    Threshold.Pr(ii,iii,:) = B(ceil(length(B)*0.1)); clear B; %10th Percentile
-                    A = Q_ref(ii,iii,:); B = sort(A(:)); clear A;
-                    Threshold.Q(ii,iii,:) = B(ceil(length(B)*0.1)); clear B; %10th Percentile
-                    A = SM_ref(ii,iii,:); B = sort(A(:)); clear A;
-                    Threshold.SM(ii,iii,:) = B(ceil(length(B)*0.1)); clear B; %10th Percentile
-                    A = Pr_ET_ref(ii,iii,:); B = sort(A(:)); clear A;
-                    Threshold.Pr_ET(ii,iii,:) = B(ceil(length(B)*0.1)); clear B; %10th Percentile
-                else
-                    Threshold.Pr(ii,iii,:) = nan;
-                    Threshold.Q(ii,iii,:) = nan;
-                    Threshold.SM(ii,iii,:) = nan;
-                    Threshold.Pr_ET(ii,iii,:) = nan;
+                for i_month = 1 : 12 % Each Grid has 12 threshold for each month
+                    All_Month = size(Pr_ref,3);
+                    if nansum(isnan(Pr_ref(ii,iii,i_month:12:All_Month)))==0
+                        A = Pr_ref(ii,iii,i_month:12:All_Month); B = sort(A(:)); clear A;
+                        Threshold.Pr(ii,iii,i_month) = B(ceil(length(B)*0.1)); clear B; %10th Percentile
+                        A = Q_ref(ii,iii,i_month:12:All_Month); B = sort(A(:)); clear A;
+                        Threshold.Q(ii,iii,i_month) = B(ceil(length(B)*0.1)); clear B; %10th Percentile
+                        A = SM_ref(ii,iii,i_month:12:All_Month); B = sort(A(:)); clear A;
+                        Threshold.SM(ii,iii,i_month) = B(ceil(length(B)*0.1)); clear B; %10th Percentile
+                        A = Pr_ET_ref(ii,iii,i_month:12:All_Month); B = sort(A(:)); clear A;
+                        Threshold.Pr_ET(ii,iii,i_month) = B(ceil(length(B)*0.1)); clear B; %10th Percentile
+                    else
+                        Threshold.Pr(ii,iii,i_month) = nan;
+                        Threshold.Q(ii,iii,i_month) = nan;
+                        Threshold.SM(ii,iii,i_month) = nan;
+                        Threshold.Pr_ET(ii,iii,i_month) = nan;
+                    end
                 end
             end
         end
-        clear ii iii Pr_ref Q_ref SM_ref Pr_ET_ref
+        clear ii iii Pr_ref Q_ref SM_ref Pr_ET_ref i_month All_Month
         
         %% (1.1.2) Drought Extent Analysis
         load(strcat(InputMetPath{i_Path} , GCM , '.mat'));
@@ -85,20 +92,27 @@ for i_Path = 1 : length(InputMetPath)
         Pr_ET = Pr - r1.evspsbl; %kg/(m2s)
         clear r1 Met_Var
         for ii = 1 : size( Pr , 3)
+            if mod(ii,12)~=0
+                i_month = mod(ii,12);
+            else
+                i_month = 12;
+            end
             % Pr
-            DroughtExtent_Month.Pr(i_GCM,ii) = nansum(EarthLandArea_05deg(Pr(:,:,ii)<Threshold.Pr))...
-                ./nansum(nansum(EarthLandArea_05deg(~isnan(landmask_05deg)))) .* 100;
+            DroughtExtent_Month.Pr(i_GCM,ii) = nansum(EarthLandArea_05deg(Pr(:,:,ii)<Threshold.Pr(:,:,i_month)))...
+                ./nansum(EarthLandArea_05deg(~isnan(landmask_05deg))) .* 100;
             % Q
-            DroughtExtent_Month.Q(i_GCM,ii) = nansum(EarthLandArea_05deg(Q(:,:,ii)<Threshold.Q))...
-                ./nansum(nansum(EarthLandArea_05deg(~isnan(landmask_05deg)))) .* 100;
+            DroughtExtent_Month.Q(i_GCM,ii) = nansum(EarthLandArea_05deg(Q(:,:,ii)<Threshold.Q(:,:,i_month)))...
+                ./nansum(EarthLandArea_05deg(~isnan(landmask_05deg))) .* 100;
             % SM
-            DroughtExtent_Month.SM(i_GCM,ii) = nansum(EarthLandArea_05deg(SM(:,:,ii)<Threshold.SM))...
-                ./nansum(nansum(EarthLandArea_05deg(~isnan(landmask_05deg)))) .* 100;
+            DroughtExtent_Month.SM(i_GCM,ii) = nansum(EarthLandArea_05deg(SM(:,:,ii)<Threshold.SM(:,:,i_month)))...
+                ./nansum(EarthLandArea_05deg(~isnan(landmask_05deg))) .* 100;
+            % Compound Drought
+            
             % Pr_ET
-            DroughtExtent_Month.Pr_ET(i_GCM,ii) = nansum(EarthLandArea_05deg(Pr_ET(:,:,ii)<Threshold.Pr_ET))...
-                ./nansum(nansum(EarthLandArea_05deg(~isnan(landmask_05deg)))) .* 100;
+            DroughtExtent_Month.Pr_ET(i_GCM,ii) = nansum(EarthLandArea_05deg(Pr_ET(:,:,ii)<Threshold.Pr_ET(:,:,i_month)))...
+                ./nansum(EarthLandArea_05deg(~isnan(landmask_05deg))) .* 100;
         end
-        clear ii
+        clear ii i_month
         % Monthly Drought Extent to Yearly
         iii = 1;
         for ii = 1 : 12 : size(DroughtExtent_Month.Pr,2)
@@ -119,12 +133,17 @@ for i_Path = 1 : length(InputMetPath)
         %% (1.1.3) Drought Frequency Analysis
         % Frequency records whether (1 or 0) Variables < Threshold for every month
         for ii = 1 : size( Pr , 3)
-            Frequency.Pr(:,:,ii) = Pr(:,:,ii) < Threshold.Pr;
-            Frequency.Q(:,:,ii) = Q(:,:,ii) < Threshold.Q;
-            Frequency.SM(:,:,ii) = SM(:,:,ii) < Threshold.SM;
-            Frequency.Pr_ET(:,:,ii) = Pr_ET(:,:,ii) < Threshold.Pr_ET;
+            if mod(ii,12)~=0
+                i_month = mod(ii,12);
+            else
+                i_month = 12;
+            end
+            Frequency.Pr(:,:,ii) = Pr(:,:,ii) < Threshold.Pr(:,:,i_month);
+            Frequency.Q(:,:,ii) = Q(:,:,ii) < Threshold.Q(:,:,i_month);
+            Frequency.SM(:,:,ii) = SM(:,:,ii) < Threshold.SM(:,:,i_month);
+            Frequency.Pr_ET(:,:,ii) = Pr_ET(:,:,ii) < Threshold.Pr_ET(:,:,i_month);
         end
-        clear ii
+        clear ii i_month
         % Drought Frequency: GridYear (how many months under drought or moist conditions for every year)
         iii = 1;
         for ii = 1 : 12 : size(Frequency.Pr,3)
@@ -141,7 +160,7 @@ for i_Path = 1 : length(InputMetPath)
             iii = iii+1;
         end
         clear ii iii Frequency
-        % Yearly Grid to global average Yearly series : DroughtFrequency_GMAYear
+        % Yearly Grid to global average Yearly series : DroughtFrequency_GMYear
         for ii = 1 : size(GridYear.Pr , 3)
             A = GridYear.Pr(:,:,ii); DroughtFrequency_GMYear.Pr(i_GCM , ii) = nanmean(A(:)); clear A;
             A = GridYear.Q(:,:,ii); DroughtFrequency_GMYear.Q(i_GCM , ii) = nanmean(A(:)); clear A;

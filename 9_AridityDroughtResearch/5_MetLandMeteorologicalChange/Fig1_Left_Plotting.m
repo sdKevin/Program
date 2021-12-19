@@ -6,7 +6,8 @@ RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % Pr
 RGB_ssp_Shade = [222,235,247; 198,234,251; 161,196,218; 194,196,226];
 RGB_ssp_Line = [133,184,227; 0,173,238; 50,128,185; 57,83,164];
-YlimRange_Pr = [9,12]; YTickRange_Pr = [9:1:12];
+XlimRange = [1850,2100];
+YlimRange_Pr = [8,16]; YTickRange_Pr = [8:1:16];
 %% Three time windows
 %  Contemporary: 1948-2014
 fill([1948;2014;2014;1948],...
@@ -67,7 +68,7 @@ plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
 ylabel('Area in Drought (%)');
 title('Pr<10th Percentile')
-set(gca,'xlim',[1948,2100],'ylim',YlimRange_Pr,'yTick',YTickRange_Pr,...
+set(gca,'xlim',XlimRange,'ylim',YlimRange_Pr,'yTick',YTickRange_Pr,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
 %% Plotting Legend
 axes('position',get(gca,'position'),'visible','off')
@@ -91,7 +92,8 @@ RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % Pr-ET
 RGB_ssp_Shade = [222,235,247; 198,234,251; 161,196,218; 194,196,226];
 RGB_ssp_Line = [133,184,227; 0,173,238; 50,128,185; 57,83,164];
-YlimRange_Pr_ET = [8,12.5]; YTickRange_Pr_ET = [8:1:12];
+XlimRange = [1850,2100];
+YlimRange_Pr_ET = [8,16.5]; YTickRange_Pr_ET = [8:1:16];
 %% Three time windows
 %  Contemporary: 1948-2014
 fill([1948;2014;2014;1948],...
@@ -152,7 +154,7 @@ plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
 ylabel('Area in Drought (%)');
 title('Pr-ET<10th Percentile')
-set(gca,'xlim',[1948,2100],'ylim',YlimRange_Pr_ET,'yTick',YTickRange_Pr_ET,...
+set(gca,'xlim',XlimRange,'ylim',YlimRange_Pr_ET,'yTick',YTickRange_Pr_ET,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
 %% Plotting Legend
 axes('position',get(gca,'position'),'visible','off')
@@ -176,7 +178,8 @@ RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % Q
 RGB_ssp_Shade = [222,235,247; 198,234,251; 161,196,218; 194,196,226];
 RGB_ssp_Line = [133,184,227; 0,173,238; 50,128,185; 57,83,164];
-YlimRange_Q = [6,12]; YTickRange_Q = [6:2:12];
+XlimRange = [1850,2100];
+YlimRange_Q = [6,17.5]; YTickRange_Q = [6:2:17];
 %% Three time windows
 %  Contemporary: 1948-2014
 fill([1948;2014;2014;1948],...
@@ -237,7 +240,7 @@ plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
 ylabel('Area in Drought (%)');
 title('Q<10th Percentile');
-set(gca,'xlim',[1948,2100],'ylim',YlimRange_Q,'yTick',YTickRange_Q,...
+set(gca,'xlim',XlimRange,'ylim',YlimRange_Q,'yTick',YTickRange_Q,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
 %% Plotting Legend
 axes('position',get(gca,'position'),'visible','off')
@@ -261,7 +264,8 @@ RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % SM
 RGB_ssp_Shade = [222,235,247; 198,234,251; 161,196,218; 194,196,226];
 RGB_ssp_Line = [133,184,227; 0,173,238; 50,128,185; 57,83,164];
-YlimRange_SM = [7,27]; YTickRange_SM = [5:5:25];
+XlimRange = [1850,2100];
+YlimRange_SM = [7,32]; YTickRange_SM = [5:5:30];
 %% Three time windows
 %  Contemporary: 1948-2014
 fill([1948;2014;2014;1948],...
@@ -322,7 +326,7 @@ plot([1948 2100],[0 0],'Color',[189,188,188]./255,'LineWidth',3)
 % setting axis
 ylabel('Area in Drought (%)');
 title('SoilMoisture<10th Percentile')
-set(gca,'xlim',[1948,2100],'ylim',YlimRange_SM,'yTick',YTickRange_SM,...
+set(gca,'xlim',XlimRange,'ylim',YlimRange_SM,'yTick',YTickRange_SM,...
     'FontSize',24,'FontName','Arial','TickDir','out','LineWidth',2.5,'XMinorTick','on','YMinorTick','on');
 %% Plotting Legend
 axes('position',get(gca,'position'),'visible','off')
