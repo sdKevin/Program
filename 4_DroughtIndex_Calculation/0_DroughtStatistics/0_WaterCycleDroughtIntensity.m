@@ -218,25 +218,25 @@ for i_Path = 1 : length(InputMetPath)
                     end
                     % Compound Drought1: Met&Hyd Co-occurrence
                     if Intensity.Pr(iii,iiii,ii)<=0.1 & Intensity.Q(iii,iiii,ii)<=0.1
-                        Intensity.CompoundDrought1(iii,iiii,ii) = mean([Intensity.Pr(iii,iiii,ii),Intensity.Q(iii,iiii,ii)]);
+                        Intensity.CompoundDrought1(iii,iiii,ii) = 0.1 - mean([Intensity.Pr(iii,iiii,ii),Intensity.Q(iii,iiii,ii)]);
                     else
                         Intensity.CompoundDrought1(iii,iiii,ii) = nan;
                     end
                     % Compound Drought2: Met&Agr Co-occurrence
                     if Intensity.Pr(iii,iiii,ii)<=0.1 & Intensity.SM(iii,iiii,ii)<=0.1
-                        Intensity.CompoundDrought2(iii,iiii,ii) = mean([Intensity.Pr(iii,iiii,ii),Intensity.SM(iii,iiii,ii)]);
+                        Intensity.CompoundDrought2(iii,iiii,ii) = 0.1 - mean([Intensity.Pr(iii,iiii,ii),Intensity.SM(iii,iiii,ii)]);
                     else
                         Intensity.CompoundDrought2(iii,iiii,ii) = nan;
                     end
                     % Compound Drought3: Hyd&Agr Co-occurrence
                     if Intensity.Q(iii,iiii,ii)<=0.1 & Intensity.SM(iii,iiii,ii)<=0.1
-                        Intensity.CompoundDrought3(iii,iiii,ii) = mean([Intensity.Q(iii,iiii,ii),Intensity.SM(iii,iiii,ii)]);
+                        Intensity.CompoundDrought3(iii,iiii,ii) = 0.1 - mean([Intensity.Q(iii,iiii,ii),Intensity.SM(iii,iiii,ii)]);
                     else
                         Intensity.CompoundDrought3(iii,iiii,ii) = nan;
                     end
                     % Compound Drought: Met&Hyd&Agr Co-occurrence
                     if Intensity.Pr(iii,iiii,ii)<=0.1 & Intensity.Q(iii,iiii,ii)<=0.1 & Intensity.SM(iii,iiii,ii)<=0.1
-                        Intensity.CompoundDrought(iii,iiii,ii) = mean([Intensity.Pr(iii,iiii,ii),Intensity.Q(iii,iiii,ii),Intensity.SM(iii,iiii,ii)]);
+                        Intensity.CompoundDrought(iii,iiii,ii) = 0.1 - mean([Intensity.Pr(iii,iiii,ii),Intensity.Q(iii,iiii,ii),Intensity.SM(iii,iiii,ii)]);
                     else
                         Intensity.CompoundDrought(iii,iiii,ii) = nan;
                     end
@@ -293,8 +293,9 @@ for i_Path = 1 : length(InputMetPath)
         All_DroughtIntensity_Year.CompoundDrought3(:,:,:,i_GCM) = DroughtIntensity_Year.CompoundDrought3;
         All_DroughtIntensity_Year.CompoundDrought(:,:,:,i_GCM) = DroughtIntensity_Year.CompoundDrought;
         %% (1.2) Output GridYear from 1850-2100
-        save(strcat(OutputDroughtPath{i_Path} , GCM , '_DroughtIntensity_Month_Year') , 'DroughtIntensity_Month' , 'DroughtIntensity_Year');
-        clear DroughtIntensity_Year DroughtIntensity_Month GCM
+        save(strcat(OutputDroughtPath{i_Path} , GCM , '_DroughtIntensity_Month') , 'DroughtIntensity_Month');
+        save(strcat(OutputDroughtPath{i_Path} , GCM , '_DroughtIntensity_Year') , 'DroughtIntensity_Year');
+        clear DroughtIntensity_Month DroughtIntensity_Year GCM
     end
     clear i_GCM
     % save global mean yearly drought intensity

@@ -109,7 +109,7 @@ for i_Path = 1 : length(InputMetDroughtPath)
     end
     for i_GCM = 1 : length(GCM_Ensemble)
         GCM = GCM_Ensemble{i_GCM};
-        load(strcat(InputMetDroughtPath{i_Path} , GCM , '_DroughtIntensity_Month_Year.mat'));
+        load(strcat(InputMetDroughtPath{i_Path} , GCM , '_DroughtIntensity_Year.mat'));
         for i_Year = 1 : size(DroughtIntensity_Year.CompoundDrought,3)
             AA = DroughtIntensity_Year.CompoundDrought(:,:,i_Year);
             BB(1:360,:) = AA(361:end,:); BB(361:720,:) = AA(1:360,:); clear AA;  % Adjust longitude from 0-360 to -180-180
@@ -131,24 +131,6 @@ subplot(3,1,2)
 Fig_Timeseries_Extent(Met_Drought_Extent_Year)
 subplot(3,1,3)
 Fig_Timeseries_Frequency(Met_Drought_Frequency_Year)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

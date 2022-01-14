@@ -1,4 +1,4 @@
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Drought analysis using CMIP Met&Land Variables%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Calculating Drought Frequency and Extent using CMIP Met&Land Variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clc; clear all; close all;
 %% Setting the input/output paths
 % CMIP6 Historical Met Data
@@ -70,7 +70,7 @@ for i_Path = 1 : length(InputMetPath)
                         % Pr
                         A = Pr_ref(ii,iii,i_month:12:All_Month); B = sort(A(:)); clear A;
                         if B(ceil(length(B)*0.1))<=0 | isnan(B(ceil(length(B)*0.1)))
-                            Threshold.Pr(ii,iii,i_month) = nan; % ignore girds where 10th Percentile = 0
+                            Threshold.Pr(ii,iii,i_month) = nan; % ignore girds where 10th Percentile = 0 or nan
                         else
                             B(B<=0) = min(B(B>0)); % For satisfying positive restriction in ksdensity function
                             % Kernal Density Function
@@ -94,7 +94,7 @@ for i_Path = 1 : length(InputMetPath)
                         % Q
                         A = Q_ref(ii,iii,i_month:12:All_Month); B = sort(A(:)); clear A;
                         if B(ceil(length(B)*0.1))<=0 | isnan(B(ceil(length(B)*0.1)))
-                            Threshold.Q(ii,iii,i_month) = nan; % ignore girds where 10th Percentile = 0
+                            Threshold.Q(ii,iii,i_month) = nan; % ignore girds where 10th Percentile = 0 or nan
                         else
                             B(B<=0) = min(B(B>0)); % For satisfying positive restriction in ksdensity function
                             % Kernal Density Function
@@ -118,7 +118,7 @@ for i_Path = 1 : length(InputMetPath)
                         % SM
                         A = SM_ref(ii,iii,i_month:12:All_Month); B = sort(A(:)); clear A;
                         if B(ceil(length(B)*0.1))<=0 | isnan(B(ceil(length(B)*0.1)))
-                            Threshold.SM(ii,iii,i_month) = nan; % ignore girds where 10th Percentile = 0
+                            Threshold.SM(ii,iii,i_month) = nan; % ignore girds where 10th Percentile = 0 or nan
                         else
                             B(B<=0) = min(B(B>0)); % For satisfying positive restriction in ksdensity function
                             % Kernal Density Function
@@ -142,7 +142,7 @@ for i_Path = 1 : length(InputMetPath)
                         % Pr-ET
                         A = Pr_ET_ref(ii,iii,i_month:12:All_Month); B = sort(A(:)); clear A;
                         if isnan(B(ceil(length(B)*0.1)))
-                            Threshold.Pr_ET(ii,iii,i_month) = nan; % ignore girds where 10th Percentile = 0
+                            Threshold.Pr_ET(ii,iii,i_month) = nan; % ignore girds where 10th Percentile = 0 or nan
                         else
                             % Kernal Density Function
                             % warning('')
@@ -172,7 +172,7 @@ for i_Path = 1 : length(InputMetPath)
         end
         clear ii iii Pr_ref Q_ref SM_ref Pr_ET_ref i_month All_Month
         
-        %% (1.1.2) Drought Extent Analysis
+        %% (1.1.2) Global Drought Extent Analysis
         load(strcat(InputMetPath{i_Path} , GCM , '.mat'));
         load(strcat(InputLandPath{i_Path} , GCM , '.mat'));
         Pr = Met_Var.pr; %kg/(m2s)
@@ -263,7 +263,7 @@ for i_Path = 1 : length(InputMetPath)
             Frequency.CompoundDrought(:,:,ii) = Pr(:,:,ii) < Threshold.Pr(:,:,i_month) & Q(:,:,ii) < Threshold.Q(:,:,i_month) & SM(:,:,ii) < Threshold.SM(:,:,i_month);
         end
         clear ii i_month
-        % Drought Frequency: GridYear (how many months under drought or moist conditions for every year)
+        % Drought Frequency: GridYear (how many months under drought conditions for every year)
         iii = 1;
         for ii = 1 : 12 : size(Frequency.Pr,3)
             A = Frequency.Pr(:,:,ii:ii+11);
