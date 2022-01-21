@@ -1,22 +1,13 @@
 function Fig_Timeseries_Intensity(Met_Drought_Intensity_Year)
-
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CompoundDrought (Met&Hyd&Agr Co-occurrence) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
-% CompoundDrought1
-RGB_ssp_Shade = [252,218,197; 198,234,251; 161,196,218; 249,199,190];
-RGB_ssp_Line = [245,132,63; 253,141,60; 239,101,72; 238,32,37];
+% CompoundDrought
+RGB_ssp_Shade = [200,202,229; 223,238,246; 252,218,197; 254,223,209];
+RGB_ssp_Line = [50,78,161; 133,184,227; 245,132,63; 238,31,36];
 XlimRange = [1950,2100];
-YlimRange_CD = [0.05,0.072]; YTickRange_CD = [0.05:0.005:0.072];
-% %% Three time windows
-% %  Contemporary: 1948-2014
-% fill([1948;2014;2014;1948],...
-%     [YlimRange_CD(1); YlimRange_CD(1); YlimRange_CD(2); YlimRange_CD(2)],...
-%     [240,240,242]./255,'EdgeAlpha',0,'FaceAlpha',0.9); hold on;
-% % Far Future: 2070-2099
-% fill([2070;2099;2099;2070],...
-%     [YlimRange_CD(1); YlimRange_CD(1); YlimRange_CD(2); YlimRange_CD(2)],...
-%     [240,240,242]./255,'EdgeAlpha',0,'FaceAlpha',0.9);
+YlimRange_CD = [0.0525,0.072]; YTickRange_CD = [0.05:0.005:0.072];
+
 %% Plotting Shade Area
 % Historical CompoundDrought
 CD_Historical = Met_Drought_Intensity_Year(1).DroughtIntensity_Year.CompoundDrought;
@@ -62,6 +53,84 @@ for i_ssp = [1,2,3,4]
             'Color',RGB_ssp_Line(i_ssp,:)./255,'Linewidth',2.5);
     end
 end
+% Plot Statistical values
+try
+    % Mean over 1951-2000
+    CD_Historical = Met_Drought_Intensity_Year(1).DroughtIntensity_Year.CompoundDrought;
+    Ensemble_Mean_CD_Historical = nanmean(CD_Historical)';
+    c95_CD_Historical = (std(CD_Historical)./sqrt(size(CD_Historical,1))) .* 1.96; % 95% confidence interval
+    text(1976,0.054,strcat( '[' , num2str(mean(Ensemble_Mean_CD_Historical(102:151)),'%.3f'),'¡À' ,...
+        num2str(mean(c95_CD_Historical(102:151)) ,'%.3f') , ']'),...
+        'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_Historical_Line./255);
+end
+try
+    % ssp 585 Mean over 2051-2100
+    CD_ssp585 = Met_Drought_Intensity_Year(5).DroughtIntensity_Year.CompoundDrought;
+    Ensemble_Mean_CD_ssp585 = nanmean(CD_ssp585)';
+    c95_CD_ssp585 = (std(CD_ssp585)./sqrt(size(CD_ssp585,1))) .* 1.96; % 95% confidence interval
+    text(2051,0.058,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp585(37:86)),'%.3f'),'¡À' ,...
+        num2str(mean(c95_CD_ssp585(37:86)) , '%.3f') , ']'),...
+        'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_ssp_Line(4,:)./255);
+    % ssp 370 Mean over 2051-2100
+    CD_ssp370 = Met_Drought_Intensity_Year(4).DroughtIntensity_Year.CompoundDrought;
+    Ensemble_Mean_CD_ssp370 = nanmean(CD_ssp370)';
+    c95_CD_ssp370 = (std(CD_ssp370)./sqrt(size(CD_ssp370,1))) .* 1.96; % 95% confidence interval
+    text(2076,0.058,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp370(37:86)),'%.3f'),'¡À' ,...
+        num2str(mean(c95_CD_ssp370(37:86)) ,'%.3f') , ']'),...
+        'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_ssp_Line(3,:)./255);
+    % ssp 245 Mean over 2051-2100
+    CD_ssp245 = Met_Drought_Intensity_Year(3).DroughtIntensity_Year.CompoundDrought;
+    Ensemble_Mean_CD_ssp245 = nanmean(CD_ssp245)';
+    c95_CD_ssp245 = (std(CD_ssp245)./sqrt(size(CD_ssp245,1))) .* 1.96; % 95% confidence interval
+    text(2051,0.055,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp245(37:86)),'%.3f'),'¡À' ,...
+        num2str(mean(c95_CD_ssp245(37:86)) ,'%.3f') , ']'),...
+        'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_ssp_Line(2,:)./255);
+    % ssp 126 Mean over 2051-2100
+    CD_ssp126 = Met_Drought_Intensity_Year(2).DroughtIntensity_Year.CompoundDrought;
+    Ensemble_Mean_CD_ssp126 = nanmean(CD_ssp126)';
+    c95_CD_ssp126 = (std(CD_ssp126)./sqrt(size(CD_ssp126,1))) .* 1.96; % 95% confidence interval
+    text(2076,0.055 , strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp126(37:86)),'%.3f'),'¡À' ,...
+        num2str(mean(c95_CD_ssp126(37:86)) ,'%.3f') , ']'),...
+        'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_ssp_Line(1,:)./255);
+end
+try
+    % ssp 585 Mean over 2001-2052
+    CD_Historical = Met_Drought_Intensity_Year(1).DroughtIntensity_Year.CompoundDrought;
+    CD_ssp585 = Met_Drought_Intensity_Year(5).DroughtIntensity_Year.CompoundDrought;
+    Ensemble_Mean_CD_ssp585 = [nanmean(CD_Historical)';nanmean(CD_ssp585)'];
+    c95_CD_ssp585 = (std([CD_Historical,CD_ssp585])./sqrt(size([CD_Historical,CD_ssp585],1))) .* 1.96; % 95% confidence interval
+    text(2001,0.07,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp585(152:201)),'%.3f'),'¡À' ,...
+        num2str(mean(c95_CD_ssp585(152:201)) ,'%.3f') , ']'),...
+        'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_ssp_Line(4,:)./255);
+    % ssp 245 Mean over 2001-2052
+    CD_Historical = Met_Drought_Intensity_Year(1).DroughtIntensity_Year.CompoundDrought;
+    CD_ssp245 = Met_Drought_Intensity_Year(3).DroughtIntensity_Year.CompoundDrought;
+    Ensemble_Mean_CD_ssp245 = [nanmean(CD_Historical)';nanmean(CD_ssp245)'];
+    c95_CD_ssp245 = (std([CD_Historical,CD_ssp245])./sqrt(size([CD_Historical,CD_ssp245],1))) .* 1.96; % 95% confidence interval
+    text(2001,0.067,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp245(152:201)),'%.3f'),'¡À' ,...
+        num2str(mean(c95_CD_ssp245(152:201)) ,'%.3f') , ']'),...
+        'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_ssp_Line(2,:)./255);
+    % ssp 126 Mean over 2001-2052
+    CD_Historical = Met_Drought_Intensity_Year(1).DroughtIntensity_Year.CompoundDrought;
+    CD_ssp126 = Met_Drought_Intensity_Year(2).DroughtIntensity_Year.CompoundDrought;
+    Ensemble_Mean_CD_ssp126 = [nanmean(CD_Historical)';nanmean(CD_ssp126)'];
+    c95_CD_ssp126 = (std([CD_Historical,CD_ssp126])./sqrt(size([CD_Historical,CD_ssp126],1))) .* 1.96; % 95% confidence interval
+    text(2026,0.067,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp126(152:201)),'%.3f'),'¡À' ,...
+        num2str(mean(c95_CD_ssp126(152:201)) ,'%.3f') , ']'),...
+        'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_ssp_Line(1,:)./255);
+    % ssp 370 Mean over 2001-2052
+    CD_Historical = Met_Drought_Intensity_Year(1).DroughtIntensity_Year.CompoundDrought;
+    CD_Historical(13,:) = []; % since HadGEM3-GC31-LL model does not have ssp370
+    CD_ssp370 = Met_Drought_Intensity_Year(4).DroughtIntensity_Year.CompoundDrought;
+    Ensemble_Mean_CD_ssp370 = [nanmean(CD_Historical)';nanmean(CD_ssp370)'];
+    c95_CD_ssp370 = (std([CD_Historical,CD_ssp370])./sqrt(size([CD_Historical,CD_ssp370],1))) .* 1.96; % 95% confidence interval
+    text(2026,0.07,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp370(152:201)),'%.3f'),'¡À' ,...
+        num2str(mean(c95_CD_ssp370(152:201)) ,'%.3f') , ']'),...
+        'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_ssp_Line(3,:)./255);
+end
+% Plot Time Window Line
+plot([2000 2000],YlimRange_CD,'k--','LineWidth',2);
+plot([2050 2050],YlimRange_CD,'k--','LineWidth',2);
 % setting axis
 ylabel('Intensity Index');
 set(gca,'xlim',XlimRange,'ylim',YlimRange_CD,'yTick',YTickRange_CD,...
