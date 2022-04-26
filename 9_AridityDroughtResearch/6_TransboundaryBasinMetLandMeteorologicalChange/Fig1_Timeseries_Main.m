@@ -127,11 +127,11 @@ clc; clear all; close all;
 load Met_Drought_Frequency_Intensity_Extent
 
 subplot(3,1,1)
-Fig_Timeseries_Extent(Met_Drought_Extent_Year)
+Fig1_Timeseries_Extent(Met_Drought_Extent_Year)
 subplot(3,1,2)
-Fig_Timeseries_Intensity(Met_Drought_Intensity_Year)
+Fig1_Timeseries_Intensity(Met_Drought_Intensity_Year)
 subplot(3,1,3)
-Fig_Timeseries_Frequency(Met_Drought_Frequency_Year)
+Fig1_Timeseries_Frequency(Met_Drought_Frequency_Year)
 
 
 

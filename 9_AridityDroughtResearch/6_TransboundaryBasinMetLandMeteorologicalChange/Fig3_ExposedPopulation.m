@@ -106,7 +106,7 @@ save('Population','Met_Drought_FractionalPopulation_Year','Met_Drought_Populatio
 
 clc; clear all; close all;
 load Population
-Fig_ExposedPopulation_Timeseries(Met_Drought_Population_Year , Met_Drought_FractionalPopulation_Year)
+Fig3_ExposedPopulation_Timeseries(Met_Drought_Population_Year , Met_Drought_FractionalPopulation_Year)
 
 
 %% £¨2£© Calculating the spatial distribution of historicl and future Population

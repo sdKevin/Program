@@ -1,4 +1,4 @@
-function Fig_Timeseries_Frequency(Met_Drought_Frequency_Year)
+function Fig1_Timeseries_Frequency(Met_Drought_Frequency_Year)
 for ii = 1 : size(Met_Drought_Frequency_Year,2)
     % From months per year to monthes per decade
     Met_Drought_Frequency_Year(ii).DroughtFrequency_Year.CompoundDrought = Met_Drought_Frequency_Year(ii).DroughtFrequency_Year.CompoundDrought .* 10;

@@ -1,4 +1,4 @@
-function Fig_ExposedPopulation_Timeseries(Met_Drought_Population_Year , Met_Drought_FractionalPopulation_Year)
+function Fig3_ExposedPopulation_Timeseries(Met_Drought_Population_Year , Met_Drought_FractionalPopulation_Year)
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Population CompoundDrought (Met&Hyd&Agr Co-occurrence) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 subplot(2,1,1)
 %% Setting Color and axis property

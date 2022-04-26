@@ -118,7 +118,26 @@ save('Population_Attribution','Met_Drought_FractionalPopulation_Attribution_Year
 
 clc; clear all; close all;
 load Population_Attribution
-Fig_ExposedPopulation_Timeseries_Attribution(Met_Drought_Population_Attribution_Year , Met_Drought_FractionalPopulation_Attribution_Year)
+Fig6_ExposedPopulation_Timeseries_Attribution(Met_Drought_Population_Attribution_Year , Met_Drought_FractionalPopulation_Attribution_Year)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

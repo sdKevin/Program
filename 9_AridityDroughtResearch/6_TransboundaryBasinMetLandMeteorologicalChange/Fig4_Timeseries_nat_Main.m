@@ -88,9 +88,9 @@ load Met_Drought_nat_Frequency_Intensity_Extent
 load Met_Drought_Frequency_Intensity_Extent
 
 subplot(3,1,1)
-Fig_Timeseries_nat_Extent(Met_Drought_Extent_Year , Met_Drought_nat_Extent_Year)
+Fig4_Timeseries_nat_Extent(Met_Drought_Extent_Year , Met_Drought_nat_Extent_Year)
 subplot(3,1,2)
-Fig_Timeseries_nat_Intensity(Met_Drought_Intensity_Year , Met_Drought_nat_Intensity_Year)
+Fig4_Timeseries_nat_Intensity(Met_Drought_Intensity_Year , Met_Drought_nat_Intensity_Year)
 subplot(3,1,3)
-Fig_Timeseries_nat_Frequency(Met_Drought_Frequency_Year , Met_Drought_nat_Frequency_Year)
+Fig4_Timeseries_nat_Frequency(Met_Drought_Frequency_Year , Met_Drought_nat_Frequency_Year)
 
