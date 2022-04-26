@@ -31,6 +31,7 @@ for i_ssp = [5,4,3,2]
         CD_Historical = Met_Drought_Frequency_Year(1).DroughtFrequency_Year.CompoundDrought;
     end
     CD_ssp = Met_Drought_Frequency_Year(i_ssp).DroughtFrequency_Year.CompoundDrought;
+    CD_ssp = CD_ssp - repmat((CD_ssp(:,1) - CD_Historical(:,end)),1,size(CD_ssp,2));
     CD_ssp = [CD_Historical(:,end) , CD_ssp];
     Ensemble_Mean_CD_ssp(:,i_ssp-1) = nanmean(CD_ssp)';
     c95_CD_ssp = (std(CD_ssp)./sqrt(size(CD_ssp,1))) .* 1.96; % 95% confidence interval
@@ -70,20 +71,17 @@ end
 try
     % ssp 585 Mean over 2051-2100
     CD_ssp585 = Met_Drought_Frequency_Year(5).DroughtFrequency_Year.CompoundDrought;
+    CD_ssp585 = CD_ssp585 - repmat((CD_ssp585(:,1) - CD_Historical(:,end)),1,size(CD_ssp585,2));
+    CD_ssp585 = [CD_Historical(:,end) , CD_ssp585];
     Ensemble_Mean_CD_ssp585 = nanmean(CD_ssp585)';
     c95_CD_ssp585 = (std(CD_ssp585)./sqrt(size(CD_ssp585,1))) .* 1.96; % 95% confidence interval
     text(2051,2.0,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp585(37:86)),3),'¡À' ,...
         num2str(mean(c95_CD_ssp585(37:86)) , 3) , ']'),...
         'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_ssp_Line(4,:)./255);
-    % ssp 370 Mean over 2051-2100
-    CD_ssp370 = Met_Drought_Frequency_Year(4).DroughtFrequency_Year.CompoundDrought;
-    Ensemble_Mean_CD_ssp370 = nanmean(CD_ssp370)';
-    c95_CD_ssp370 = (std(CD_ssp370)./sqrt(size(CD_ssp370,1))) .* 1.96; % 95% confidence interval
-    text(2076,2.0,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp370(37:86)),3),'¡À' ,...
-        num2str(mean(c95_CD_ssp370(37:86)) ,3) , ']'),...
-        'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_ssp_Line(3,:)./255);
     % ssp 245 Mean over 2051-2100
     CD_ssp245 = Met_Drought_Frequency_Year(3).DroughtFrequency_Year.CompoundDrought;
+    CD_ssp245 = CD_ssp245 - repmat((CD_ssp245(:,1) - CD_Historical(:,end)),1,size(CD_ssp245,2));
+    CD_ssp245 = [CD_Historical(:,end) , CD_ssp245];
     Ensemble_Mean_CD_ssp245 = nanmean(CD_ssp245)';
     c95_CD_ssp245 = (std(CD_ssp245)./sqrt(size(CD_ssp245,1))) .* 1.96; % 95% confidence interval
     text(2051,1.1,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp245(37:86)),3),'¡À' ,...
@@ -91,16 +89,29 @@ try
         'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_ssp_Line(2,:)./255);
     % ssp 126 Mean over 2051-2100
     CD_ssp126 = Met_Drought_Frequency_Year(2).DroughtFrequency_Year.CompoundDrought;
+    CD_ssp126 = CD_ssp126 - repmat((CD_ssp126(:,1) - CD_Historical(:,end)),1,size(CD_ssp126,2));
+    CD_ssp126 = [CD_Historical(:,end) , CD_ssp126];
     Ensemble_Mean_CD_ssp126 = nanmean(CD_ssp126)';
     c95_CD_ssp126 = (std(CD_ssp126)./sqrt(size(CD_ssp126,1))) .* 1.96; % 95% confidence interval
     text(2076 , 1.1 , strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp126(37:86)),3),'¡À' ,...
         num2str(mean(c95_CD_ssp126(37:86)) ,3) , ']'),...
         'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_ssp_Line(1,:)./255);
+    % ssp 370 Mean over 2051-2100
+    CD_ssp370 = Met_Drought_Frequency_Year(4).DroughtFrequency_Year.CompoundDrought;
+    CD_Historical(13,:) = []; % since HadGEM3-GC31-LL model does not have ssp370
+    CD_ssp370 = CD_ssp370 - repmat((CD_ssp370(:,1) - CD_Historical(:,end)),1,size(CD_ssp370,2));
+    CD_ssp370 = [CD_Historical(:,end) , CD_ssp370];
+    Ensemble_Mean_CD_ssp370 = nanmean(CD_ssp370)';
+    c95_CD_ssp370 = (std(CD_ssp370)./sqrt(size(CD_ssp370,1))) .* 1.96; % 95% confidence interval
+    text(2076,2.0,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp370(37:86)),3),'¡À' ,...
+        num2str(mean(c95_CD_ssp370(37:86)) ,3) , ']'),...
+        'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_ssp_Line(3,:)./255);
 end
 try
     % ssp 585 Mean over 2001-2052
     CD_Historical = Met_Drought_Frequency_Year(1).DroughtFrequency_Year.CompoundDrought;
     CD_ssp585 = Met_Drought_Frequency_Year(5).DroughtFrequency_Year.CompoundDrought;
+    CD_ssp585 = CD_ssp585 - repmat((CD_ssp585(:,1) - CD_Historical(:,end)),1,size(CD_ssp585,2));
     Ensemble_Mean_CD_ssp585 = [nanmean(CD_Historical)';nanmean(CD_ssp585)'];
     c95_CD_ssp585 = (std([CD_Historical,CD_ssp585])./sqrt(size([CD_Historical,CD_ssp585],1))) .* 1.96; % 95% confidence interval
     text(2001,6.3,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp585(152:201)),3),'¡À' ,...
@@ -109,6 +120,7 @@ try
     % ssp 245 Mean over 2001-2052
     CD_Historical = Met_Drought_Frequency_Year(1).DroughtFrequency_Year.CompoundDrought;
     CD_ssp245 = Met_Drought_Frequency_Year(3).DroughtFrequency_Year.CompoundDrought;
+    CD_ssp245 = CD_ssp245 - repmat((CD_ssp245(:,1) - CD_Historical(:,end)),1,size(CD_ssp245,2));
     Ensemble_Mean_CD_ssp245 = [nanmean(CD_Historical)';nanmean(CD_ssp245)'];
     c95_CD_ssp245 = (std([CD_Historical,CD_ssp245])./sqrt(size([CD_Historical,CD_ssp245],1))) .* 1.96; % 95% confidence interval
     text(2001,5.4,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp245(152:201)),3),'¡À' ,...
@@ -117,6 +129,7 @@ try
     % ssp 126 Mean over 2001-2052
     CD_Historical = Met_Drought_Frequency_Year(1).DroughtFrequency_Year.CompoundDrought;
     CD_ssp126 = Met_Drought_Frequency_Year(2).DroughtFrequency_Year.CompoundDrought;
+    CD_ssp126 = CD_ssp126 - repmat((CD_ssp126(:,1) - CD_Historical(:,end)),1,size(CD_ssp126,2));
     Ensemble_Mean_CD_ssp126 = [nanmean(CD_Historical)';nanmean(CD_ssp126)'];
     c95_CD_ssp126 = (std([CD_Historical,CD_ssp126])./sqrt(size([CD_Historical,CD_ssp126],1))) .* 1.96; % 95% confidence interval
     text(2026,5.4,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp126(152:201)),3),'¡À' ,...
@@ -126,6 +139,7 @@ try
     CD_Historical = Met_Drought_Frequency_Year(1).DroughtFrequency_Year.CompoundDrought;
     CD_Historical(13,:) = []; % since HadGEM3-GC31-LL model does not have ssp370
     CD_ssp370 = Met_Drought_Frequency_Year(4).DroughtFrequency_Year.CompoundDrought;
+    CD_ssp370 = CD_ssp370 - repmat((CD_ssp370(:,1) - CD_Historical(:,end)),1,size(CD_ssp370,2));
     Ensemble_Mean_CD_ssp370 = [nanmean(CD_Historical)';nanmean(CD_ssp370)'];
     c95_CD_ssp370 = (std([CD_Historical,CD_ssp370])./sqrt(size([CD_Historical,CD_ssp370],1))) .* 1.96; % 95% confidence interval
     text(2026,6.3,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp370(152:201)),3),'¡À' ,...

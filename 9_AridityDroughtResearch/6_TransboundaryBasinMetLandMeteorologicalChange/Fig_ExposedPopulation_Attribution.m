@@ -8,18 +8,15 @@ clear Path_GlobalTransboundary
 % CMIP6 Historical Met Data
 InputMetDroughtPath{1} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\Historical\Met_Land_Historical_';
 InputPopulationPath{1} = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP1\Total\Mat\ssp1_2010.mat';
-% CMIP6 ScenarioMIP ssp126 Data
-InputMetDroughtPath{2} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ScenarioMIP_ssp126\Met_Land_ssp126_';
-InputPopulationPath{2} = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP1\Total\Mat\';
 % CMIP6 ScenarioMIP ssp245 Data
-InputMetDroughtPath{3} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ScenarioMIP_ssp245\Met_Land_ssp245_';
-InputPopulationPath{3} = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP2\Total\Mat\';
-% CMIP6 ScenarioMIP ssp370 Data
-InputMetDroughtPath{4} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ScenarioMIP_ssp370\Met_Land_ssp370_';
-InputPopulationPath{4} = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP3\Total\Mat\';
-% CMIP6 ScenarioMIP ssp585 Data
-InputMetDroughtPath{5} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ScenarioMIP_ssp585\Met_Land_ssp585_';
-InputPopulationPath{5} = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP5\Total\Mat\';
+InputMetDroughtPath{2} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ScenarioMIP_ssp245\Met_Land_ssp245_';
+InputPopulationPath{2} = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP2\Total\Mat\';
+% CMIP6 hist-nat Data
+InputMetDroughtPath{3} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\hist_nat\Met_Land_hist_nat_';
+% CMIP6 ssp245-nat ssp245 Data
+InputMetDroughtPath{4} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ssp245_nat\Met_Land_ssp245_nat_';
+% CMIP6 piControl Data
+InputMetDroughtPath{5} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\piControl\Met_Land_piControl_';
 
 % Extract GlobalTransboundary
 % Coordinate information of CMIP6 output
@@ -34,25 +31,14 @@ save in_HR in_HR
 
 %% £¨1.3£© Calculating Population exposed to Compound Drought for each year
 for i_Path = 1 : length(InputMetDroughtPath)
-    if i_Path == 4
+    if i_Path < 3
         % Name of Global Climate Model
-        GCM_Ensemble = {'ACCESS-CM2','ACCESS-ESM1-5','BCC-CSM2-MR','CanESM5','CanESM5-CanOE',...
-            'CESM2','CESM2-WACCM','CNRM-CM6-1','CNRM-ESM2-1','EC-Earth3','EC-Earth3-Veg',...
-            'GISS-E2-1-G','INM-CM4-8',...
-            'INM-CM5-0','IPSL-CM6A-LR','MIROC6','MIROC-ES2L','MPI-ESM1-2-HR','MPI-ESM1-2-LR',...
-            'MRI-ESM2-0','NorESM2-MM','UKESM1-0-LL'};
+        GCM_Ensemble = {'CanESM5','GISS-E2-1-G','IPSL-CM6A-LR','MIROC6','NorESM2-MM'};
     else
-        % Name of Global Climate Model, since HadGEM3-GC31-LL model does
-        % not have ssp370
-        GCM_Ensemble = {'ACCESS-CM2','ACCESS-ESM1-5','BCC-CSM2-MR','CanESM5','CanESM5-CanOE',...
-            'CESM2','CESM2-WACCM','CNRM-CM6-1','CNRM-ESM2-1','EC-Earth3','EC-Earth3-Veg',...
-            'GISS-E2-1-G','HadGEM3-GC31-LL','INM-CM4-8',...
-            'INM-CM5-0','IPSL-CM6A-LR','MIROC6','MIROC-ES2L','MPI-ESM1-2-HR','MPI-ESM1-2-LR',...
-            'MRI-ESM2-0','NorESM2-MM','UKESM1-0-LL'};
+        % Name of Global Climate Model
+        GCM_Ensemble = {'CanESM5','GISS-E2-1-G','IPSL-CM6A-LR','MIROC6','NorESM2-LM'};
     end
-    if i_Path == 1
-        load(InputPopulationPath{i_Path});
-    end
+    
     for i_GCM = 1 : length(GCM_Ensemble)
         GCM = GCM_Ensemble{i_GCM};
         load(strcat(InputMetDroughtPath{i_Path} , GCM , '_DroughtFrequency_Year.mat'));
@@ -63,50 +49,86 @@ for i_Path = 1 : length(InputMetDroughtPath)
             BB_HR = interp2(lat_05deg,Lon_05deg,BB,lat,lon); % interpolate to the resolution of population
             CC = BB_HR >= 1; clear BB BB_HR; % CC indicates compound drought happens
             % Read Population Data
-            if i_Path > 1
-                if i_Path==5
-                    AA = num2str(i_Path);
-                else
-                    AA = num2str(i_Path-1);
-                end
+            if i_Path == 1 || i_Path == 3 || i_Path == 4 || i_Path == 5
+                load(InputPopulationPath{1});
+            end
+            if i_Path == 2
+                AA = '2';
                 if i_Year == 1
-                    load(strcat(InputPopulationPath{i_Path},'ssp',AA,'_2010.mat'));
+                    load(strcat(InputPopulationPath{2},'ssp',AA,'_2010.mat'));
                 elseif i_Year == 6
-                    load(strcat(InputPopulationPath{i_Path},'ssp',AA,'_2020.mat'));
+                    load(strcat(InputPopulationPath{2},'ssp',AA,'_2020.mat'));
                 elseif i_Year == 16
-                    load(strcat(InputPopulationPath{i_Path},'ssp',AA,'_2030.mat'));
+                    load(strcat(InputPopulationPath{2},'ssp',AA,'_2030.mat'));
                 elseif i_Year == 26
-                    load(strcat(InputPopulationPath{i_Path},'ssp',AA,'_2040.mat'));
+                    load(strcat(InputPopulationPath{2},'ssp',AA,'_2040.mat'));
                 elseif i_Year == 36
-                    load(strcat(InputPopulationPath{i_Path},'ssp',AA,'_2050.mat'));
+                    load(strcat(InputPopulationPath{2},'ssp',AA,'_2050.mat'));
                 elseif i_Year == 46
-                    load(strcat(InputPopulationPath{i_Path},'ssp',AA,'_2060.mat'));
+                    load(strcat(InputPopulationPath{2},'ssp',AA,'_2060.mat'));
                 elseif i_Year == 56
-                    load(strcat(InputPopulationPath{i_Path},'ssp',AA,'_2070.mat'));
+                    load(strcat(InputPopulationPath{2},'ssp',AA,'_2070.mat'));
                 elseif i_Year == 66
-                    load(strcat(InputPopulationPath{i_Path},'ssp',AA,'_2080.mat'));
+                    load(strcat(InputPopulationPath{2},'ssp',AA,'_2080.mat'));
                 elseif i_Year == 76
-                    load(strcat(InputPopulationPath{i_Path},'ssp',AA,'_2090.mat'));
+                    load(strcat(InputPopulationPath{2},'ssp',AA,'_2090.mat'));
                 elseif i_Year == 86
-                    load(strcat(InputPopulationPath{i_Path},'ssp',AA,'_2100.mat'));
+                    load(strcat(InputPopulationPath{2},'ssp',AA,'_2100.mat'));
                 end
                 clear AA
             end
+            
             % Met_Drought_Population_Year : the number of people experiencing compound drought per year
-            Met_Drought_Population_Year(i_Path).Population_Year.CompoundDrought(i_GCM,i_Year) = nansum(Population(CC&in_HR));
+            Met_Drought_Population_Attribution_Year(i_Path).Population_Year.CompoundDrought(i_GCM,i_Year) = nansum(Population(CC&in_HR));
             % Met_Drought_FractionalPopulation_Year : the ratio of people experiencing compound drought for each year
-            Met_Drought_FractionalPopulation_Year(i_Path).FractionalPopulation_Year.CompoundDrought(i_GCM,i_Year) = nansum(Population(CC&in_HR))./nansum(Population(in_HR)) .* 100;
+            Met_Drought_FractionalPopulation_Attribution_Year(i_Path).FractionalPopulation_Year.CompoundDrought(i_GCM,i_Year) = nansum(Population(CC&in_HR))./nansum(Population(in_HR)) .* 100;
             clear CC
         end
         clear GCM i_Year DroughtFrequency_Year
     end
     clear i_GCM GCM_Ensemble Population
 end
-save('Population','Met_Drought_FractionalPopulation_Year','Met_Drought_Population_Year');
+
+% Fix future population
+for i_Path = 2
+    % Name of Global Climate Model
+    GCM_Ensemble = {'CanESM5','GISS-E2-1-G','IPSL-CM6A-LR','MIROC6','NorESM2-MM'};
+    for i_GCM = 1 : length(GCM_Ensemble)
+        GCM = GCM_Ensemble{i_GCM};
+        load(strcat(InputMetDroughtPath{i_Path} , GCM , '_DroughtFrequency_Year.mat'));
+        for i_Year = 1 : size(DroughtFrequency_Year.CompoundDrought,3)
+            % Read Drought Data
+            AA = DroughtFrequency_Year.CompoundDrought(:,:,i_Year);
+            BB(1:360,:) = AA(361:end,:); BB(361:720,:) = AA(1:360,:); clear AA;  % Adjust longitude from 0-360 to -180-180
+            BB_HR = interp2(lat_05deg,Lon_05deg,BB,lat,lon); % interpolate to the resolution of population
+            CC = BB_HR >= 1; clear BB BB_HR; % CC indicates compound drought happens
+            % Read Population Data
+            load(InputPopulationPath{1});
+            % Met_Drought_Population_Year : the number of people experiencing compound drought per year
+            Met_Drought_Population_Attribution_Year(6).Population_Year.CompoundDrought(i_GCM,i_Year) = nansum(Population(CC&in_HR));
+            % Met_Drought_FractionalPopulation_Year : the ratio of people experiencing compound drought for each year
+            Met_Drought_FractionalPopulation_Attribution_Year(6).FractionalPopulation_Year.CompoundDrought(i_GCM,i_Year) = nansum(Population(CC&in_HR))./nansum(Population(in_HR)) .* 100;
+            clear CC
+        end
+        clear GCM i_Year DroughtFrequency_Year
+    end
+    clear i_GCM GCM_Ensemble Population
+end
+save('Population_Attribution','Met_Drought_FractionalPopulation_Attribution_Year','Met_Drought_Population_Attribution_Year');
 
 clc; clear all; close all;
-load Population
-Fig_ExposedPopulation_Timeseries(Met_Drought_Population_Year , Met_Drought_FractionalPopulation_Year)
+load Population_Attribution
+Fig_ExposedPopulation_Timeseries_Attribution(Met_Drought_Population_Attribution_Year , Met_Drought_FractionalPopulation_Attribution_Year)
+
+
+
+
+
+
+
+
+
+
 
 
 %% £¨2£© Calculating the spatial distribution of historicl and future Population

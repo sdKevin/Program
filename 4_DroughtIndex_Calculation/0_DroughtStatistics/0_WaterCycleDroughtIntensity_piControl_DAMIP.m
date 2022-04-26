@@ -2,23 +2,20 @@
 clc; clear all; close all;
 %% Setting the input/output paths
 % CMIP6 hist-nat Met Data
-InputMetPath{1} = 'D:\CMIP6\ProcessData\DAMIP\hist_nat\Met_Data\';
-InputLandPath{1} = 'D:\CMIP6\ProcessData\DAMIP\hist_nat\Land_Data\';
-OutputDroughtPath{1} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\hist_nat';
+InputMetLandPath{1} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Land\hist_nat\Met_Land_Var_hist_nat_';
+OutputDroughtPath{1} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\hist_nat\Met_Land_hist_nat_';
 % CMIP6 ssp245-nat Data
-InputMetPath{2} = 'D:\CMIP6\ProcessData\DAMIP\ssp245_nat\Met_Data\';
-InputLandPath{2} = 'D:\CMIP6\ProcessData\DAMIP\ssp245_nat\Land_Data\';
-OutputDroughtPath{2} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ssp245_nat';
+InputMetLandPath{2} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Land\ssp245_nat\Met_Land_Var_ssp245_nat_';
+OutputDroughtPath{2} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ssp245_nat\Met_Land_ssp245_nat_';
 % CMIP6 piControl Data
-InputMetPath{3} = 'D:\CMIP6\ProcessData\piControl\Met_Data\';
-InputLandPath{3} = 'D:\CMIP6\ProcessData\piControl\Land_Data\';
-OutputDroughtPath{3} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\piControl';
+InputMetLandPath{3} = 'D:\CMIP6\VariableStorage\MonthlyVar\Var_Land\piControl\Met_Land_Var_piControl_';
+OutputDroughtPath{3} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\piControl\Met_Land_piControl_';
 
 % global land surface Area including both land and water (km^2)
 load EarthLandArea_05deg % Land and Water Area V4.11, download from https://sedac.ciesin.columbia.edu/data/set/gpw-v4-land-water-area-rev11
 load LandInfo_05deg.mat
 %% (1) Monthly Met calculated by CMIP6 data
-for i_Path = 1 : length(InputMetPath)
+for i_Path = 1 : length(InputMetLandPath)
     % Name of Global Climate Model
     GCM_Ensemble = {'CanESM5','GISS-E2-1-G','IPSL-CM6A-LR','MIROC6','NorESM2-LM'};
     
@@ -27,7 +24,7 @@ for i_Path = 1 : length(InputMetPath)
         GCM = GCM_Ensemble{i_GCM};
         
         %% (1.1.1) Calculate Threshold During reference period
-        load(strcat(InputMetPath{1} , GCM , '.mat'));
+        load(strcat(InputMetLandPath{1} , GCM , '.mat'));
         Pr_ref = r1.pr(:,:,:); %kg/(m2s)
         % Select reference time
         % Reference Time 1948-2014
@@ -36,7 +33,6 @@ for i_Path = 1 : length(InputMetPath)
         % SM_ref = r1.mrso(:,:,1177:end); %kg/(m2), from 1850-2014 to 1948-2014
         % Pr_ET_ref = Pr_ref - r1.evspsbl(:,:,1177:end); %kg/(m2s), from 1850-2014 to 1948-2014 !!! Warning Negative Pr-ET caused by bias correction using different reference data
         % Reference Time 1850-2014
-        load(strcat(InputLandPath{1} , GCM , '.mat'));
         Q_ref = r1.mrro(:,:,:); %kg/(m2s)
         SM_ref = r1.mrso(:,:,:); %kg/(m2)
         clear r1
@@ -117,47 +113,22 @@ for i_Path = 1 : length(InputMetPath)
                             CDF.SM(ii,iii,i_month) = {B(ceil(length(B)*[0.01:0.01:0.99]))'}; clear B; % 10th Percentile
                         end
                         
-                        % Pr-ET
-                        A = Pr_ET_ref(ii,iii,i_month:12:All_Month); B = sort(A(:)); clear A;
-                        if B(ceil(length(B)*0.1))<=0 | isnan(B(ceil(length(B)*0.1)))
-                            CDF.Pr_ET(ii,iii,i_month) = {nan}; % ignore girds where 10th Percentile = 0
-                        else
-                            % Kernal Density Function
-                            % warning('')
-                            % [Bi , Fb , bw] = ksdensity(B , [0.01:0.01:0.99] , 'BoundaryCorrection' , 'reflection'  , 'function','icdf'); % Kernel Density
-                            % [warnMsg, warnId] = lastwarn; % Warning means bad icdf estimations, thus adjusting bandwidth
-                            % if ~isempty(warnMsg)
-                            % while ~isempty(warnMsg)
-                            %     warning('')
-                            %     [Bi , Fb , bw] = ksdensity(B , [0.01:0.01:0.99] , 'BandWidth' , 5*bw , 'BoundaryCorrection' , 'reflection' , 'function' , 'icdf'); % Kernel Density
-                            %     [warnMsg, warnId] = lastwarn;
-                            % end
-                            %     figure; ecdf(B); hold on; plot(Bi,Fb); title(strcat('Pr-ETGrid:',num2str(ii),'and',num2str(iii)));
-                            % end
-                            % CDF.Pr_ET(ii,iii,i_month) = {Bi(1:99)}; clear B Bi Fb bw warnMsg warnId; % 10th Percentile
-                            
-                            % A Quick Approximation of Kernal Density Function
-                            CDF.Pr_ET(ii,iii,i_month) = {B(ceil(length(B)*[0.01:0.01:0.99]))'}; clear B; % 10th Percentile
-                        end
                     else
                         CDF.Pr(ii,iii,i_month) = {nan};
                         CDF.Q(ii,iii,i_month) = {nan};
                         CDF.SM(ii,iii,i_month) = {nan};
-                        CDF.Pr_ET(ii,iii,i_month) = {nan};
                     end
                 end
             end
         end
-        clear ii iii Pr_ref Q_ref SM_ref Pr_ET_ref i_month All_Month
+        clear ii iii Pr_ref Q_ref SM_ref i_month All_Month
         
         %% (1.1.2) Drought Intensity Analysis
-        load(strcat(InputMetPath{i_Path} , GCM , '.mat'));
-        load(strcat(InputLandPath{i_Path} , GCM , '.mat'));
-        Pr = Met_Var.pr; %kg/(m2s)
+        load(strcat(InputMetLandPath{i_Path} , GCM , '.mat'));
+        Pr = r1.pr; %kg/(m2s)
         Q = r1.mrro; %kg/(m2s)
         SM = r1.mrso; %kg/(m2)
-        Pr_ET = Pr - r1.evspsbl; %kg/(m2s)
-        clear r1 Met_Var
+        clear r1
         for ii = 1 : size( Pr , 3)
             if mod(ii,12)~=0
                 i_month = mod(ii,12);
@@ -186,13 +157,6 @@ for i_Path = 1 : length(InputMetPath)
                     else
                         [~,I]=min(abs(CDF.SM{iii,iiii,i_month}-SM(iii,iiii,ii)));
                         Intensity.SM(iii,iiii,ii) = 0.01 * I; clear I;
-                    end
-                    % Pr_ET
-                    if isnan(Pr_ET(iii,iiii,ii))
-                        Intensity.Pr_ET(iii,iiii,ii) = nan;
-                    else
-                        [~,I]=min(abs(CDF.Pr_ET{iii,iiii,i_month}-Pr_ET(iii,iiii,ii)));
-                        Intensity.Pr_ET(iii,iiii,ii) = 0.01 * I; clear I;
                     end
                     % Compound Drought1: Met&Hyd Co-occurrence
                     if Intensity.Pr(iii,iiii,ii)<=0.1 & Intensity.Q(iii,iiii,ii)<=0.1
@@ -232,8 +196,6 @@ for i_Path = 1 : length(InputMetPath)
             GridYear.Q(:,:,iii) = nanmean(B,3).*landmask_05deg;
             C = Intensity.SM(:,:,ii:ii+11); C(C>0.1) = nan;
             GridYear.SM(:,:,iii) = nanmean(C,3).*landmask_05deg;
-            AA = Intensity.Pr_ET(:,:,ii:ii+11); AA(AA>0.1) = nan;
-            GridYear.Pr_ET(:,:,iii) = nanmean(AA,3).*landmask_05deg;
             BB = Intensity.CompoundDrought1(:,:,ii:ii+11);
             GridYear.CompoundDrought1(:,:,iii) = nanmean(BB,3).*landmask_05deg;
             CC = Intensity.CompoundDrought2(:,:,ii:ii+11);
@@ -252,20 +214,18 @@ for i_Path = 1 : length(InputMetPath)
             A = GridYear.Pr(:,:,ii); DroughtIntensity_GMYear.Pr(i_GCM , ii) = nanmean(A(:)); clear A;
             A = GridYear.Q(:,:,ii); DroughtIntensity_GMYear.Q(i_GCM , ii) = nanmean(A(:)); clear A;
             A = GridYear.SM(:,:,ii); DroughtIntensity_GMYear.SM(i_GCM , ii) = nanmean(A(:)); clear A;
-            A = GridYear.Pr_ET(:,:,ii); DroughtIntensity_GMYear.Pr_ET(i_GCM , ii) = nanmean(A(:)); clear A;
             A = GridYear.CompoundDrought1(:,:,ii); DroughtIntensity_GMYear.CompoundDrought1(i_GCM , ii) = nanmean(A(:)); clear A;
             A = GridYear.CompoundDrought2(:,:,ii); DroughtIntensity_GMYear.CompoundDrought2(i_GCM , ii) = nanmean(A(:)); clear A;
             A = GridYear.CompoundDrought3(:,:,ii); DroughtIntensity_GMYear.CompoundDrought3(i_GCM , ii) = nanmean(A(:)); clear A;
             A = GridYear.CompoundDrought(:,:,ii); DroughtIntensity_GMYear.CompoundDrought(i_GCM , ii) = nanmean(A(:)); clear A;
         end
-        clear ii Pr Q SM Pr_ET
+        clear ii Pr Q SM
         DroughtIntensity_Year = GridYear; clear GridYear;
         DroughtIntensity_Month = Intensity; clear Intensity;
         % Save DroughtIntensity_Year to calculate Ensemble Mean
         All_DroughtIntensity_Year.Pr(:,:,:,i_GCM) = DroughtIntensity_Year.Pr;
         All_DroughtIntensity_Year.Q(:,:,:,i_GCM) = DroughtIntensity_Year.Q;
         All_DroughtIntensity_Year.SM(:,:,:,i_GCM) = DroughtIntensity_Year.SM;
-        All_DroughtIntensity_Year.Pr_ET(:,:,:,i_GCM) = DroughtIntensity_Year.Pr_ET;
         All_DroughtIntensity_Year.CompoundDrought1(:,:,:,i_GCM) = DroughtIntensity_Year.CompoundDrought1;
         All_DroughtIntensity_Year.CompoundDrought2(:,:,:,i_GCM) = DroughtIntensity_Year.CompoundDrought2;
         All_DroughtIntensity_Year.CompoundDrought3(:,:,:,i_GCM) = DroughtIntensity_Year.CompoundDrought3;
@@ -283,7 +243,6 @@ for i_Path = 1 : length(InputMetPath)
     Ensemble_Mean_DroughtIntensity_Year.Pr = nanmean(All_DroughtIntensity_Year.Pr,4);
     Ensemble_Mean_DroughtIntensity_Year.Q = nanmean(All_DroughtIntensity_Year.Q,4);
     Ensemble_Mean_DroughtIntensity_Year.SM = nanmean(All_DroughtIntensity_Year.SM,4);
-    Ensemble_Mean_DroughtIntensity_Year.Pr_ET = nanmean(All_DroughtIntensity_Year.Pr_ET,4);
     Ensemble_Mean_DroughtIntensity_Year.CompoundDrought1 = nanmean(All_DroughtIntensity_Year.CompoundDrought1,4);
     Ensemble_Mean_DroughtIntensity_Year.CompoundDrought2 = nanmean(All_DroughtIntensity_Year.CompoundDrought2,4);
     Ensemble_Mean_DroughtIntensity_Year.CompoundDrought3 = nanmean(All_DroughtIntensity_Year.CompoundDrought3,4);
