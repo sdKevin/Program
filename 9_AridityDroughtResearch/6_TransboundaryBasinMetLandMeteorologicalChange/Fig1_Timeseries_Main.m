@@ -132,14 +132,3 @@ subplot(3,1,2)
 Fig1_Timeseries_Intensity(Met_Drought_Intensity_Year)
 subplot(3,1,3)
 Fig1_Timeseries_Frequency(Met_Drought_Frequency_Year)
-
-
-
-
-
-
-
-
-
-
-

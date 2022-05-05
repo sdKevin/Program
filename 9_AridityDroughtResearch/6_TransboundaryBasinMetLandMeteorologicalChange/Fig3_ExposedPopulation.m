@@ -5,7 +5,7 @@ Path_GlobalTransboundary = 'G:\TransboundaryRivers\Munia\hess-22-2795-2018-suppl
 GlobalTransboundary = shaperead(Path_GlobalTransboundary);
 clear Path_GlobalTransboundary
 %% £¨1.2£© Setting the input/output paths
-% CMIP6 Historical Met Data
+% CMIP6 Historical Data
 InputMetDroughtPath{1} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\Historical\Met_Land_Historical_';
 InputPopulationPath{1} = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP1\Total\Mat\ssp1_2010.mat';
 % CMIP6 ScenarioMIP ssp126 Data
@@ -112,7 +112,7 @@ Fig3_ExposedPopulation_Timeseries(Met_Drought_Population_Year , Met_Drought_Frac
 %% £¨2£© Calculating the spatial distribution of historicl and future Population
 clc; clear all; close all;
 %% £¨2.1£© Setting the input/output paths
-% CMIP6 Historical Met Data
+% CMIP6 Historical Data
 InputMetDroughtPath{1} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\Historical\Met_Land_Historical_';
 InputPopulationPath{1} = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP1\Total\Mat\ssp1_2010.mat';
 % CMIP6 ScenarioMIP ssp126 Data
@@ -213,11 +213,11 @@ for i_basin = 1 : size(GlobalTransboundary,1)
 end
 clear i_basin
 
-xlswrite(['Basins_TWAP.xlsx'] , Basin_Historical_Population , 'Sheet1' , 'V3:V288');
-xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp126_Population , 'Sheet1' , 'W3:W288');
-xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp245_Population , 'Sheet1' , 'X3:X288');
-xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp370_Population , 'Sheet1' , 'Y3:Y288');
-xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp585_Population , 'Sheet1' , 'Z3:Z288');
+xlswrite(['Basins_TWAP.xlsx'] , Basin_Historical_Population , 'Sheet1' , 'AD3:AD288');
+xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp126_Population , 'Sheet1' , 'AE3:AE288');
+xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp245_Population , 'Sheet1' , 'AF3:AF288');
+xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp370_Population , 'Sheet1' , 'AG3:AG288');
+xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp585_Population , 'Sheet1' , 'AH3:AH288');
 
 clear GlobalTransboundary Basin_Historical_Population Basin_ssp126_Population
 clear Basin_ssp245_Population  Basin_ssp370_Population Basin_ssp585_Population
@@ -238,11 +238,11 @@ for i_basin = 1 : size(GlobalTransboundary,1)
 end
 clear i_basin
 
-xlswrite(['Basins_Munia.xlsx'] , Basin_Historical_Population , 'Sheet1' , 'M3:M170');
-xlswrite(['Basins_Munia.xlsx'] , Basin_ssp126_Population , 'Sheet1' , 'N3:N170');
-xlswrite(['Basins_Munia.xlsx'] , Basin_ssp245_Population , 'Sheet1' , 'O3:O170');
-xlswrite(['Basins_Munia.xlsx'] , Basin_ssp370_Population , 'Sheet1' , 'P3:P170');
-xlswrite(['Basins_Munia.xlsx'] , Basin_ssp585_Population , 'Sheet1' , 'Q3:Q170');
+xlswrite(['Basins_Munia.xlsx'] , Basin_Historical_Population , 'Sheet1' , 'U3:U170');
+xlswrite(['Basins_Munia.xlsx'] , Basin_ssp126_Population , 'Sheet1' , 'V3:V170');
+xlswrite(['Basins_Munia.xlsx'] , Basin_ssp245_Population , 'Sheet1' , 'W3:W170');
+xlswrite(['Basins_Munia.xlsx'] , Basin_ssp370_Population , 'Sheet1' , 'X3:X170');
+xlswrite(['Basins_Munia.xlsx'] , Basin_ssp585_Population , 'Sheet1' , 'Y3:Y170');
 
 clear GlobalTransboundary Basin_Historical_Population Basin_ssp126_Population
 clear Basin_ssp245_Population  Basin_ssp370_Population Basin_ssp585_Population
@@ -405,11 +405,11 @@ for i_basin = 1 : size(GlobalTransboundary,1)
 end
 clear i_basin
 
-xlswrite(['Basins_TWAP.xlsx'] , Basin_Historical_ExposedPopulation , 'Sheet1' , 'AA3:AA288');
-xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp126_ExposedPopulation , 'Sheet1' , 'AB3:AB288');
-xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp245_ExposedPopulation , 'Sheet1' , 'AC3:AC288');
-xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp370_ExposedPopulation , 'Sheet1' , 'AD3:AD288');
-xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp585_ExposedPopulation , 'Sheet1' , 'AE3:AE288');
+xlswrite(['Basins_TWAP.xlsx'] , Basin_Historical_ExposedPopulation , 'Sheet1' , 'AI3:AI288');
+xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp126_ExposedPopulation , 'Sheet1' , 'AJ3:AJ288');
+xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp245_ExposedPopulation , 'Sheet1' , 'AK3:AK288');
+xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp370_ExposedPopulation , 'Sheet1' , 'AL3:AL288');
+xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp585_ExposedPopulation , 'Sheet1' , 'AM3:AM288');
 
 clear GlobalTransboundary Basin_Historical_ExposedPopulation Basin_ssp126_ExposedPopulation
 clear Basin_ssp245_ExposedPopulation  Basin_ssp370_ExposedPopulation Basin_ssp585_ExposedPopulation
@@ -430,16 +430,15 @@ for i_basin = 1 : size(GlobalTransboundary,1)
 end
 clear i_basin
 
-xlswrite(['Basins_Munia.xlsx'] , Basin_Historical_ExposedPopulation , 'Sheet1' , 'R3:R170');
-xlswrite(['Basins_Munia.xlsx'] , Basin_ssp126_ExposedPopulation , 'Sheet1' , 'S3:S170');
-xlswrite(['Basins_Munia.xlsx'] , Basin_ssp245_ExposedPopulation , 'Sheet1' , 'T3:T170');
-xlswrite(['Basins_Munia.xlsx'] , Basin_ssp370_ExposedPopulation , 'Sheet1' , 'U3:U170');
-xlswrite(['Basins_Munia.xlsx'] , Basin_ssp585_ExposedPopulation , 'Sheet1' , 'V3:V170');
+xlswrite(['Basins_Munia.xlsx'] , Basin_Historical_ExposedPopulation , 'Sheet1' , 'Z3:Z170');
+xlswrite(['Basins_Munia.xlsx'] , Basin_ssp126_ExposedPopulation , 'Sheet1' , 'AA3:AA170');
+xlswrite(['Basins_Munia.xlsx'] , Basin_ssp245_ExposedPopulation , 'Sheet1' , 'AB3:AB170');
+xlswrite(['Basins_Munia.xlsx'] , Basin_ssp370_ExposedPopulation , 'Sheet1' , 'AC3:AC170');
+xlswrite(['Basins_Munia.xlsx'] , Basin_ssp585_ExposedPopulation , 'Sheet1' , 'AD3:AD170');
 
 clear GlobalTransboundary Basin_Historical_ExposedPopulation Basin_ssp126_ExposedPopulation
 clear Basin_ssp245_ExposedPopulation  Basin_ssp370_ExposedPopulation Basin_ssp585_ExposedPopulation
 clear ExposedPopulation_Historical ExposedPopulation_ssp126 ExposedPopulation_ssp245
 clear ExposedPopulation_ssp370 ExposedPopulation_ssp585
-
 
 

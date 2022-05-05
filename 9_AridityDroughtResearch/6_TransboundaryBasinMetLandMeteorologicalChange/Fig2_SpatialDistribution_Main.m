@@ -1,7 +1,7 @@
 %% Figure SpatialDistribution
 clc; clear all; close all;
 %% Setting the input/output paths
-% CMIP6 Historical Met Data
+% CMIP6 Historical Data
 InputMetDroughtPath{1} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\Historical\Met_Land_Historical_';
 % CMIP6 ScenarioMIP ssp126 Data
 InputMetDroughtPath{2} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ScenarioMIP_ssp126\Met_Land_ssp126_';
@@ -168,11 +168,11 @@ xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp245_Drought_Intensity , 'Sheet1' , 'N3:
 xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp370_Drought_Intensity , 'Sheet1' , 'O3:O288');
 xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp585_Drought_Intensity , 'Sheet1' , 'P3:P288');
 
-xlswrite(['Basins_TWAP.xlsx'] , Basin_Historical_Drought_Frequency , 'Sheet1' , 'S3:S288');
-xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp126_Drought_Frequency , 'Sheet1' , 'T3:T288');
-xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp245_Drought_Frequency , 'Sheet1' , 'U3:U288');
-xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp370_Drought_Frequency , 'Sheet1' , 'V3:V288');
-xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp585_Drought_Frequency , 'Sheet1' , 'W3:W288');
+xlswrite(['Basins_TWAP.xlsx'] , Basin_Historical_Drought_Frequency , 'Sheet1' , 'U3:U288');
+xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp126_Drought_Frequency , 'Sheet1' , 'V3:V288');
+xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp245_Drought_Frequency , 'Sheet1' , 'W3:W288');
+xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp370_Drought_Frequency , 'Sheet1' , 'X3:X288');
+xlswrite(['Basins_TWAP.xlsx'] , Basin_ssp585_Drought_Frequency , 'Sheet1' , 'Y3:Y288');
 
 clear GlobalTransboundary Basin_Historical_Drought_Intensity Basin_ssp126_Drought_Intensity
 clear Basin_ssp245_Drought_Intensity Basin_ssp370_Drought_Intensity Basin_ssp585_Drought_Intensity
@@ -206,13 +206,9 @@ xlswrite(['Basins_Munia.xlsx'] , Basin_ssp245_Drought_Intensity , 'Sheet1' , 'E3
 xlswrite(['Basins_Munia.xlsx'] , Basin_ssp370_Drought_Intensity , 'Sheet1' , 'F3:F170');
 xlswrite(['Basins_Munia.xlsx'] , Basin_ssp585_Drought_Intensity , 'Sheet1' , 'G3:G170');
 
-xlswrite(['Basins_Munia.xlsx'] , Basin_Historical_Drought_Frequency , 'Sheet1' , 'J3:J170');
-xlswrite(['Basins_Munia.xlsx'] , Basin_ssp126_Drought_Frequency , 'Sheet1' , 'K3:K170');
-xlswrite(['Basins_Munia.xlsx'] , Basin_ssp245_Drought_Frequency , 'Sheet1' , 'L3:L170');
-xlswrite(['Basins_Munia.xlsx'] , Basin_ssp370_Drought_Frequency , 'Sheet1' , 'M3:M170');
-xlswrite(['Basins_Munia.xlsx'] , Basin_ssp585_Drought_Frequency , 'Sheet1' , 'N3:N170');
-
-
-
-
+xlswrite(['Basins_Munia.xlsx'] , Basin_Historical_Drought_Frequency , 'Sheet1' , 'L3:L170');
+xlswrite(['Basins_Munia.xlsx'] , Basin_ssp126_Drought_Frequency , 'Sheet1' , 'M3:M170');
+xlswrite(['Basins_Munia.xlsx'] , Basin_ssp245_Drought_Frequency , 'Sheet1' , 'N3:N170');
+xlswrite(['Basins_Munia.xlsx'] , Basin_ssp370_Drought_Frequency , 'Sheet1' , 'O3:O170');
+xlswrite(['Basins_Munia.xlsx'] , Basin_ssp585_Drought_Frequency , 'Sheet1' , 'P3:P170');
 

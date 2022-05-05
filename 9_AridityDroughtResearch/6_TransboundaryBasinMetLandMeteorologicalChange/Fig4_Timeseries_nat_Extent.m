@@ -49,6 +49,7 @@ h_ssp = fill([[2014:2100]';flipud([2014:2100]')],...
     RGB_NAT_Shade./255,'EdgeAlpha',0,'FaceAlpha',0.5); hold on;
 clearvars -except Met_Drought_Extent_Year Met_Drought_nat_Extent_Year RGB_ALL_Shade RGB_ALL_Line RGB_NAT_Shade RGB_NAT_Line XlimRange YlimRange_CD YTickRange_CD
 %% Plotting piControl Shade Area
+% piControl 150 year
 CD_piControl = Met_Drought_nat_Extent_Year(3).DroughtExtent_Year.CompoundDrought;
 CD_piControl = CD_piControl(:);
 for iii = 1 : floor(numel(CD_piControl)/151)
@@ -80,6 +81,7 @@ for iii = 1 : floor(numel(CD_piControl)/50)
 end
 % Mean Value for every 50 years
 CD_piControl = mean(RandPick,2); clear RandPick;
+% Change represents changes between each 50 year data
 Change = [];
 for iii = 1 : length(CD_piControl)-1
     Change = [Change ; CD_piControl(iii) - CD_piControl(iii+1:end)];

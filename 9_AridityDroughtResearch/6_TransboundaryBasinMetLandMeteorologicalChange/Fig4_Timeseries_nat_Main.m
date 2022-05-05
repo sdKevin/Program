@@ -94,3 +94,30 @@ Fig4_Timeseries_nat_Intensity(Met_Drought_Intensity_Year , Met_Drought_nat_Inten
 subplot(3,1,3)
 Fig4_Timeseries_nat_Frequency(Met_Drought_Frequency_Year , Met_Drought_nat_Frequency_Year)
 
+% Plot Contribution
+figure
+Contribution = [(9.93-9.88)/(20.9-10.5)*100 , 0.64/(20.9-10.5)*100 , 100-(9.93-9.88)/(20.9-10.5)*100-0.64/(20.9-10.5)*100;
+    (0.0543-0.054)/(0.0608-0.0539)*100 , 0.00064/(0.0608-0.0539)*100 , 100-(0.0543-0.054)/(0.0608-0.0539)*100-0.00064/(0.0608-0.0539)*100;
+    (1.241-1.24)/(3.33-1.34)*100 , 0.11/(3.33-1.34)*100 , 100-(1.23-1.24)/(3.33-1.34)*100-0.11/(3.33-1.34)*100;];
+
+explode = [1 1 0];
+subplot(1,3,1)
+F1 = donut(Contribution(1,:),explode);
+colormap([99,100,173;125,125,125;159,73,116]./255);
+F1(2).Color = [99,100,173]./255; F1(4).Color = [125,125,125]./255; F1(6).Color = [159,73,116]./255;
+legend({'Forced natural climate variability'},...
+    'Color','None','EdgeColor','None','TextColor',[99,100,173]./255)
+
+subplot(1,3,2)
+F2 = donut(Contribution(2,:),explode);
+colormap([99,100,173;125,125,125;159,73,116]./255);
+F2(2).Color = [99,100,173]./255; F1(4).Color = [125,125,125]./255; F1(6).Color = [159,73,116]./255;
+legend({'','Unforced natural climate variability'},...
+    'Color','None','EdgeColor','None','TextColor',[125,125,125]./255)
+
+subplot(1,3,3)
+F3 = donut(Contribution(3,:),explode);
+colormap([99,100,173;125,125,125;159,73,116]./255);
+F3(2).Color = [99,100,173]./255; F1(4).Color = [125,125,125]./255; F1(6).Color = [159,73,116]./255;
+legend({'','','Anthropogenic climate change'},...
+    'Color','None','EdgeColor','None','TextColor',[159,73,116]./255)
