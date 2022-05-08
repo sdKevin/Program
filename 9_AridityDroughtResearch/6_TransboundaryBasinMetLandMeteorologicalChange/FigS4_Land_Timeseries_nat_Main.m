@@ -1,9 +1,5 @@
 %% Figure Timeseries
 clc; clear all; close all;
-%% Read the boundary file of transboundary rivers
-Path_GlobalTransboundary = 'G:\TransboundaryRivers\Munia\hess-22-2795-2018-supplement\SBA_shp\GlobalBasin.shp';
-GlobalTransboundary = shaperead(Path_GlobalTransboundary);
-clear Path_GlobalTransboundary
 %% Setting the input/output paths
 % CMIP6 hist-nat Met Data
 InputMetDroughtPath{1} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\hist_nat\Met_Land_hist_nat_';
@@ -14,8 +10,9 @@ InputMetDroughtPath{3} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\piContr
 
 % Extract GlobalTransboundary
 load LandInfo_05deg.mat
-Lon_05deg(1:360,:) = lon_05deg(361:end,:) - 360; Lon_05deg(361:720,:) = lon_05deg(1:360,:); % Adjust longitude from 0-360 to -180-180
-in = inpolygon(lat_05deg , Lon_05deg , GlobalTransboundary.Y , GlobalTransboundary.X); clear Lon_05deg;
+Lon_05deg(1:360,:) = lon_05deg(361:end,:) - 360; Lon_05deg(361:720,:) = lon_05deg(1:360,:);
+in(1:360,:) = landmask_05deg(361:end,:); in(361:720,:) = landmask_05deg(1:360,:);  % Adjust longitude from 0-360 to -180-180
+in(isnan(in))=0; in = logical(in);
 
 %% Calculating Drought Frequency
 for i_Path = 1 : length(InputMetDroughtPath)
@@ -80,25 +77,25 @@ end
 Met_Drought_nat_Frequency_Year = Met_Drought_Frequency_Year;
 Met_Drought_nat_Intensity_Year = Met_Drought_Intensity_Year;
 Met_Drought_nat_Extent_Year = Met_Drought_Extent_Year;
-save('Met_Drought_nat_Frequency_Intensity_Extent' , 'Met_Drought_nat_Frequency_Year' , 'Met_Drought_nat_Intensity_Year' , 'Met_Drought_nat_Extent_Year');
+save('Met_Drought_nat_Land_Frequency_Intensity_Extent' , 'Met_Drought_nat_Frequency_Year' , 'Met_Drought_nat_Intensity_Year' , 'Met_Drought_nat_Extent_Year');
 
 %% Plotting
 clc; clear all; close all;
-load Met_Drought_nat_Frequency_Intensity_Extent
-load Met_Drought_Frequency_Intensity_Extent
+load Met_Drought_nat_Land_Frequency_Intensity_Extent
+load Met_Drought_Land_Frequency_Intensity_Extent
 
 subplot(3,3,[1,2])
-Fig4_Timeseries_nat_Extent(Met_Drought_Extent_Year , Met_Drought_nat_Extent_Year)
+FigS4_Land_Timeseries_nat_Extent(Met_Drought_Extent_Year , Met_Drought_nat_Extent_Year)
 subplot(3,3,[4,5])
-Fig4_Timeseries_nat_Intensity(Met_Drought_Intensity_Year , Met_Drought_nat_Intensity_Year)
+FigS4_Land_Timeseries_nat_Intensity(Met_Drought_Intensity_Year , Met_Drought_nat_Intensity_Year)
 subplot(3,3,[7,8])
-Fig4_Timeseries_nat_Frequency(Met_Drought_Frequency_Year , Met_Drought_nat_Frequency_Year)
+FigS4_Land_Timeseries_nat_Frequency(Met_Drought_Frequency_Year , Met_Drought_nat_Frequency_Year)
 
 % Plot Contribution
 figure
-Contribution = [(9.93-9.88)/(20.9-10.5)*100 , 0.64/(20.9-10.5)*100 , 100-(9.93-9.88)/(20.9-10.5)*100-0.64/(20.9-10.5)*100;
-    (0.0543-0.054)/(0.0608-0.0539)*100 , 0.00064/(0.0608-0.0539)*100 , 100-(0.0543-0.054)/(0.0608-0.0539)*100-0.00064/(0.0608-0.0539)*100;
-    (1.241-1.24)/(3.33-1.34)*100 , 0.11/(3.33-1.34)*100 , 100-(1.23-1.24)/(3.33-1.34)*100-0.11/(3.33-1.34)*100;];
+Contribution = [(10.2-9.59)/(18.6-9.36)*100 , 0.55/(18.6-9.36)*100 , 100-(10.2-9.59)/(18.6-9.36)*100-0.55/(18.6-9.36)*100;
+    (0.0578-0.0571)/(0.0614-0.0564)*100 , 0.00055/(0.0614-0.0564)*100 , 100-(0.0578-0.0571)/(0.0614-0.0564)*100-0.00055/(0.0614-0.0564)*100;
+    (1.24-1.1)/(2.38-0.978)*100 , 0.072/(2.38-0.978)*100 , 100-(1.24-1.1)/(2.38-0.978)*100-0.072/(2.38-0.978)*100;];
 
 explode = [1 1 0];
 subplot(3,1,1)

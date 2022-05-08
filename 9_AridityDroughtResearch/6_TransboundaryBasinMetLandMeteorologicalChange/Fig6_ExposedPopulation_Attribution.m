@@ -122,10 +122,10 @@ Fig6_ExposedPopulation_Timeseries_Attribution(Met_Drought_Population_Attribution
 
 % Plot Contribution
 figure
+subplot(2,3,3)
 Contribution = [(194-184)/(461-161)*100 , 22.4/(461-161)*100 , (461-349)/(461-161)*100 , 100-(194-184)/(461-161)*100-22.4/(461-161)*100-(461-349)/(461-161)*100];
 
 explode = [1 1 1 0];
-subplot(1,3,1)
 F1 = donut(Contribution(1,:),explode);
 colormap([99,100,173;125,125,125;60,124,98;159,73,116]./255);
 F1(2).Color = [99,100,173]./255; F1(4).Color = [125,125,125]./255; F1(6).Color = [60,124,98]./255; F1(8).Color = [159,73,116]./255;

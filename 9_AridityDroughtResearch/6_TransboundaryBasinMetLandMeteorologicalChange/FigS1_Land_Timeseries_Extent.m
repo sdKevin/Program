@@ -1,4 +1,4 @@
-function Fig1_Timeseries_Extent(Met_Drought_Extent_Year)
+function FigS1_Land_Timeseries_Extent(Met_Drought_Extent_Year)
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CompoundDrought (Met&Hyd&Agr Co-occurrence) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
@@ -6,7 +6,7 @@ RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 RGB_ssp_Shade = [200,202,229; 223,238,246; 252,218,197; 254,223,209];
 RGB_ssp_Line = [50,78,161; 133,184,227; 245,132,63; 238,31,36];
 XlimRange = [1950,2100];
-YlimRange_CD = [7.6,31.5]; YTickRange_CD = [10:5:31.5];
+YlimRange_CD = [7.6,25]; YTickRange_CD = [10:5:25];
 %% Plotting Shade Area
 % Historical CompoundDrought
 CD_Historical = Met_Drought_Extent_Year(1).DroughtExtent_Year.CompoundDrought;
@@ -59,7 +59,7 @@ try
     CD_Historical = Met_Drought_Extent_Year(1).DroughtExtent_Year.CompoundDrought;
     Ensemble_Mean_CD_Historical = nanmean(CD_Historical)';
     c95_CD_Historical = (std(CD_Historical)./sqrt(size(CD_Historical,1))) .* 1.96; % 95% confidence interval
-    text(1980,9.5,strcat( '[' , num2str(mean(Ensemble_Mean_CD_Historical(102:151)),3),'¡À' ,...
+    text(1975,23.5,strcat( '[' , num2str(mean(Ensemble_Mean_CD_Historical(102:151)),3),'¡À' ,...
         num2str(mean(c95_CD_Historical(102:151)) ,3) , ']'),...
         'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_Historical_Line./255);
 end
@@ -70,7 +70,7 @@ try
     CD_ssp585 = [CD_Historical(:,end) , CD_ssp585];
     Ensemble_Mean_CD_ssp585 = nanmean(CD_ssp585)';
     c95_CD_ssp585 = (std(CD_ssp585)./sqrt(size(CD_ssp585,1))) .* 1.96; % 95% confidence interval
-    text(2051,13,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp585(37:86)),3),'¡À' ,...
+    text(2051,12,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp585(37:86)),3),'¡À' ,...
         num2str(mean(c95_CD_ssp585(37:86)) , 3) , ']'),...
         'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_ssp_Line(4,:)./255);
     % ssp 245 Mean over 2051-2100
@@ -98,7 +98,7 @@ try
     CD_ssp370 = [CD_Historical(:,end) , CD_ssp370];
     Ensemble_Mean_CD_ssp370 = nanmean(CD_ssp370)';
     c95_CD_ssp370 = (std(CD_ssp370)./sqrt(size(CD_ssp370,1))) .* 1.96; % 95% confidence interval
-    text(2076,13,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp370(37:86)),3),'¡À' ,...
+    text(2076,12,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp370(37:86)),3),'¡À' ,...
         num2str(mean(c95_CD_ssp370(37:86)) ,3) , ']'),...
         'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_ssp_Line(3,:)./255);
 end
@@ -109,7 +109,7 @@ try
     CD_ssp585 = CD_ssp585 - repmat((CD_ssp585(:,1) - CD_Historical(:,end)),1,size(CD_ssp585,2));
     Ensemble_Mean_CD_ssp585 = [nanmean(CD_Historical)';nanmean(CD_ssp585)'];
     c95_CD_ssp585 = (std([CD_Historical,CD_ssp585])./sqrt(size([CD_Historical,CD_ssp585],1))) .* 1.96; % 95% confidence interval
-    text(2001,29,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp585(152:201)),3),'¡À' ,...
+    text(2001,23.5,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp585(152:201)),3),'¡À' ,...
         num2str(mean(c95_CD_ssp585(152:201)) ,3) , ']'),...
         'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_ssp_Line(4,:)./255);
     % ssp 245 Mean over 2001-2052
@@ -118,7 +118,7 @@ try
     CD_ssp245 = CD_ssp245 - repmat((CD_ssp245(:,1) - CD_Historical(:,end)),1,size(CD_ssp245,2));
     Ensemble_Mean_CD_ssp245 = [nanmean(CD_Historical)';nanmean(CD_ssp245)'];
     c95_CD_ssp245 = (std([CD_Historical,CD_ssp245])./sqrt(size([CD_Historical,CD_ssp245],1))) .* 1.96; % 95% confidence interval
-    text(2001,25.5,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp245(152:201)),3),'¡À' ,...
+    text(2001,21,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp245(152:201)),3),'¡À' ,...
         num2str(mean(c95_CD_ssp245(152:201)) ,3) , ']'),...
         'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_ssp_Line(2,:)./255);
     % ssp 126 Mean over 2001-2052
@@ -127,7 +127,7 @@ try
     CD_ssp126 = CD_ssp126 - repmat((CD_ssp126(:,1) - CD_Historical(:,end)),1,size(CD_ssp126,2));
     Ensemble_Mean_CD_ssp126 = [nanmean(CD_Historical)';nanmean(CD_ssp126)'];
     c95_CD_ssp126 = (std([CD_Historical,CD_ssp126])./sqrt(size([CD_Historical,CD_ssp126],1))) .* 1.96; % 95% confidence interval
-    text(2026,25.5,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp126(152:201)),3),'¡À' ,...
+    text(2026,21,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp126(152:201)),3),'¡À' ,...
         num2str(mean(c95_CD_ssp126(152:201)) ,3) , ']'),...
         'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_ssp_Line(1,:)./255);
     % ssp 370 Mean over 2001-2052
@@ -137,7 +137,7 @@ try
     CD_ssp370 = CD_ssp370 - repmat((CD_ssp370(:,1) - CD_Historical(:,end)),1,size(CD_ssp370,2));
     Ensemble_Mean_CD_ssp370 = [nanmean(CD_Historical)';nanmean(CD_ssp370)'];
     c95_CD_ssp370 = (std([CD_Historical,CD_ssp370])./sqrt(size([CD_Historical,CD_ssp370],1))) .* 1.96; % 95% confidence interval
-    text(2026,29,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp370(152:201)),3),'¡À' ,...
+    text(2026,23.5,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp370(152:201)),3),'¡À' ,...
         num2str(mean(c95_CD_ssp370(152:201)) ,3) , ']'),...
         'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_ssp_Line(3,:)./255);
 end

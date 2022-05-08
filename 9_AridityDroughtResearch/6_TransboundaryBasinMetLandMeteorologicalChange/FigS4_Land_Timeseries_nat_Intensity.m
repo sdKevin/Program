@@ -5,7 +5,7 @@ RGB_ALL_Shade = [245,231,238]; RGB_ALL_Line = [159,73,116]; % ALL represents his
 RGB_NAT_Shade = [232,231,243]; RGB_NAT_Line = [99,100,173]; % NAT represents hist-nat and ssp-nat experiments
 
 XlimRange = [1950,2100];
-YlimRange_CD = [0.05,0.067]; YTickRange_CD = [0.05:0.005:0.066];
+YlimRange_CD = [0.0545,0.067]; YTickRange_CD = [0.055:0.005:0.066];
 %% Plotting ALL Shade Area
 % Historical CompoundDrought
 CD_Historical = Met_Drought_Intensity_Year(1).DroughtIntensity_Year.CompoundDrought;
@@ -66,7 +66,7 @@ colormap(flipud(gray))
 patch(X,Y,C,'EdgeColor','none','FaceAlpha',0.5); hold on;
 % Plot Statistical values
 try
-    text(1951,0.062,strcat( '[' , num2str(mean(CD_piControl),3),'¡À' ,...
+    text(1951,0.063,strcat( '[' , num2str(mean(CD_piControl),3),'¡À' ,...
         num2str(mean(c95_CD_Historical) ,3) , ']'),...
         'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , [0 0 0]./255);
 end
@@ -87,7 +87,7 @@ end
 Change = abs(Change); % Since the change of every 50 year can be both positive and negative
 c95_Change = (std(Change)./sqrt(size(Change,1))) .* 1.96; % 95% confidence interval
 try
-    text(1975,0.062,strcat( '[' , num2str(mean(Change),2),'¡À' ,...
+    text(1975,0.063,strcat( '[' , num2str(mean(Change),2),'¡À' ,...
         num2str(c95_Change ,2) , ']'),...
         'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , [125 125 125]./255);
 end
@@ -150,7 +150,7 @@ CD_Historical = Met_Drought_nat_Intensity_Year(1).DroughtIntensity_Year.Compound
 Ensemble_Mean_CD_Historical = nanmean(CD_Historical)'; % Selecting 5 ESMs
 
 CD_ssp = Met_Drought_nat_Intensity_Year(2).DroughtIntensity_Year.CompoundDrought;
-CD_ssp = CD_ssp - repmat((CD_ssp(:,1) - CD_Historical(:,end)),1,size(CD_ssp,2));
+CD_ssp = CD_ssp - repmat((CD_ssp(:,1) - CD_Historical(:,end-3)),1,size(CD_ssp,2));
 CD_ssp = [CD_Historical(:,end) , CD_ssp];
 Ensemble_Mean_CD_ssp = nanmean(CD_ssp)';
 
@@ -169,18 +169,18 @@ try
     CD_Historical = Met_Drought_nat_Intensity_Year(1).DroughtIntensity_Year.CompoundDrought;
     Ensemble_Mean_CD_Historical = nanmean(CD_Historical)'; % Selecting 5 ESMs
     c95_CD_Historical = (std(CD_Historical)./sqrt(size(CD_Historical,1))) .* 1.96; % 95% confidence interval
-    text(1951,0.064,strcat( '[' , num2str(mean(Ensemble_Mean_CD_Historical(102:151)),3),'¡À' ,...
+    text(1951,0.0645,strcat( '[' , num2str(mean(Ensemble_Mean_CD_Historical(102:151)),3),'¡À' ,...
         num2str(mean(c95_CD_Historical(102:151)) ,3) , ']'),...
         'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_NAT_Line./255);
 end
 try
     % ssp 245 Mean over 2051-2100
     CD_ssp245 = Met_Drought_nat_Intensity_Year(2).DroughtIntensity_Year.CompoundDrought;
-    CD_ssp245 = CD_ssp245 - repmat((CD_ssp245(:,1) - CD_Historical(:,end)),1,size(CD_ssp245,2));
+    CD_ssp245 = CD_ssp245 - repmat((CD_ssp245(:,1) - CD_Historical(:,end-3)),1,size(CD_ssp245,2));
     CD_ssp245 = [CD_Historical(:,end) , CD_ssp245];
     Ensemble_Mean_CD_ssp245 = nanmean(CD_ssp245)';
     c95_CD_ssp245 = (std(CD_ssp245)./sqrt(size(CD_ssp245,1))) .* 1.96; % 95% confidence interval
-    text(2051,0.064,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp245(37:86)),3),'¡À' ,...
+    text(2051,0.0645,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp245(37:86)),3),'¡À' ,...
         num2str(mean(c95_CD_ssp245(37:86)) ,3) , ']'),...
         'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_NAT_Line./255);
 end
@@ -188,10 +188,10 @@ try
     % ssp 245 Mean over 2001-2052
     CD_Historical = Met_Drought_nat_Intensity_Year(1).DroughtIntensity_Year.CompoundDrought;
     CD_ssp245 = Met_Drought_nat_Intensity_Year(2).DroughtIntensity_Year.CompoundDrought;
-    CD_ssp245 = CD_ssp245 - repmat((CD_ssp245(:,1) - CD_Historical(:,end)),1,size(CD_ssp245,2));
+    CD_ssp245 = CD_ssp245 - repmat((CD_ssp245(:,1) - CD_Historical(:,end-3)),1,size(CD_ssp245,2));
     Ensemble_Mean_CD_ssp245 = [nanmean(CD_Historical)';nanmean(CD_ssp245)'];
     c95_CD_ssp245 = (std([CD_Historical,CD_ssp245])./sqrt(size([CD_Historical,CD_ssp245],1))) .* 1.96; % 95% confidence interval
-    text(2001,0.064,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp245(152:201)),3),'¡À' ,...
+    text(2001,0.0645,strcat( '[' , num2str(mean(Ensemble_Mean_CD_ssp245(152:201)),3),'¡À' ,...
         num2str(mean(c95_CD_ssp245(152:201)) ,3) , ']'),...
         'FontSize' , 24 , 'FontName' , 'Arial' , 'Color' , RGB_NAT_Line./255);
 end

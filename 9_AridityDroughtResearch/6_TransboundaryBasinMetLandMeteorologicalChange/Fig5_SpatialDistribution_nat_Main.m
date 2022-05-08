@@ -72,8 +72,8 @@ piControl_Drought_Frequency_Max(isnan(piControl_Drought_Frequency_Max)) = -9999;
 
 SaveData2GeoTIFF(['SpatialDistribution\hist_nat_Drought_Frequency'] , extent , hist_nat_Drought_Frequency');
 SaveData2GeoTIFF(['SpatialDistribution\ssp245_nat_Drought_Frequency'] , extent , ssp245_nat_Drought_Frequency');
-SaveData2GeoTIFF(['SpatialDistribution\piControl_Drought_Frequency_Mean'] , extent , piControl_Drought_Frequency_Mean');
-SaveData2GeoTIFF(['SpatialDistribution\piControl_Drought_Frequency_Max'] , extent , piControl_Drought_Frequency_Max');
+SaveData2GeoTIFF(['SpatialDistribution\piControl_Drought_Frequency_MeanChange'] , extent , piControl_Drought_Frequency_Mean');
+SaveData2GeoTIFF(['SpatialDistribution\piControl_Drought_Frequency_MaxChange'] , extent , piControl_Drought_Frequency_Max');
 
 % Recover NAN Data
 hist_nat_Drought_Frequency(hist_nat_Drought_Frequency<0) = nan;
@@ -141,8 +141,8 @@ piControl_Drought_Intensity_Max(isnan(piControl_Drought_Intensity_Max)) = -9999;
 
 SaveData2GeoTIFF(['SpatialDistribution\hist_nat_Drought_Intensity'] , extent , hist_nat_Drought_Intensity');
 SaveData2GeoTIFF(['SpatialDistribution\ssp245_nat_Drought_Intensity'] , extent , ssp245_nat_Drought_Intensity');
-SaveData2GeoTIFF(['SpatialDistribution\piControl_Drought_Intensity_Mean'] , extent , piControl_Drought_Intensity_Mean');
-SaveData2GeoTIFF(['SpatialDistribution\piControl_Drought_Intensity_Max'] , extent , piControl_Drought_Intensity_Max');
+SaveData2GeoTIFF(['SpatialDistribution\piControl_Drought_Intensity_MeanChange'] , extent , piControl_Drought_Intensity_Mean');
+SaveData2GeoTIFF(['SpatialDistribution\piControl_Drought_Intensity_MaxChange'] , extent , piControl_Drought_Intensity_Max');
 
 % Recover NAN Data
 hist_nat_Drought_Intensity(hist_nat_Drought_Intensity<0) = nan;
