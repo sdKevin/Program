@@ -254,7 +254,7 @@ plot(0,'Color',RGB_ALL_Line./255,'Linewidth',3.5);hold on;
 plot(0,'Color',RGB_NAT_Line./255,'Linewidth',3.5);
 plot(0,'Color',RGB_POP_Line./255,'Linewidth',3.5);
 plot(0,'k','Linewidth',3.5);
-legend('historical + ssp245','hist-nat + ssp245-nat','ssp245 with fixed population','piControl',...
+legend('HIST + SSP245','HIST-nat + SSP245-nat','SSP245 with fixed population','piControl',...
     'Location','NorthWest','Color','None','EdgeColor','None','FontSize',24,'FontName','Arial')
 set(gca,'visible','off')
 

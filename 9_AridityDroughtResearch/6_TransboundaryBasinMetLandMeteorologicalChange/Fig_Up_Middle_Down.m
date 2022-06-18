@@ -139,6 +139,92 @@ for i_up_middle_down = 1 : size(GlobalTransboundary,2)
     end
 end
 
+
+for i_up_middle_down = 1 : size(GlobalTransboundary,2)
+    %% Setting the input/output paths
+    % CMIP6 Historical Met Data
+    InputMetDroughtPath{1} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\Historical\Met_Land_Historical_';
+    % CMIP6 ScenarioMIP ssp126 Data
+    InputMetDroughtPath{2} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ScenarioMIP_ssp126\Met_Land_ssp126_';
+    % CMIP6 ScenarioMIP ssp245 Data
+    InputMetDroughtPath{3} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ScenarioMIP_ssp245\Met_Land_ssp245_';
+    % CMIP6 ScenarioMIP ssp370 Data
+    InputMetDroughtPath{4} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ScenarioMIP_ssp370\Met_Land_ssp370_';
+    % CMIP6 ScenarioMIP ssp585 Data
+    InputMetDroughtPath{5} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ScenarioMIP_ssp585\Met_Land_ssp585_';
+    
+    % Extract GlobalTransboundary
+    load LandInfo_05deg.mat
+    Lon_05deg(1:360,:) = lon_05deg(361:end,:) - 360; Lon_05deg(361:720,:) = lon_05deg(1:360,:); % Adjust longitude from 0-360 to -180-180
+    in = inpolygon(lat_05deg , Lon_05deg , GlobalTransboundary(i_up_middle_down).Y , GlobalTransboundary(i_up_middle_down).X); clear Lon_05deg;
+    
+    %% Calculating Drought Exposure
+    for i_Path = 1 : length(InputMetDroughtPath)
+        if i_Path == 4
+            % Name of Global Climate Model
+            GCM_Ensemble = {'ACCESS-CM2','ACCESS-ESM1-5','BCC-CSM2-MR','CanESM5','CanESM5-CanOE',...
+                'CESM2','CESM2-WACCM','CNRM-CM6-1','CNRM-ESM2-1','EC-Earth3','EC-Earth3-Veg',...
+                'GISS-E2-1-G','INM-CM4-8',...
+                'INM-CM5-0','IPSL-CM6A-LR','MIROC6','MIROC-ES2L','MPI-ESM1-2-HR','MPI-ESM1-2-LR',...
+                'MRI-ESM2-0','NorESM2-MM','UKESM1-0-LL'};
+        else
+            % Name of Global Climate Model, since HadGEM3-GC31-LL model does
+            % not have ssp370
+            GCM_Ensemble = {'ACCESS-CM2','ACCESS-ESM1-5','BCC-CSM2-MR','CanESM5','CanESM5-CanOE',...
+                'CESM2','CESM2-WACCM','CNRM-CM6-1','CNRM-ESM2-1','EC-Earth3','EC-Earth3-Veg',...
+                'GISS-E2-1-G','HadGEM3-GC31-LL','INM-CM4-8',...
+                'INM-CM5-0','IPSL-CM6A-LR','MIROC6','MIROC-ES2L','MPI-ESM1-2-HR','MPI-ESM1-2-LR',...
+                'MRI-ESM2-0','NorESM2-MM','UKESM1-0-LL'};
+        end
+        if i_Path == 1
+            load(InputPopulationPath{i_Path});
+        end
+        for i_GCM = 1 : length(GCM_Ensemble)
+            GCM = GCM_Ensemble{i_GCM};
+            load(strcat(InputMetDroughtPath{i_Path} , GCM , '_DroughtFrequency_Year.mat'));
+            for i_Year = 1 : size(DroughtFrequency_Year.CompoundDrought,3)
+                AA = DroughtFrequency_Year.CompoundDrought(:,:,i_Year);
+                BB(1:360,:) = AA(361:end,:); BB(361:720,:) = AA(1:360,:); clear AA;  % Adjust longitude from 0-360 to -180-180
+                BB_HR = interp2(lat_05deg,Lon_05deg,BB,lat,lon); % interpolate to the resolution of population
+                CC = BB_HR >= 1; clear BB BB_HR; % CC indicates compound drought happens
+                % Read Population Data
+                if i_Path > 1
+                    if i_Path==5
+                        AA = num2str(i_Path);
+                    else
+                        AA = num2str(i_Path-1);
+                    end
+                    if i_Year == 1
+                        load(strcat(InputPopulationPath{i_Path},'ssp',AA,'_2010.mat'));
+                    elseif i_Year == 6
+                        load(strcat(InputPopulationPath{i_Path},'ssp',AA,'_2020.mat'));
+                    elseif i_Year == 16
+                        load(strcat(InputPopulationPath{i_Path},'ssp',AA,'_2030.mat'));
+                    elseif i_Year == 26
+                        load(strcat(InputPopulationPath{i_Path},'ssp',AA,'_2040.mat'));
+                    elseif i_Year == 36
+                        load(strcat(InputPopulationPath{i_Path},'ssp',AA,'_2050.mat'));
+                    elseif i_Year == 46
+                        load(strcat(InputPopulationPath{i_Path},'ssp',AA,'_2060.mat'));
+                    elseif i_Year == 56
+                        load(strcat(InputPopulationPath{i_Path},'ssp',AA,'_2070.mat'));
+                    elseif i_Year == 66
+                        load(strcat(InputPopulationPath{i_Path},'ssp',AA,'_2080.mat'));
+                    elseif i_Year == 76
+                        load(strcat(InputPopulationPath{i_Path},'ssp',AA,'_2090.mat'));
+                    elseif i_Year == 86
+                        load(strcat(InputPopulationPath{i_Path},'ssp',AA,'_2100.mat'));
+                    end
+                    clear AA
+                end
+                Met_Drought_Frequency_Year(i_Path).DroughtFrequency_Year.CompoundDrought(i_GCM,i_Year) = nanmean(BB(in));
+                clear BB
+            end
+            clear GCM i_Year DroughtFrequency_Year
+        end
+        clear i_GCM
+    end
+end
 %% Plotting
 clc; clear all; close all;
 % Up

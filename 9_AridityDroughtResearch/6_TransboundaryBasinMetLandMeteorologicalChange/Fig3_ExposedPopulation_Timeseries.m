@@ -4,8 +4,10 @@ subplot(2,1,1)
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % CompoundDrought
-RGB_ssp_Shade = [200,202,229; 223,238,246; 230,243,223; 254,223,209];
-RGB_ssp_Line = [50,78,161; 133,184,227; 60,124,98; 238,31,36];
+% RGB_ssp_Shade = [200,202,229; 223,238,246; 230,243,223; 254,223,209];
+% RGB_ssp_Line = [50,78,161; 133,184,227; 60,124,98; 238,31,36];
+RGB_ssp_Shade = [200,202,229; 223,238,246; 252,218,197; 254,223,209];
+RGB_ssp_Line = [50,78,161; 133,184,227; 245,132,63; 238,31,36];
 
 XlimRange = [1950,2100];
 YlimRange_CD = [100,900]; YTickRange_CD = [100:200:900];
@@ -160,7 +162,7 @@ for i_ssp = [1,2,3,4]
         plot(0,'-','Color',RGB_ssp_Line(i_ssp,:)./255,'Linewidth',3.5);
     end
 end
-legend('historical','ssp126','ssp245','ssp370','ssp585',...
+legend('HIST','SSP126','SSP245','SSP370','SSP585',...
     'Location','NorthWest','Color','None','EdgeColor','None','FontSize',24,'FontName','Arial')
 set(gca,'visible','off')
 clearvars -except Met_Drought_FractionalPopulation_Year
@@ -170,8 +172,11 @@ subplot(2,1,2)
 %% Setting Color and axis property
 RGB_Historical_Shade = [205,205,205]; RGB_Historical_Line = [23,23,23];
 % CompoundDrought
-RGB_ssp_Shade = [200,202,229; 223,238,246; 230,243,223; 254,223,209];
-RGB_ssp_Line = [50,78,161; 133,184,227; 60,124,98; 238,31,36];
+% RGB_ssp_Shade = [200,202,229; 223,238,246; 230,243,223; 254,223,209];
+% RGB_ssp_Line = [50,78,161; 133,184,227; 60,124,98; 238,31,36];
+RGB_ssp_Shade = [200,202,229; 223,238,246; 252,218,197; 254,223,209];
+RGB_ssp_Line = [50,78,161; 133,184,227; 245,132,63; 238,31,36];
+
 XlimRange = [1950,2100];
 YlimRange_CD = [4,20]; YTickRange_CD = [4:4:20];
 %% Plotting Shade Area
@@ -325,7 +330,7 @@ for i_ssp = [1,2,3,4]
         plot(0,'-','Color',RGB_ssp_Line(i_ssp,:)./255,'Linewidth',3.5);
     end
 end
-legend('historical','ssp126','ssp245','ssp370','ssp585',...
+legend('HIST','SSP126','SSP245','SSP370','SSP585',...
     'Location','NorthWest','Color','None','EdgeColor','None','FontSize',24,'FontName','Arial')
 set(gca,'visible','off')
 clearvars -except Met_Drought_Population_Year

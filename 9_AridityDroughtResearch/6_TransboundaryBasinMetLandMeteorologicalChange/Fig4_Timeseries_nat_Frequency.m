@@ -215,7 +215,7 @@ axes('position',get(gca,'position'),'visible','off')
 plot(0,'Color',RGB_ALL_Line./255,'Linewidth',3.5);hold on;
 plot(0,'Color',RGB_NAT_Line./255,'Linewidth',3.5);
 plot(0,'k','Linewidth',3.5);
-legend('historical + ssp245','hist-nat + ssp245-nat','piControl',...
+legend('HIST + SSP245','HIST-nat + SSP245-nat','piControl',...
     'Location','NorthWest','Color','None','EdgeColor','None','FontSize',24,'FontName','Arial')
 set(gca,'visible','off')
 end

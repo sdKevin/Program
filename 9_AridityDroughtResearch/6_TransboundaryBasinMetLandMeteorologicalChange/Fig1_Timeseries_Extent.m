@@ -158,7 +158,7 @@ for i_ssp = [1,2,3,4]
         plot(0,'-','Color',RGB_ssp_Line(i_ssp,:)./255,'Linewidth',3.5);
     end
 end
-legend('historical','ssp126','ssp245','ssp370','ssp585',...
+legend('HIST','SSP126','SSP245','SSP370','SSP585',...
     'Location','NorthWest','Color','None','EdgeColor','None','FontSize',24,'FontName','Arial')
 set(gca,'visible','off')
 clearvars -except Met_Drought_Extent_Year
