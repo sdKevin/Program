@@ -139,24 +139,32 @@ for i_up_middle_down = 1 : size(GlobalTransboundary,2)
     end
 end
 
-
 for i_up_middle_down = 1 : size(GlobalTransboundary,2)
     %% Setting the input/output paths
     % CMIP6 Historical Met Data
     InputMetDroughtPath{1} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\Historical\Met_Land_Historical_';
+    InputPopulationPath{1} = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP1\Total\Mat\ssp1_2010.mat';
     % CMIP6 ScenarioMIP ssp126 Data
     InputMetDroughtPath{2} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ScenarioMIP_ssp126\Met_Land_ssp126_';
+    InputPopulationPath{2} = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP1\Total\Mat\';
     % CMIP6 ScenarioMIP ssp245 Data
     InputMetDroughtPath{3} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ScenarioMIP_ssp245\Met_Land_ssp245_';
+    InputPopulationPath{3} = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP2\Total\Mat\';
     % CMIP6 ScenarioMIP ssp370 Data
     InputMetDroughtPath{4} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ScenarioMIP_ssp370\Met_Land_ssp370_';
+    InputPopulationPath{4} = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP3\Total\Mat\';
     % CMIP6 ScenarioMIP ssp585 Data
     InputMetDroughtPath{5} = 'D:\CMIP6\VariableStorage\YearlyVar\Var_Drought\ScenarioMIP_ssp585\Met_Land_ssp585_';
+    InputPopulationPath{5} = 'D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP5\Total\Mat\';
     
     % Extract GlobalTransboundary
     load LandInfo_05deg.mat
     Lon_05deg(1:360,:) = lon_05deg(361:end,:) - 360; Lon_05deg(361:720,:) = lon_05deg(1:360,:); % Adjust longitude from 0-360 to -180-180
-    in = inpolygon(lat_05deg , Lon_05deg , GlobalTransboundary(i_up_middle_down).Y , GlobalTransboundary(i_up_middle_down).X); clear Lon_05deg;
+    in = inpolygon(lat_05deg , Lon_05deg , GlobalTransboundary(i_up_middle_down).Y , GlobalTransboundary(i_up_middle_down).X); clear lon_05deg;
+    % Coordinate information of population data
+    load('D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP1\Total\Mat\lat.mat');
+    load('D:\CMIP6\ProcessData\ImplicationResearch\Global Population Projection Grids Based on SSPs\SSP1\Total\Mat\lon.mat');
+    in_HR = inpolygon(lat , lon , GlobalTransboundary(i_up_middle_down).Y , GlobalTransboundary(i_up_middle_down).X);
     
     %% Calculating Drought Exposure
     for i_Path = 1 : length(InputMetDroughtPath)
@@ -217,34 +225,48 @@ for i_up_middle_down = 1 : size(GlobalTransboundary,2)
                     end
                     clear AA
                 end
-                Met_Drought_Frequency_Year(i_Path).DroughtFrequency_Year.CompoundDrought(i_GCM,i_Year) = nanmean(BB(in));
-                clear BB
+                Met_Drought_Population_Year(i_Path).DroughtPopulation_Year.CompoundDrought(i_GCM,i_Year) = nansum(Population(CC&in_HR));
+                clear CC
             end
             clear GCM i_Year DroughtFrequency_Year
         end
-        clear i_GCM
+        clear i_GCM GCM_Ensemble Population
+    end
+    
+    if i_up_middle_down == 1
+        load Met_Drought_Frequency_Intensity_Extent_UpStream
+        save('Met_Drought_Frequency_Intensity_Extent_UpStream' , 'Met_Drought_Frequency_Year' , 'Met_Drought_Intensity_Year' , 'Met_Drought_Extent_Year' , 'Met_Drought_Population_Year'); clearvars -except GlobalTransboundary
+    elseif i_up_middle_down == 2
+        load Met_Drought_Frequency_Intensity_Extent_MiddleStream
+        save('Met_Drought_Frequency_Intensity_Extent_MiddleStream' , 'Met_Drought_Frequency_Year' , 'Met_Drought_Intensity_Year' , 'Met_Drought_Extent_Year' , 'Met_Drought_Population_Year'); clearvars -except GlobalTransboundary
+    else
+        load Met_Drought_Frequency_Intensity_Extent_DownStream
+        save('Met_Drought_Frequency_Intensity_Extent_DownStream' , 'Met_Drought_Frequency_Year' , 'Met_Drought_Intensity_Year' , 'Met_Drought_Extent_Year' , 'Met_Drought_Population_Year'); clearvars -except GlobalTransboundary
     end
 end
 %% Plotting
 clc; clear all; close all;
 % Up
 load Met_Drought_Frequency_Intensity_Extent_UpStream
-[Extent , Intensity , Frequency] = Fig_Up_Middle_Down_Statistical(Met_Drought_Extent_Year , Met_Drought_Intensity_Year , Met_Drought_Frequency_Year);
+[Extent , Intensity , Frequency , Population] = Fig_Up_Middle_Down_Statistical(Met_Drought_Extent_Year , Met_Drought_Intensity_Year , Met_Drought_Frequency_Year , Met_Drought_Population_Year);
 xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Extent' , 'Extent' , 'B2:J2');
 xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Intensity' , 'Intensity' , 'B2:J2');
 xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Frequency'.*10 , 'Frequency' , 'B2:J2'); % months per decade
+xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Population' , 'ExposedPopulation' , 'B2:J2');
 % Middle
 load Met_Drought_Frequency_Intensity_Extent_MiddleStream
-[Extent , Intensity , Frequency] = Fig_Up_Middle_Down_Statistical(Met_Drought_Extent_Year , Met_Drought_Intensity_Year , Met_Drought_Frequency_Year);
+[Extent , Intensity , Frequency , Population] = Fig_Up_Middle_Down_Statistical(Met_Drought_Extent_Year , Met_Drought_Intensity_Year , Met_Drought_Frequency_Year , Met_Drought_Population_Year);
 xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Extent' , 'Extent' , 'B3:J3');
 xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Intensity' , 'Intensity' , 'B3:J3');
 xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Frequency'.*10 , 'Frequency' , 'B3:J3'); % months per decade
+xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Population' , 'ExposedPopulation' , 'B3:J3');
 % Down
 load Met_Drought_Frequency_Intensity_Extent_DownStream
-[Extent , Intensity , Frequency] = Fig_Up_Middle_Down_Statistical(Met_Drought_Extent_Year , Met_Drought_Intensity_Year , Met_Drought_Frequency_Year);
+[Extent , Intensity , Frequency , Population] = Fig_Up_Middle_Down_Statistical(Met_Drought_Extent_Year , Met_Drought_Intensity_Year , Met_Drought_Frequency_Year , Met_Drought_Population_Year);
 xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Extent' , 'Extent' , 'B4:J4');
 xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Intensity' , 'Intensity' , 'B4:J4');
 xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Frequency'.*10 , 'Frequency' , 'B4:J4'); % months per decade
+xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Population' , 'ExposedPopulation' , 'B4:J4');
 
 
 
@@ -254,14 +276,3 @@ xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Frequency'.*10 , 'Frequenc
 
 
 
-
-
-
-
-
-subplot(3,1,1)
-Fig_Timeseries_Extent(Met_Drought_Extent_Year)
-subplot(3,1,2)
-Fig_Timeseries_Intensity(Met_Drought_Intensity_Year)
-subplot(3,1,3)
-Fig_Timeseries_Frequency(Met_Drought_Frequency_Year)

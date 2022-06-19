@@ -1,4 +1,4 @@
-function [Extent , Intensity , Frequency] = Fig_Up_Middle_Down_Statistical(Met_Drought_Extent_Year , Met_Drought_Intensity_Year , Met_Drought_Frequency_Year)
+function [Extent , Intensity , Frequency , Population] = Fig_Up_Middle_Down_Statistical(Met_Drought_Extent_Year , Met_Drought_Intensity_Year , Met_Drought_Frequency_Year , Met_Drought_Population_Year)
 
 %% Drought Extent
 % Historical Mean over 1951-2000
@@ -213,6 +213,78 @@ CD_ssp370 = Met_Drought_Frequency_Year(4).DroughtFrequency_Year.CompoundDrought;
 Ensemble_Mean_CD_ssp370 = [nanmean(CD_Historical)';nanmean(CD_ssp370)'];
 c95_CD_ssp370 = (std([CD_Historical,CD_ssp370])./sqrt(size([CD_Historical,CD_ssp370],1))) .* 1.96; % 95% confidence interval
 Frequency(4,1) = mean(Ensemble_Mean_CD_ssp370(152:201));
+mean(c95_CD_ssp370(152:201))
+clear CD_Historical c95_CD_ssp370 Ensemble_Mean_CD_ssp370 CD_ssp370
+
+%% Drought Exposed Population
+% Historical Mean over 1951-2000
+CD_Historical = Met_Drought_Population_Year(1).DroughtPopulation_Year.CompoundDrought;
+Ensemble_Mean_CD_Historical = nanmean(CD_Historical)';
+c95_CD_Historical = (std(CD_Historical)./sqrt(size(CD_Historical,1))) .* 1.96; % 95% confidence interval
+Population(1,1) = mean(Ensemble_Mean_CD_Historical(102:151));
+mean(c95_CD_Historical(102:151))
+clear c95_CD_Historical Ensemble_Mean_CD_Historical CD_Historical
+
+% ssp 585 Mean over 2051-2100
+CD_ssp585 = Met_Drought_Population_Year(5).DroughtPopulation_Year.CompoundDrought;
+Ensemble_Mean_CD_ssp585 = nanmean(CD_ssp585)';
+c95_CD_ssp585 = (std(CD_ssp585)./sqrt(size(CD_ssp585,1))) .* 1.96; % 95% confidence interval
+Population(9,1) = mean(Ensemble_Mean_CD_ssp585(37:86));
+mean(c95_CD_ssp585(37:86))
+clear c95_CD_ssp585 Ensemble_Mean_CD_ssp585 CD_ssp585
+% ssp 370 Mean over 2051-2100
+CD_ssp370 = Met_Drought_Population_Year(4).DroughtPopulation_Year.CompoundDrought;
+Ensemble_Mean_CD_ssp370 = nanmean(CD_ssp370)';
+c95_CD_ssp370 = (std(CD_ssp370)./sqrt(size(CD_ssp370,1))) .* 1.96; % 95% confidence interval
+Population(8,1) = mean(Ensemble_Mean_CD_ssp370(37:86));
+mean(c95_CD_ssp370(37:86))
+clear c95_CD_ssp370 Ensemble_Mean_CD_ssp370 CD_ssp370
+% ssp 245 Mean over 2051-2100
+CD_ssp245 = Met_Drought_Population_Year(3).DroughtPopulation_Year.CompoundDrought;
+Ensemble_Mean_CD_ssp245 = nanmean(CD_ssp245)';
+c95_CD_ssp245 = (std(CD_ssp245)./sqrt(size(CD_ssp245,1))) .* 1.96; % 95% confidence interval
+Population(7,1) = mean(Ensemble_Mean_CD_ssp245(37:86));
+mean(c95_CD_ssp245(37:86))
+clear c95_CD_ssp245 Ensemble_Mean_CD_ssp245 CD_ssp245
+% ssp 126 Mean over 2051-2100
+CD_ssp126 = Met_Drought_Population_Year(2).DroughtPopulation_Year.CompoundDrought;
+Ensemble_Mean_CD_ssp126 = nanmean(CD_ssp126)';
+c95_CD_ssp126 = (std(CD_ssp126)./sqrt(size(CD_ssp126,1))) .* 1.96; % 95% confidence interval
+Population(6,1) = mean(Ensemble_Mean_CD_ssp126(37:86));
+mean(c95_CD_ssp126(37:86))
+clear c95_CD_ssp126 Ensemble_Mean_CD_ssp126 CD_ssp126
+
+% ssp 585 Mean over 2001-2050
+CD_Historical = Met_Drought_Population_Year(1).DroughtPopulation_Year.CompoundDrought;
+CD_ssp585 = Met_Drought_Population_Year(5).DroughtPopulation_Year.CompoundDrought;
+Ensemble_Mean_CD_ssp585 = [nanmean(CD_Historical)';nanmean(CD_ssp585)'];
+c95_CD_ssp585 = (std([CD_Historical,CD_ssp585])./sqrt(size([CD_Historical,CD_ssp585],1))) .* 1.96; % 95% confidence interval
+Population(5,1) = mean(Ensemble_Mean_CD_ssp585(152:201));
+mean(c95_CD_ssp585(152:201))
+clear CD_Historical c95_CD_ssp585 Ensemble_Mean_CD_ssp585 CD_ssp585
+% ssp 245 Mean over 2001-2050
+CD_Historical = Met_Drought_Population_Year(1).DroughtPopulation_Year.CompoundDrought;
+CD_ssp245 = Met_Drought_Population_Year(3).DroughtPopulation_Year.CompoundDrought;
+Ensemble_Mean_CD_ssp245 = [nanmean(CD_Historical)';nanmean(CD_ssp245)'];
+c95_CD_ssp245 = (std([CD_Historical,CD_ssp245])./sqrt(size([CD_Historical,CD_ssp245],1))) .* 1.96; % 95% confidence interval
+Population(3,1) = mean(Ensemble_Mean_CD_ssp245(152:201));
+mean(c95_CD_ssp245(152:201))
+clear CD_Historical c95_CD_ssp245 Ensemble_Mean_CD_ssp245 CD_ssp245
+% ssp 126 Mean over 2001-2050
+CD_Historical = Met_Drought_Population_Year(1).DroughtPopulation_Year.CompoundDrought;
+CD_ssp126 = Met_Drought_Population_Year(2).DroughtPopulation_Year.CompoundDrought;
+Ensemble_Mean_CD_ssp126 = [nanmean(CD_Historical)';nanmean(CD_ssp126)'];
+c95_CD_ssp126 = (std([CD_Historical,CD_ssp126])./sqrt(size([CD_Historical,CD_ssp126],1))) .* 1.96; % 95% confidence interval
+Population(2,1) = mean(Ensemble_Mean_CD_ssp126(152:201));
+mean(c95_CD_ssp126(152:201))
+clear CD_Historical c95_CD_ssp126 Ensemble_Mean_CD_ssp126 CD_ssp126
+% ssp 370 Mean over 2001-2050
+CD_Historical = Met_Drought_Population_Year(1).DroughtPopulation_Year.CompoundDrought;
+CD_Historical(13,:) = []; % since HadGEM3-GC31-LL model does not have ssp370
+CD_ssp370 = Met_Drought_Population_Year(4).DroughtPopulation_Year.CompoundDrought;
+Ensemble_Mean_CD_ssp370 = [nanmean(CD_Historical)';nanmean(CD_ssp370)'];
+c95_CD_ssp370 = (std([CD_Historical,CD_ssp370])./sqrt(size([CD_Historical,CD_ssp370],1))) .* 1.96; % 95% confidence interval
+Population(4,1) = mean(Ensemble_Mean_CD_ssp370(152:201));
 mean(c95_CD_ssp370(152:201))
 clear CD_Historical c95_CD_ssp370 Ensemble_Mean_CD_ssp370 CD_ssp370
 end
