@@ -24,7 +24,7 @@ fill([2070.3;2099;2099;2070.3],[YlimRange_AI(1)*0.99;YlimRange_AI(1)*0.99;YlimRa
 
 % AI in PM_RC_CO2_Yang
 AI_PM_RC_CO2_Yang = pr./ETrc_Year.PM_RC_CO2_Yang;
-AI_PM_RC_CO2_Yang = AI_PM_RC_CO2_Yang - repmat(mean(AI_PM_RC_CO2_Yang(:,99:165),2),1,251);% Change to Anomaly
+AI_PM_RC_CO2_Yang = AI_PM_RC_CO2_Yang - repmat(mean(AI_PM_RC_CO2_Yang(:,99:165),2),1,251); % Change to Anomaly
 Ensemble_Mean_AI_PM_RC_CO2_Yang = nanmean(AI_PM_RC_CO2_Yang)';
 c95_AI_PM_RC_CO2_Yang = (std(AI_PM_RC_CO2_Yang)./sqrt(size(AI_PM_RC_CO2_Yang,1))).*1.96;c95_AI_PM_RC_CO2_Yang=c95_AI_PM_RC_CO2_Yang';
 fill([[1850:2100]';flipud([1850:2100]')],...
@@ -87,32 +87,51 @@ h = legend('ETrc-Jarvis');
 set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Jarvis_Line./255)
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_AI,'xlim',[1948,2100]);
 %% Princeton
-% load('D:\CMIP6\Program\Fig1_ProcessData\ETrc_Year_Princeton.mat')
-% load('D:\CMIP6\Program\Fig1_ProcessData\Met_Year_Princeton.mat')
-% pr = Met_Year_Princeton.pr.*1000.*31536000./997; %to mm/year
-% AI_PM_RC_CO2_Jarvis_H = pr./ETrc_Year.PM_RC_CO2_Jarvis_H;
-% AI_PM_RC_CO2_Jarvis_H = AI_PM_RC_CO2_Jarvis_H - mean(AI_PM_RC_CO2_Jarvis_H);% Change to Anomaly
-%
-% AI_PM_RC_CO2_Yang = pr./ETrc_Year.PM_RC_CO2_Yang;
-% AI_PM_RC_CO2_Yang = AI_PM_RC_CO2_Yang - mean(AI_PM_RC_CO2_Yang);% Change to Anomaly
-%
-% AI_PM_RC = pr./ETrc_Year.PM_RC;
-% AI_PM_RC = AI_PM_RC - mean(AI_PM_RC);% Change to Anomaly
-%
+pr = Input_Met_Year(6).Met_Year.pr.*1000.*31536000./997; %to mm/year
+AI_PM_RC_CO2_Jarvis_H = pr./Input_ETrc_Year(6).ETrc_Year.PM_RC_CO2_Jarvis_H ./ 365;
+AI_PM_RC_CO2_Jarvis_H = AI_PM_RC_CO2_Jarvis_H - mean(AI_PM_RC_CO2_Jarvis_H);% Change to Anomaly
+
+AI_PM_RC_CO2_Yang = pr./Input_ETrc_Year(6).ETrc_Year.PM_RC_CO2_Yang ./ 365;
+AI_PM_RC_CO2_Yang = AI_PM_RC_CO2_Yang - mean(AI_PM_RC_CO2_Yang);% Change to Anomaly
+
+AI_PM_RC = pr./Input_ETrc_Year(6).ETrc_Year.PM_RC ./ 365;
+AI_PM_RC = AI_PM_RC - mean(AI_PM_RC);% Change to Anomaly
+
+axes('position', [0.1300    0.1100    0.7750    0.8150]);
+plot([1948:2014],AI_PM_RC_CO2_Jarvis_H,...
+    'Color',[1 1 1],'EraseMode','xor','Linewidth',2.5); hold on;
+plot([1948:2014],AI_PM_RC_CO2_Yang,...
+    'Color',[1 1 1],'EraseMode','xor','Linewidth',2.5);
+
+plot([1948:2014],AI_PM_RC,...
+    'Color',[1 1 1],'EraseMode','xor','Linewidth',2.5);
+set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_AI,'xlim',[1948,2100]);
+
+axes('position', [0.1300    0.1100    0.7750    0.8150]);
+plot([1948:2014],AI_PM_RC,'--',...
+    'Color',1.0-1*(1.0-[224,130,20]./255),'EraseMode','xor','Linewidth',2.5); hold on;% 1为透明度
+plot([1948:2014],AI_PM_RC_CO2_Yang,'--',...
+    'Color',1.0-1*(1.0-[116,173,209]./255),'EraseMode','xor','Linewidth',2.5);% 1为透明度
+plot([1948:2014],AI_PM_RC_CO2_Jarvis_H,'--',...
+    'Color',1.0-1*(1.0-[102,189,99]./255),'EraseMode','xor','Linewidth',2.5);% 1为透明度
+h = legend;
+set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Jarvis_Line./255)
+set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_AI,'xlim',[1948,2100]);
+
 % plot([1948:2014],smooth(AI_PM_RC_CO2_Jarvis_H,7),...
 %     'Color',[1 1 1],'EraseMode','xor','Linewidth',2.5);
 % plot([1948:2014],smooth(AI_PM_RC_CO2_Jarvis_H,7),'--',...
-%     'Color',1.0-1*(1.0-[183,154,200]./255),'EraseMode','xor','Linewidth',2.5);% 1为透明度
-%
+%     'Color',1.0-1*(1.0-[102,189,99]./255),'EraseMode','xor','Linewidth',2.5);% 1为透明度
+% 
 % plot([1948:2014],smooth(AI_PM_RC_CO2_Yang,7),...
 %     'Color',[1 1 1],'EraseMode','xor','Linewidth',2.5);
 % plot([1948:2014],smooth(AI_PM_RC_CO2_Yang,7),'--',...
-%     'Color',1.0-1*(1.0-[117,178,225]./255),'EraseMode','xor','Linewidth',2.5);% 1为透明度
-%
+%     'Color',1.0-1*(1.0-[116,173,209]./255),'EraseMode','xor','Linewidth',2.5);% 1为透明度
+% 
 % plot([1948:2014],smooth(AI_PM_RC,7),...
 %     'Color',[1 1 1],'EraseMode','xor','Linewidth',2.5);
 % plot([1948:2014],smooth(AI_PM_RC,7),'--',...
-%     'Color',1.0-1*(1.0-[211,156,95]./255),'EraseMode','xor','Linewidth',2.5);% 1为透明度
+%     'Color',1.0-1*(1.0-[224,130,20]./255),'EraseMode','xor','Linewidth',2.5);% 1为透明度
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Figure Right%%%%%%%%%%%%%%%%%%%%%%%%
 figure

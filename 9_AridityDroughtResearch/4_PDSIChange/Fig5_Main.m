@@ -17,6 +17,7 @@ clear Path_PDSI_Year_ScenarioMIP_ssp370_GCM Path_PDSI_Year_ScenarioMIP_ssp585_GC
 
 %% Fig2a Drawing PDSI calculated by PM_RC_CO2_Jarvis_H
 Fig5a_Plotting(PDSI_Year)
+Fig4b_Article_Plotting(PDSI_Year)
 %% Fig2b Drawing PDSI calculated by PM_RC_CO2_Yang
 Fig5b_Plotting(PDSI_Year)
 %% Fig2c Drawing PDSI calculated by PM_RC

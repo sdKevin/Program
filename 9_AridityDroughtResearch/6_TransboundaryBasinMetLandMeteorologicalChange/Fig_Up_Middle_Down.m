@@ -248,28 +248,38 @@ end
 clc; clear all; close all;
 % Up
 load Met_Drought_Frequency_Intensity_Extent_UpStream
-[Extent , Intensity , Frequency , Population] = Fig_Up_Middle_Down_Statistical(Met_Drought_Extent_Year , Met_Drought_Intensity_Year , Met_Drought_Frequency_Year , Met_Drought_Population_Year);
-xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Extent' , 'Extent' , 'B2:J2');
-xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Intensity' , 'Intensity' , 'B2:J2');
-xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Frequency'.*10 , 'Frequency' , 'B2:J2'); % months per decade
-xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Population' , 'ExposedPopulation' , 'B2:J2');
+[Extent_up , Intensity_up , Frequency_up , Population_up , c95_Extent_up , c95_Intensity_up , c95_Frequency_up , c95_Population_up] =...
+    Fig_Up_Middle_Down_Statistical(Met_Drought_Extent_Year , Met_Drought_Intensity_Year , Met_Drought_Frequency_Year , Met_Drought_Population_Year);
+xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Extent_up' , 'Extent' , 'B2:J2');
+xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Intensity_up' , 'Intensity' , 'B2:J2');
+xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Frequency_up'.*10 , 'Frequency' , 'B2:J2'); % months per decade
+xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Population_up' , 'ExposedPopulation' , 'B2:J2');
 % Middle
 load Met_Drought_Frequency_Intensity_Extent_MiddleStream
-[Extent , Intensity , Frequency , Population] = Fig_Up_Middle_Down_Statistical(Met_Drought_Extent_Year , Met_Drought_Intensity_Year , Met_Drought_Frequency_Year , Met_Drought_Population_Year);
-xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Extent' , 'Extent' , 'B3:J3');
-xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Intensity' , 'Intensity' , 'B3:J3');
-xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Frequency'.*10 , 'Frequency' , 'B3:J3'); % months per decade
-xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Population' , 'ExposedPopulation' , 'B3:J3');
+[Extent_middle , Intensity_middle , Frequency_middle , Population_middle , c95_Extent_middle , c95_Intensity_middle , c95_Frequency_middle , c95_Population_middle] =...
+    Fig_Up_Middle_Down_Statistical(Met_Drought_Extent_Year , Met_Drought_Intensity_Year , Met_Drought_Frequency_Year , Met_Drought_Population_Year);
+xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Extent_middle' , 'Extent' , 'B3:J3');
+xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Intensity_middle' , 'Intensity' , 'B3:J3');
+xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Frequency_middle'.*10 , 'Frequency' , 'B3:J3'); % months per decade
+xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Population_middle' , 'ExposedPopulation' , 'B3:J3');
 % Down
 load Met_Drought_Frequency_Intensity_Extent_DownStream
-[Extent , Intensity , Frequency , Population] = Fig_Up_Middle_Down_Statistical(Met_Drought_Extent_Year , Met_Drought_Intensity_Year , Met_Drought_Frequency_Year , Met_Drought_Population_Year);
-xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Extent' , 'Extent' , 'B4:J4');
-xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Intensity' , 'Intensity' , 'B4:J4');
-xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Frequency'.*10 , 'Frequency' , 'B4:J4'); % months per decade
-xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Population' , 'ExposedPopulation' , 'B4:J4');
+[Extent_down , Intensity_down , Frequency_down , Population_down , c95_Extent_down , c95_Intensity_down , c95_Frequency_down , c95_Population_down] =...
+    Fig_Up_Middle_Down_Statistical(Met_Drought_Extent_Year , Met_Drought_Intensity_Year , Met_Drought_Frequency_Year , Met_Drought_Population_Year);
+xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Extent_down' , 'Extent' , 'B4:J4');
+xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Intensity_down' , 'Intensity' , 'B4:J4');
+xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Frequency_down'.*10 , 'Frequency' , 'B4:J4'); % months per decade
+xlswrite(['Basins_Up_Middle_Down_Statistical.xlsx'] , Population_down' , 'ExposedPopulation' , 'B4:J4');
 
-
-
+Extent = [mean([Extent_middle,Extent_down],2)';Extent_up'];
+Intensity = [mean([Intensity_middle,Intensity_down],2)';Intensity_up'];
+Frequency = [mean([Frequency_middle,Frequency_down],2)';Frequency_up'];
+Population = [mean([Population_middle,Population_down],2)';Population_up'];
+c95_Extent = [mean([c95_Extent_middle,c95_Extent_down],2)';c95_Extent_up'];
+c95_Intensity = [mean([c95_Intensity_middle,c95_Intensity_down],2)';c95_Intensity_up'];
+c95_Frequency = [mean([c95_Frequency_middle,c95_Frequency_down],2)';c95_Frequency_up'];
+c95_Population = [mean([c95_Population_middle,c95_Population_down],2)';c95_Population_up'];
+Fig_Up_Middle_Down_Statistical_Bar(Extent , Intensity , Frequency , Population , c95_Extent , c95_Intensity , c95_Frequency , c95_Population)
 
 
 

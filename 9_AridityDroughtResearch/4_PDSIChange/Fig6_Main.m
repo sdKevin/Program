@@ -18,6 +18,8 @@ clear Path_Ensemble_Mean_Historical_GCM Path_Ensemble_Mean_ScenarioMIP_ssp126_GC
 clear Path_Ensemble_Mean_ScenarioMIP_ssp370_GCM Path_Ensemble_Mean_ScenarioMIP_ssp585_GCM Path_Ensemble_Mean_Princeton
 
 Fig6a_Plotting(GridPDSI_Princeton_CMIP , Path_Fig6a_Output)
+subplot(1,2,2)
+Fig4d_Article_Plotting(GridPDSI_Princeton_CMIP , Path_Fig6a_Output)
 
 %% Spatial change of scPDSI calculated drought frequency linear trend
 clc; clear all; close all;

@@ -23,7 +23,7 @@ YlimRange_Cold = [6 , 16]; YTickRange_Cold = 6 : 5 : 16;
 YlimRange_Dry_Humid = [41 , 49]; YTickRange_Dry_Humid = 41 : 4 : 49;
 
 %% Three time windows
-figure
+% figure
 % Far History: 1850-1879
 fill([1850;1879;1879;1850],...
     [YlimRange_Cold(1); YlimRange_Cold(1); YlimRange_Cold(2); YlimRange_Cold(2)],...
@@ -47,7 +47,8 @@ set(ax(1),'ylim',YlimRange_Cold,'xlim',[1948,2100],...
 set(ax(2),'ylim',YlimRange_Dry_Humid,'xlim',[1948,2100],'yColor','k',...
     'YTick',YTickRange_Dry_Humid,'XTick',[1850:50:2100],'FontSize',24,...
     'FontName','Arial','TickDir','out','LineWidth',2.5);
-set(get(ax(2),'ylabel'),'string','Humid Lands / Drylands Area  (%)')
+% set(get(ax(2),'ylabel'),'string','Humid Lands / Drylands Area  (%)')
+set(get(ax(2),'ylabel'),'string','')
 set(gca,'YMinorTick','on','XMinorTick','on')
 xlabel('Year');
 
@@ -61,7 +62,8 @@ fill([[1850:2100]';flipud([1850:2100]')],...
 clear A ax B h1 h2 ii mycolormap;
 
 %% Plotting Dryland and Humid land
-axes('position', [0.1300    0.1100    0.7750    0.8150]);
+ax = gca;
+axes('position', ax.Position);
 %%% Plotting Shade Area and Ensemble Mean for Dryland and Humid land
 % Dryland Shade Area
 % Calculate the 95% Confidence interval (c95)
@@ -87,69 +89,81 @@ set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange
 
 %%% Plotting Moving Average for Dryland and Humid land
 % Dryland Moving Average
-axes('position', [0.1300    0.1100    0.7750    0.8150]);
+axes('position', ax.Position);
 plot([1850:2100],smooth(mean(DryLand_PM_RC),7),...
     'Color',1.0-1*(1.0-RGB_Dry_Line./255),'EraseMode','xor','Linewidth',2.5);
-h = legend('Drylands');
-set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Dry_Line./255)
+% h = legend('Drylands');
+% set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Dry_Line./255)
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Dry_Humid,'xlim',[1948,2100]);
 % Humid land Moving Average
-axes('position', [0.1300    0.1100    0.7750    0.8150]);
+axes('position', ax.Position);
 plot([1850:2100],smooth(mean(HumidLand_PM_RC),7),...
     'Color',1.0-1*(1.0-RGB_Humid_Line./255),'EraseMode','xor','Linewidth',2.5);
-h = legend('Humid Lands');
-set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Humid_Line./255)
+% h = legend('Humid Lands');
+% set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Humid_Line./255)
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Dry_Humid,'xlim',[1948,2100]);
 
 %% Plotting Cold Region
-axes('position', [0.1300    0.1100    0.7750    0.8150]);
+axes('position', ax.Position);
 % Plotting Ensemble Mean
 plot([1850:2100],mean(Cold_PM_RC),...
     'Color',1.0-1*(1.0-RGB_Cold_Line./255),'EraseMode','xor','Linewidth',1); hold on;
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Cold,'xlim',[1948,2100]);
-axes('position', [0.1300    0.1100    0.7750    0.8150]);
+axes('position', ax.Position);
 % Plotting moving average
 plot([1850:2100],smooth(mean(Cold_PM_RC),7),...
     'Color',1.0-1*(1.0-RGB_Cold_Line./255),'EraseMode','xor','Linewidth',2.5);
-h = legend('CMIP6 : Cold Regions');
-set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Cold_Line./255)
+% h = legend('CMIP6 : Cold Regions');
+% set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Cold_Line./255)
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Cold,'xlim',[1948,2100]);
 
 %% DryWetRegion_Princeton
 load(Path_DryWetRegion_Princeton)
 % Cold Region Moving average
-axes('position', [0.1300    0.1100    0.7750    0.8150]);
+axes('position', ax.Position);
 % Cold Region Yearly Series
-% plot([1948:2014],Cold_PM_RC,...
-%     'Color',1.0-1*(1.0-RGB_Princeton_Cold./255),'EraseMode','xor','Linewidth',1);
+% plot([1948:2014],Cold_PM_RC,'-',...
+%     'Color',[1 1 1],'EraseMode','xor','Linewidth',2.5); hold on;
+% plot([1948:2014],Cold_PM_RC,'--',...
+%     'Color',1.0-1*(1.0-RGB_Princeton_Cold./255),'EraseMode','xor','Linewidth',2.5);
 % Cold Region Moving average
+plot([1948:2014],smooth(Cold_PM_RC,7),'-',...
+    'Color',[1 1 1],'EraseMode','xor','Linewidth',2.5); hold on;
 plot([1948:2014],smooth(Cold_PM_RC,7),'--',...
     'Color',1.0-1*(1.0-RGB_Princeton_Cold./255),'EraseMode','xor','Linewidth',2.5);
-h = legend('Princeton : Cold Regions');
-set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Princeton_Cold./255)
+% h = legend('Princeton : Cold Regions');
+% set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Princeton_Cold./255)
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Cold,'xlim',[1948,2100]);
 
 % Dryland Moving average
-axes('position', [0.1300    0.1100    0.7750    0.8150]);
+axes('position', ax.Position);
 % Dryland Yearly Series
-% plot([1948:2014],DryLand_PM_RC,...
-%     'Color',1.0-1*(1.0-RGB_Princeton_Dry./255),'EraseMode','xor','Linewidth',1); hold on;
+% plot([1948:2014],DryLand_PM_RC,'-',...
+%     'Color',[1 1 1],'EraseMode','xor','Linewidth',2.5); hold on;
+% plot([1948:2014],DryLand_PM_RC,'--',...
+%     'Color',1.0-1*(1.0-RGB_Princeton_Dry./255),'EraseMode','xor','Linewidth',2.5);
 % Dryland Moving average
+plot([1948:2014],smooth(DryLand_PM_RC,7),'-',...
+    'Color',[1 1 1],'EraseMode','xor','Linewidth',2.5); hold on;
 plot([1948:2014],smooth(DryLand_PM_RC,7),'--',...
     'Color',1.0-1*(1.0-RGB_Princeton_Dry./255),'EraseMode','xor','Linewidth',2.5); hold on;
-h = legend('Drylands');
-set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Princeton_Dry./255);
+% h = legend('Drylands');
+% set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Princeton_Dry./255);
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Dry_Humid,'xlim',[1948,2100]);
 
 % Humid Land Moving average
-axes('position', [0.1300    0.1100    0.7750    0.8150]);
+axes('position', ax.Position);
 % Humid land Yearly Series
-% plot([1948:2014],HumidLand_PM_RC,...
-%     'Color',1.0-1*(1.0-RGB_Princeton_Humid./255),'EraseMode','xor','Linewidth',1);
+% plot([1948:2014],HumidLand_PM_RC,'-',...
+%     'Color',[1 1 1],'EraseMode','xor','Linewidth',2.5); hold on;
+% plot([1948:2014],HumidLand_PM_RC,'--',...
+%     'Color',1.0-1*(1.0-RGB_Princeton_Humid./255),'EraseMode','xor','Linewidth',2.5);
 % Humid land Moving average
+plot([1948:2014],smooth(HumidLand_PM_RC,7),'-',...
+    'Color',[1 1 1],'EraseMode','xor','Linewidth',2.5); hold on;
 plot([1948:2014],smooth(HumidLand_PM_RC,7),'--',...
     'Color',1.0-1*(1.0-RGB_Princeton_Humid./255),'EraseMode','xor','Linewidth',2.5);hold on;
-h = legend('Humid Lands');
-set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Princeton_Humid./255)
+% h = legend('Humid Lands');
+% set(h,'Box','off','FontSize',24,'FontName','Arial','TextColor',RGB_Princeton_Humid./255)
 set(gca,'visible','off','TickDir','out','yaxislocation','right','ylim',YlimRange_Dry_Humid,'xlim',[1948,2100]);
 end

@@ -18,6 +18,8 @@ clear Path_Ensemble_Mean_Historical_GCM Path_Ensemble_Mean_ScenarioMIP_ssp126_GC
 clear Path_Ensemble_Mean_ScenarioMIP_ssp370_GCM Path_Ensemble_Mean_ScenarioMIP_ssp585_GCM Path_Ensemble_Mean_Princeton
 
 Fig3a_Plotting(GridPDSI_Princeton_CMIP , Path_Fig3_Output)
+subplot(1,2,1)
+Fig4c_Article_Plotting(GridPDSI_Princeton_CMIP , Path_Fig3_Output)
 
 %% Spatial change of scPDSI linear trend
 clc; clear all; close all;

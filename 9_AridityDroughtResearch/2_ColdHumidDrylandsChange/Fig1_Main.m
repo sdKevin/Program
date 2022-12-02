@@ -13,11 +13,14 @@ CMIP_DryWetRegion = cat(2,load(Path_DryWetRegion_Historical_GCM),...
     load(Path_DryWetRegion_ScenarioMIP_ssp370_GCM),load(Path_DryWetRegion_ScenarioMIP_ssp585_GCM));
 
 % Plotting Global Cold Regions, Dry Lands, and Humid Lands calculated by PM-RC-Jarvis
+subplot(3,12,[9,10,11.2,21,22,23.2])
 Fig1a_GlobalLands_Left_Plotting( cat(2,CMIP_DryWetRegion(1),CMIP_DryWetRegion(5)) , Path_DryWetRegion_Princeton );
 Fig1a_GlobalLands_Right_Plotting( CMIP_DryWetRegion );
 % Plotting Global Cold Regions, Dry Lands, and Humid Lands calculated by PM-RC-Yang
+subplot(3,12,[5,6,7.2,17,18,19.2])
 Fig1b_GlobalLands_Left_Plotting( cat(2,CMIP_DryWetRegion(1),CMIP_DryWetRegion(5)) , Path_DryWetRegion_Princeton );
 Fig1b_GlobalLands_Right_Plotting( CMIP_DryWetRegion );
 % Plotting Global Cold Regions, Dry Lands, and Humid Lands calculated by PM-RC
+subplot(3,12,[1,2,3.2,13,14,15.2])
 Fig1c_GlobalLands_Left_Plotting( cat(2,CMIP_DryWetRegion(1),CMIP_DryWetRegion(5)) , Path_DryWetRegion_Princeton );
 Fig1c_GlobalLands_Right_Plotting( CMIP_DryWetRegion );
